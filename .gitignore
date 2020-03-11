@@ -1,0 +1,10 @@
+*.swp
+*.swo
+*.log
+*.tar.gz
+.idea
+.DS_Store
+public/
+resources/
+node_modules/
+tech-doc-hugo
