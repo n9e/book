@@ -26,6 +26,8 @@ description: >
 
 每个模块都有自己监听的端口，都跟别的模块有关系，要各种关联访问，我们统一提取一个address.yml的配置文件，配置各个模块listen的地址，以及各个模块部署的机器列表用于给调用方使用。所以，所有的模块单独部署的时候，不但要带上自己同名的配置文件，还要带上address.yml
 
+[解释address.yml具体用法的一个小视频](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-usage-address.mp4)
+
 ### monapi
 
 主要承接web端的请求，无状态，可以水平扩展部署多台，依赖mysql和redis，请提前把密码准备好。monapi要run起来依赖的配置文件有3个，除了address.yml，另外就是mysql.yml和monapi.yml，mysql.yml里是数据库连接配置，一眼就懂，不啰嗦，这里主要说一下monapi.yml
