@@ -80,7 +80,7 @@ description: >
 ```
 
 ### 节点下解挂监控对象
-`POST /api/portal/node/:id/endpoint-bind`
+`POST /api/portal/node/:id/endpoint-unbind`
 - id: 对象树的节点id
 
 请求样例
