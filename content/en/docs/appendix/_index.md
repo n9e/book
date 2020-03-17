@@ -2,7 +2,7 @@
 ---
 title: "附录"
 linkTitle: "附录"
-weight: 9
+weight: 10
 date: 2020-03-15
 description: >
   把散置在各个章节的视频教程统一整理放到这个页面，供大家方便查阅

@@ -55,20 +55,6 @@ judge的核心业务指标如下，统计周期为10s
 | n9e.judge.push.in     |接收点数| 
 | n9e.judge.running     |正在执行的judge任务数| 
 | n9e.judge.stra.count     |获取的策略数| 
-| n9e.judge.redis.failed     |redis push告警失败失败次数| 
 
 如果judge变更之后，judge集群上述指标的数据没有明显的变化，则说明变更符合预期
-
-## monapi 变更
-monapi的核心业务指标如下，统计周期为10s
-
-| 监控指标        | 含义   |
-| --------   | ----- |
-| n9e.monapi.event.save.err     |当前告警保存失败数| 
-| n9e.monapi.stra.count     |历史告警保存失败数| 
-| n9e.monapi.callback.err     |callback调用失败数| 
-
-如果monapi变更之后，monapi集群上述指标的数据没有明显的变化，则说明变更符合预期
-
-
-
+     
