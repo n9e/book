@@ -7,7 +7,7 @@ description: >
   本节会介绍Nightingale对外提供的API
 ---
 ### 前言
-1. 所有接口的错误返回均为以下格式，错误信息会写入的`err`字段中
+1. 所有接口的错误返回均为以下格式，错误信息会写入到`err`字段中
 ```json
 {
     "dat": {},
@@ -20,3 +20,5 @@ description: >
 key为：Authorization
 value为： username:password
 ```
+
+3. Nightingale各个模块前面会有一个nginx，所以所有接口的地址默认为nginx的地址

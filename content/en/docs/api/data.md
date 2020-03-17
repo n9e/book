@@ -8,8 +8,9 @@ description: >
 ---
 
 ### 上报数据
-中心上报接口 `POST /api/transfer/push`      
-本地上报接口 `POST /api/collector/push`   
+Nightingale的transfer和collector两个模块都提供了上报数据的接口    
+本地collector上报接口 `POST http://127.0.0.1:2058/api/collector/push`   
+中心transfer上报接口 `POST /api/transfer/push`      
 字段含义见[数据规范](https://n9e.didiyun.com/docs/usage/metric/)   
 
 请求样例  
