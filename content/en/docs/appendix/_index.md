@@ -10,7 +10,7 @@ description: >
 
 ## 视频教程
 
-相关视频如下，请一定要看完...
+相关视频如下，请一定要看完，再问问题...
 
 - [夜莺整体架构详解](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-arch-intro.mp4)
 - [快速安装演示](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-install-didiyun.mp4)
