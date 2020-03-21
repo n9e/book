@@ -9,6 +9,8 @@ description: >
 
 本节假设您已经了解golang编译基本常识，了解GOPATH环境变量代表的意思，建议使用golang1.12以上的版本。系统依赖mysql、redis，假设您已经安装完毕，并配置了mysql和redis的访问密码。本节所述为单机安装方式。
 
+如果是新手，建议直接看演示视频，跟着视频来一步一步操作：[源码安装演示](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-install-src.mp4)
+
 ## 1、源码编译
 
 ```bash
