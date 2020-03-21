@@ -18,7 +18,7 @@ cd $GOPATH/src/github.com/didi
 
 # clone代码并编译打包，pack时会自动build，打包成一个tar.gz
 git clone https://github.com/didi/nightingale.git
-cd nightingale && export GO111MODULE=on && ./control build && ./control pack
+cd nightingale && ./control build && ./control pack
 ```
 
 如果懒得编译，也可以参看《[镜像快速体验](../didiyun/)》一节去创建云主机，在云主机的`/home/n9e`目录下也可以拿到一个打包好的压缩包，名字叫n9e-xx.tar.gz，只要是64位Linux可以直接复用发布包
