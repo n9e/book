@@ -41,7 +41,12 @@ mysql -uroot -p < sql/n9e_uic.sql
 
 ## 4、启动各模块进程
 
-发布包里默认提供了一个control脚本，用来启停服务，直接执行`./control start all`即可启动所有模块，`./control status`可以查看各模块进程是否都已启动，夜莺共有6个核心模块，注意一下进程数是否正确。最后安装一下nginx，nginx有个示例配置文件在etc/nginx.conf，注意修改pub目录指向真实路径。至此，单机版就部署成功了。访问nginx即可看到页面。
+发布包里默认提供了一个control脚本，用来启停服务，直接执行`./control start all`即可启动所有模块，`./control status`可以查看各模块进程是否都已启动，夜莺共有6个核心模块，注意一下进程数是否正确。最后安装一下nginx，nginx有个示例配置文件在etc/nginx.conf，注意修改pub目录指向真实路径。至此，单机版就部署成功了。访问nginx即可看到页面。如果发现nginx日志里出现权限报错，检查机器selinux配置，尝试关闭selinux解决：
+
+```bash
+setenforce 0
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+```
 
 ## 5、交代一些额外信息
 
