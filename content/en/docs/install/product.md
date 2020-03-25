@@ -259,7 +259,7 @@ sys:
     - cpu.core.steal
 ```
 
-collector的部署依赖的文件是n9e-collector二进制、etc/collector.yml、etc/address.yml。
+collector的部署依赖的文件是n9e-collector二进制、etc/collector.yml、etc/address.yml。这里的address.yml可能不太好理解，特地录制了一个视频：[解释address.yml](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-usage-address.mp4) 把这三个文件扔到目标机器的/home/n9e目录下，然后修改etc/address.yml中的monapi和transfer的addresses字段，配置为真实的server的ip地址即可。因为collector要跟transfer和monapi通信，所以必须知道这俩组件的ip地址。如果还弄不明白，我真是无能为力了（太多人问这个问题了...）
 
 ### nginx
 
