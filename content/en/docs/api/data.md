@@ -79,7 +79,7 @@ Nightingale的transfer和collector两个模块都提供了上报数据的接口
 }
 ```
 ### 查询监控数据
-`POST /api/transfer/v2/data`
+`POST /api/transfer/data`
 
 请求样例
 ```json

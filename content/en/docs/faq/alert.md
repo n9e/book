@@ -13,7 +13,7 @@ description: >
 2. **策略被屏蔽**：查看告警策略屏蔽列表，确认策略是否被屏蔽
 3. **通知网关问题**：到告警历史页面，查看是否已经生成的告警事件，如果有告警事件，说明是通知网关的问题
 4. **策略下发问题**：
-	- 执行 `curl monapi.addr/api/potal/stras/effective?all=1` 拿到全量策略列表
+	- 执行 `curl monapi.addr/api/portal/stras/effective?all=1` 拿到全量策略列表
 	- 如果列表没有此策略，查看 monapi 日志，看是否有报错信息，有报错，按照提示处理
 	- 如果有，则查看judge_instance字段，找到策略分发给了哪个judge实例，登陆到judge所在机器，
 	`curl 127.0.0.1:5840/api/judge/stra:id` 查看是否下发给judge
