@@ -13,20 +13,20 @@ description: >
 
 很多插件都是直接起一个进程或者用CRON驱动，往open-falcon-agent推送数据，换成夜莺的话推送地址改成collector的地址，即 http://127.0.0.1:2058/api/collector/push
 
-#### win-collector
+#### [win-collector](https://github.com/n9e/win-collector)
 
-windows版本的collector，地址：https://github.com/n9e/win-collector
+windows版本的collector
 
-#### swcollector
+#### [swcollector](https://github.com/gaochao1/swcollector)
 
-采集交换机的指标：地址：https://github.com/gaochao1/swcollector
+采集交换机的指标
 
-#### mymon
+#### [mymon](https://github.com/n9e/mymon)
 
-可以用来监控mysql，地址：https://github.com/n9e/mymon
+可以用来监控mysql
 
-#### jmxmon
+#### [jmxmon](https://github.com/toomanyopenfiles/jmxmon)
 
-可以用来采集jvm信息，地址：https://github.com/toomanyopenfiles/jmxmon
+可以用来采集jvm信息
 
 
