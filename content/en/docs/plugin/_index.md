@@ -17,6 +17,10 @@ description: >
 
 windows版本的collector，地址：https://github.com/n9e/win-collector
 
+#### swcollector
+
+采集交换机的指标：地址：https://github.com/gaochao1/swcollector
+
 #### mymon
 
 可以用来监控mysql，地址：https://github.com/n9e/mymon
