@@ -116,7 +116,7 @@ logger:
 # 可以通过specify手动设置，如果specify为空，则会通过执行shell命令自动获取，默认是获取IP 
 identity:
   specify: ""
-  shell: /usr/sbin/ifconfig `/usr/sbin/route|grep '^default'|awk '{print $NF}'`|grep inet|awk '{print $2}'|head -n 1
+  shell: ifconfig `route|grep '^default'|awk '{print $NF}'`|grep inet|awk '{print $2}'|awk -F ':' '{print $NF}'|head -n 1
 
 # index模块主要是保存监控系统的索引信息，下面是索引信息的相关配置，系统会有一个默认配置，一般可以不用关心
 # 当index重启的时候，内存的索引数据就会丢失，而tsdb模块对发给过index的索引有缓存，短期不会重复发送，这样会导致index重启之后，之前的索引缺失，所以需要对内存中的索引持久化，持久化数据所在的目录(persistDir)默认为 ./.index
@@ -185,7 +185,7 @@ redis:
 # 可以通过specify手动设置，如果specify为空，则会通过执行shell命令自动获取，默认是获取IP 
 identity:
   specify: ""
-  shell: /usr/sbin/ifconfig `/usr/sbin/route|grep '^default'|awk '{print $NF}'`|grep inet|awk '{print $2}'|head -n 1
+  shell: ifconfig `route|grep '^default'|awk '{print $NF}'`|grep inet|awk '{print $2}'|awk -F ':' '{print $NF}'|head -n 1
 ```
 
 judge的部署依赖的文件是n9e-judge二进制、etc/judge.yml、etc/address.yml。
@@ -228,7 +228,7 @@ logger:
 # identity为上报给transter监控数据中的endpoint，可以通过specify手动设置，如果specify为空，则会通过执行shell命令自动获取，默认是获取IP 
 identity:
   specify: ""
-  shell: /usr/sbin/ifconfig `/usr/sbin/route|grep '^default'|awk '{print $NF}'`|grep inet|awk '{print $2}'|head -n 1
+  shell: ifconfig `route|grep '^default'|awk '{print $NF}'`|grep inet|awk '{print $2}'|awk -F ':' '{print $NF}'|head -n 1
 
 sys:
   # timeout in ms

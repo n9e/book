@@ -25,7 +25,7 @@ collector组件虽然内置了很多监控指标的采集，但无法解决所�
 #!/bin/bash
 
 duration=$(cat /proc/uptime | awk '{print $1}')
-localip=$(/usr/sbin/ifconfig `/usr/sbin/route|grep '^default'|awk '{print $NF}'`|grep inet|awk '{print $2}'|head -n 1)
+localip=$(ifconfig `route|grep '^default'|awk '{print $NF}'`|grep inet|awk '{print $2}'|awk -F ':' '{print $NF}'|head -n 1)
 step=$(basename $0|awk -F'_' '{print $1}')
 echo '[
     {
@@ -64,7 +64,7 @@ def collect_myself_status():
 
 def main():
     code, endpoint = commands.getstatusoutput(
-        "timeout 1 /usr/sbin/ifconfig `/usr/sbin/route|grep '^default'|awk '{print $NF}'`|grep inet|awk '{print $2}'|head -n 1")
+        "timeout 1 ifconfig `route|grep '^default'|awk '{print $NF}'`|grep inet|awk '{print $2}'|awk -F ':' '{print $NF}'|head -n 1")
     if code != 0:
         sys.stderr.write('cannot get local ip')
         return
