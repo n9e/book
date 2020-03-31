@@ -35,3 +35,39 @@ rrd:
 
 什么情况需要看周环比数据？变化很规律的业务数据，比如订单量、用户在线数，而且还得是体量很大的情况，曲线才会比较平滑，如果只是看机器监控，或者业务体量比较小，意义不大。
 
+### 存储扩容
+当tsdb所在的机器资源不足的时候，可以对tsdb模块进行扩容，下面讲一下tsdb如何进行扩容
+    
+举个例子：   
+旧tsdb集群列表为 172.26.19.33，扩容之后tsdb集群列表为 172.26.19.33、172.26.19.34   
+
+1. 首先修改tsdb模块的配置文件，打开migrate扩容开关，将旧的tsdb机器列表写在oldCluster下面，将新的tsdb机器列表写在newCluster下面
+```yaml
+rrd:
+  storage: data/5821
+cache:
+  keepMinutes: 120
+logger:
+  dir: logs/tsdb
+  level: WARNING
+  keepHours: 2
+migrate:
+  enabled: true
+  oldCluster:
+    tsdb01: 172.26.19.33:5821
+  newCluster:
+    tsdb01: 172.26.19.33:5821
+    tsdb02: 172.26.19.34:5821
+```
+2. 配置文件修改完成之后，将旧机器的tsdb模块重启，将新机器的tsdb模块启动
+3. 修改transfer配置文件中的backend.cluster字段，将待扩容的tsdb机器添加到cluster下面，然后重启transfer集群
+```yaml
+backend:
+  # in ms
+  # connTimeout: 1000
+  # callTimeout: 3000
+  cluster:
+    tsdb01: 172.26.19.33:5821
+    tsdb02: 172.26.19.34:5821
+```
+4. 在监控系统中查看监控指标 n9e.tsdb.migrate.old.out 的变化，当 n9e.tsdb.migrate.old.out 变为0时，表示扩容操作完成，关闭tsdb配置文件中的migrate开关，重启tsdb模块，完成扩容
