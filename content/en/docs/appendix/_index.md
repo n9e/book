@@ -29,3 +29,4 @@ Nightingale的理念，是将告警事件扔到redis里就不管了，接下来�
 
 - [mail-sender](https://github.com/n9e/mail-sender)
 - [wechat-sender](https://github.com/n9e/wechat-sender)
+- [dingtalk-sender](https://github.com/n9e/dingtalk-sender)
