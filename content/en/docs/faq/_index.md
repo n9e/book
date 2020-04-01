@@ -9,4 +9,6 @@ description: >
 ---
 
 ### 前言
-本节答疑，假设Nightingale部署目录为 /home/n9e
+1. 本节答疑，假设Nightingale部署目录为 /home/n9e
+2. 先将[视频教程](../appendix/#heading)都看一遍
+3. 安装好之后不符合预期，先到 logs 目录下，把所有日志检查一遍，看有没有报错
