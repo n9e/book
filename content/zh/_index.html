@@ -1,0 +1,54 @@
++++
+title = "Nightingale"
+linkTitle = "Nightingale"
+
++++
+
+{{< blocks/cover title="Welcome to Nightingale" image_anchor="top" height="full" color="orange" >}}
+<div class="mx-auto">
+	<a class="btn btn-lg btn-primary mr-3 mb-4" href="{{< relref "/docs" >}}">
+		Learn More <i class="fas fa-arrow-alt-circle-right ml-2"></i>
+	</a>
+	<a class="btn btn-lg btn-secondary mr-3 mb-4" href="https://github.com/didi/nightingale">
+		Download <i class="fab fa-github ml-2 "></i>
+	</a>
+	<p class="lead mt-5">A Distributed and High-Performance Monitoring System</p>
+	{{< blocks/link-down color="info" >}}
+</div>
+{{< /blocks/cover >}}
+
+
+{{% blocks/lead color="primary" %}}
+Nightingale is a fork of Open-Falcon, and all the core modules have been greatly optimized.
+
+Nightingale is the next generation of Open-Falcon.
+{{% /blocks/lead %}}
+
+{{< blocks/section color="white" >}}
+
+{{% blocks/feature icon="fa-expand" title="Scalability" %}}
+Scalable monitoring system is necessary to support rapid business growth. Each module of Nightingale is super easy to scale horizontally.
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fa-bolt" title="Performance" %}}
+With RRA(Round Robin Archive) mechanism and memory TSDB, the one-year history data of 100+ metrics could be returned in just one second.
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fa-chart-line" title="High Availability" %}}
+No critical single point of failure, easy to operate and deploy. The system will not be affected if any machine is hung up.
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fa-puzzle-piece" title="Flexibility" %}}
+Nightingale collector is compatible with falcon-agent. Plugin mechanism and log collector are built-in.
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fa-rocket" title="Efficiency" %}}
+Integrated with object tree, Nightingale supports strategy inheritance, multiple alerting method, and callback for recovery.
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fa-cubes" title="Easy Deployment" %}}
+All modules have been rewritten in go, which reduces the number of modules and greatly reduces the difficulty of deployment.
+{{% /blocks/feature %}}
+
+{{< /blocks/section >}}
+
