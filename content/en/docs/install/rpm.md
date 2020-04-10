@@ -66,7 +66,7 @@ mysql -uroot -p </usr/local/n9e/sql/n9e_mon.sql
 mysql -uroot -p </usr/local/n9e/sql/n9e_uic.sql
 ```
 
-安全考虑，建议为 n9e 独立建立 mysql 用户，在 mysql 里创建 n9e 用户并授权
+安全考虑，建议为 n9e 独立建立 mysql 用户，在 mysql 里创建 n9e 用户并授授权（如果使用MySQL8,需使用mysql_native_password身份验证插件）
 
 ```
 mysql>create user n9e@localhost identified by 'n9epwd123';
@@ -107,7 +107,7 @@ systemctl restart nginx
 启动所有组件
 
 ```bash
-systemctl enable --now n9e-collector n9e-tsdb n9e-transfer nn9e-monapi n9e-judge n9e-index
+systemctl enable --now n9e-collector n9e-tsdb n9e-transfer n9e-monapi n9e-judge n9e-index
 ```
 
 使用浏览器打开http://ip 即可访问，默认账号 root 密码 root
