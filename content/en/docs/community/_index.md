@@ -14,7 +14,7 @@ Nightingale is a set of Internet monitoring solutions derived from [Open-Falcon]
 
 The first line of code of Open-Falcon was written in 2014. Over the past few years, there are more than 200 commercial companies using it in production. We are also gradually optimizing it. Nightingale is a very subversive version, have been made substantial improvements in performance, ease of use, usability, and Didi has resisted 770 million monitoring indicators (including physical machines, virtual machines, containers, networks, and business modules). This is a new journey, and I look forward to working with developers to make the best of monitor area.
 
-**[-> start with supports:-)](https://github.com/didi/nightingale)**
+**[-> star with supports:-)](https://github.com/didi/nightingale)**
 
 ### The team of Nightingale
 
