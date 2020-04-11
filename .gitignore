@@ -1,4 +1,5 @@
 *.swp
+*.vscode
 *.swo
 *.log
 *.tar.gz
