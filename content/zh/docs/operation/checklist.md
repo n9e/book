@@ -7,8 +7,8 @@ description: >
 ---
 
 ## 前言
-判断变更是否异常可以通过两个方面
-1. 判断更改之后进程是否存活，此方式可以通过通过给模块添加进程监控来实现
+可以通过两个方面判断变更是否异常：
+1. 判断更改之后进程是否存活，此方式可以通过给模块添加进程监控来实现
 2. 通过观察模块的业务指标是否正常，本节重点介绍下各个模块需要关注哪些业务指标
     
 Nightingale的各个组件启动之后，会将自身的的一些状态数据上报到监控系统，通过上报的指标可以观测其运行是否正常，下面介绍下各个模块的监控指标
@@ -21,7 +21,7 @@ transfer的核心业务指标如下，统计周期为10s
 | n9e.transfer.points.out.tsdb        |向tsdb发送点数| 
 | n9e.transfer.points.out.tsdb.err        |向tsdb发送失败的点数| 
 | n9e.transfer.points.out.judge        |向judge发送的点数| 
-| n9e.transfer.points.out.judge.err        |向tsdb发送失败的点数| 
+| n9e.transfer.points.out.judge.err        |向juege发送失败的点数| 
 | n9e.transfer.stra.count        |获取监控策略条数| 
 
 如果transfer变更之后，transfer集群上述指标的数据没有明显的变化，则说明变更符合预期

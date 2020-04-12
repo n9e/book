@@ -1,14 +1,14 @@
 ---
-title: "绘图相关"
-linkTitle: "绘图相关"
-date: 2020-03-08
+title: "Drawing related"
+linkTitle: "Drawing related"
+date: 2020-04-12
 description: >
-  本节讲解和绘图相关的运维操作
+  This section explains operations related to drawing
 ---
 
-### 绘图功能高可用
+### Highly available of drawing
 
-默认情况下，用作看图的数据会通过分片的方式，存到单个tsdb实例，如果某个tsdb实例所在的机器宕机，部分曲线看图会受到影响，如果预算充足，可以部署双活集群，配置方式是修改transfer模块的配置文件，每个节点配置两个tsdb实例，样例如下，集群地址之间用逗号分隔
+By default, the data used to view the image will be saved to a single tsdb instance through sharding.If the machine where a tsdb instance is down, some graphs will be affected.If the budget is sufficient, you can deploy an active-active cluster.By modifying the configuration file of the transfer module, two tsdb instances can be configured for each node. In the example below, the cluster addresses are separated by commas.
 
 ```yaml
 backend:
@@ -16,32 +16,32 @@ backend:
     tsdb01: cluster1.addr:5821,cluster2.addr:5821
 ```
 
-通过配置双活实例，当有一个实例宕机的时候，查询链路会自动去从另一个实例查询数据，无需手动处理
+After configuring the HyperMetro instance, when one instance goes down, the query link will automatically go to query data from another instance without manual processing.
 
-### 置绘图数据的存储时长
+### Set the storage time of drawing data
 
-tsdb默认的存储时长配置如下，可以根据自身需求在配置文件中修改，如果监控指标上报周期(step)为10s，则最久可以存储一年。
+The following is the default storage duration configuration of tsdb, you can modify the configuration file according to your own needs. If the monitoring index reporting step (step) is 10s, it can be stored for up to one year.
 
 ```yaml
 rrd:
   rra:
-    1:    720,   # 存储720个原始点
-	6:    4320,  # 6点个归档为一个点，保存4320个点
-	180:  1440,  # 180个点归档为一个点，保存1440个点
-	1080: 2880,  # 1080个点归档为一个点，保存2880个点
+    1:    720,   # Store 720 original points
+	6:    4320,  # 6 points are archived as one point, and 4320 points are saved
+	180:  1440,  # 180 points are archived as a point, saving 1440 points
+	1080: 2880,  # 1080 points are archived as one point, and 2880 points are saved
 ```
 
-如果未来看图的时候，希望能看到跟一周之前的数据的对比，即周环比数据，第二条归档策略，建议由4320调整为11520，这样的话归档精度一致，比较容易看图，并且利于未来做环比告警策略，但是，这也带来了弊端，就是监控数据存储的量变大了。
+If you want to see the comparison chart with the data from a week ago, that is, the week-on-week data, it is recommended to adjust the second archiving strategy from 4320 to 11520. In this case, the archiving accuracy is consistent, it is easier to see the picture, and it is conducive to the future of the ring alarm strategy However, this also brings a disadvantage-the amount of monitoring data storage becomes larger.
 
-什么情况需要看周环比数据？变化很规律的业务数据，比如订单量、用户在线数，而且还得是体量很大的情况，曲线才会比较平滑，如果只是看机器监控，或者业务体量比较小，意义不大。
+When should we look at the week-on-week data? Business data that changes very regularly, such as the number of orders and the number of users online.And it must be a case where the amount of data is large, the curve will be relatively smooth, if you only look at machine monitoring, or the amount of business is relatively small, it does not make much sense.
 
-### 存储扩容
-当tsdb所在的机器资源不足的时候，可以对tsdb模块进行扩容，下面讲一下tsdb如何进行扩容
+### Storage expansion
+When the machine resource where tsdb is located is insufficient, the tsdb module can be expanded. Let's talk about how to expand tsdb
     
-举个例子：   
-旧tsdb集群列表为 172.26.19.33，扩容之后tsdb集群列表为 172.26.19.33、172.26.19.34   
+For example:   
+The old tsdb cluster list is 172.26.19.33, and the expanded tsdb cluster list is 172.26.19.33, 172.26.19.34
 
-1. 首先修改tsdb模块的配置文件，打开migrate扩容开关，将旧的tsdb机器列表写在oldCluster下面，将新的tsdb机器列表写在newCluster下面
+1. First modify the configuration file of the tsdb module. Open the migrate expansion switch, write the old tsdb machine list under oldCluster, and write the new tsdb machine list under newCluster
 ```yaml
 rrd:
   storage: data/5821
@@ -59,8 +59,8 @@ migrate:
     tsdb01: 172.26.19.33:5821
     tsdb02: 172.26.19.34:5821
 ```
-2. 配置文件修改完成之后，将旧机器的tsdb模块重启，将新机器的tsdb模块启动
-3. 修改transfer配置文件中的backend.cluster字段，将待扩容的tsdb机器添加到cluster下面，然后重启transfer集群
+2. After the configuration file is modified, restart the tsdb module of the old machine, and then start the tsdb module of the new machine
+3. Modify the backend.cluster field in the transfer configuration file, add the old tsdb machine to the cluster, and then restart the transfer cluster
 ```yaml
 backend:
   # in ms
@@ -70,4 +70,4 @@ backend:
     tsdb01: 172.26.19.33:5821
     tsdb02: 172.26.19.34:5821
 ```
-4. 在监控系统中查看监控指标 n9e.tsdb.migrate.old.out 的变化，当 n9e.tsdb.migrate.old.out 变为0时，表示扩容操作完成，关闭tsdb配置文件中的migrate开关，重启tsdb模块，完成扩容
+4. Observe the change of n9e.tsdb.migrate.old.out in the monitoring system. When n9e.tsdb.migrate.old.out becomes 0, it means that the expansion operation is completed, we can turn off the migrate switch in the tsdb configuration file and restart tsdb, then module expansion is completed.

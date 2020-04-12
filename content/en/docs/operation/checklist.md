@@ -1,60 +1,60 @@
 ---
-title: "变更检查"
-linkTitle: "变更检查"
-date: 2020-03-06
+title: "Change check"
+linkTitle: "Change check"
+date: 2020-04-12
 description: >
-  本节讲解各个模块的变更checklist
+  This section explains the change checklist of each module
 ---
 
-## 前言
-判断变更是否异常可以通过两个方面
-1. 判断更改之后进程是否存活，此方式可以通过通过给模块添加进程监控来实现
-2. 通过观察模块的业务指标是否正常，本节重点介绍下各个模块需要关注哪些业务指标
+## Preface
+There are two ways to determine whether the change is abnormal:
+1. Determine whether the process after the change is still alive. This method can be achieved by adding process monitoring to the module;
+2. By observing whether the indicators of the module are normal. This section focuses on the monitoring indicators that each module needs to pay attention to.
     
-Nightingale的各个组件启动之后，会将自身的的一些状态数据上报到监控系统，通过上报的指标可以观测其运行是否正常，下面介绍下各个模块的监控指标
-## transfer 变更
-transfer的核心业务指标如下，统计周期为10s
+After each component of Nightingale is started, it will report some of its own status data to the monitoring system. You can observe whether the system is operating normally through the reported indicators. The monitoring indicators of each module are introduced below.
+## transfer change
+The core indicators of `transfer` are as follows, with a statistical period of 10s.
 
-| 监控指标        | 含义   |
+| Monitoring indicators       | meaning  |
 | --------   | ----- |
-| n9e.transfer.points.in     | 接收点数| 
-| n9e.transfer.points.out.tsdb        |向tsdb发送点数| 
-| n9e.transfer.points.out.tsdb.err        |向tsdb发送失败的点数| 
-| n9e.transfer.points.out.judge        |向judge发送的点数| 
-| n9e.transfer.points.out.judge.err        |向tsdb发送失败的点数| 
-| n9e.transfer.stra.count        |获取监控策略条数| 
+| n9e.transfer.points.in     |  Number of receiving points| 
+| n9e.transfer.points.out.tsdb        |Number of points sent to tsdb| 
+| n9e.transfer.points.out.tsdb.err        |Number of failed points sent to tsdb| 
+| n9e.transfer.points.out.judge        |Number of points sent to judge| 
+| n9e.transfer.points.out.judge.err        |Number of failed points sent to judge| 
+| n9e.transfer.stra.count        |Get the number of monitoring strategies| 
 
-如果transfer变更之后，transfer集群上述指标的数据没有明显的变化，则说明变更符合预期
+If there is no obvious change in the above indexes of the transfer cluster after the change of transfer, then the change is in line with expectations.
 
-## tsdb 变更
-tsdb的核心业务指标如下，统计周期为10s
+## tsdb change
+The core indicators of `tsdb` are as follows, with a statistical period of 10s
 
-| 监控指标        | 含义   |
+| Monitoring indicators        | meaning   |
 | --------   | ----- |
-| n9e.tsdb.points.in     | 接收的点数| 
-| n9e.tsdb.query.miss     | 查询数据为空的次数| 
-| n9e.tsdb.index.out.err     | 推送索引失败条数| 
+| n9e.tsdb.points.in     | Number of receiving points| 
+| n9e.tsdb.query.miss     | Number of times the query data is empty| 
+| n9e.tsdb.index.out.err     | Number of failed index pushes| 
 
-如果tsdb变更之后，tsdb集群上述指标的数据没有明显的变化，则说明变更符合预期
+If there is no obvious change in the above indicators of the tsdb cluster after the change of tsdb, then the change is in line with expectations.
 
-## index 变更
-index的核心业务指标如下，统计周期为10s
+## index change
+The core indicators of `index` are as follows, with a statistical period of 10s
 
-| 监控指标        | 含义   |
+| Monitoring indicators       | meaning   |
 | --------   | ----- |
-| n9e.index.query.counter.miss     |fullmatch接口查索引未命中次数| 
-| n9e.index.xclude.miss     |xclude接口查索引未命中次数| 
+| n9e.index.query.counter.miss     |Number of misses when querying index with fullmatch| 
+| n9e.index.xclude.miss     |xclude query index misses| 
 
-如果index变更之后，index集群上述指标的数据没有明显的变化，则说明变更符合预期
+If there is no obvious change in the index data of the index cluster after the index is changed, the change is in line with expectations.
 
-## judge 变更
-judge的核心业务指标如下，统计周期为10s
+## judge change
+The core indicators of `judge` are as follows, the statistical period is 10s
 
-| 监控指标        | 含义   |
+| Monitoring indicators        | meaning   |
 | --------   | ----- |
-| n9e.judge.push.in     |接收点数| 
-| n9e.judge.running     |正在执行的judge任务数| 
-| n9e.judge.stra.count     |获取的策略数| 
+| n9e.judge.push.in     |Number of receiving points| 
+| n9e.judge.running     |Number of judge tasks being executed| 
+| n9e.judge.stra.count     |Number of strategies acquired| 
 
-如果judge变更之后，judge集群上述指标的数据没有明显的变化，则说明变更符合预期
+If there is no obvious change in the above indicators of the judge cluster after the change of judge, it means that the change is in line with expectations.
      

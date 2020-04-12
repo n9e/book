@@ -1,10 +1,9 @@
 
 ---
-title: "运维"
-linkTitle: "运维"
+title: "Operation"
+linkTitle: "Operation"
 weight: 7
-date: 2020-03-08
+date: 2020-04-12
 description: >
-  本节会讲解一些常规运维操作
+  This section will explain some operation and maintenance.
 ---
-
