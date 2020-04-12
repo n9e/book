@@ -1,23 +1,23 @@
 ---
-title: "自监控"
-linkTitle: "自监控"
-date: 2020-03-04
+title: "Self-monitoring"
+linkTitle: "Self-monitoring"
+date: 2020-04-12
 description: >
-  本节讲解如何做好监控系统的自监控
+  This section explains how to do self-monitoring of the monitoring system
 ---
 
-要做好监控系统的自监控，我们从三个方面入手，预防问题发生、及时发现问题、快速定位止损。
+To do a good job of self-monitoring of the monitoring system, we start from three aspects: preventing problems, finding problems in a timely manner, and quickly positioning stop loss.
 
-### 预防问题发生
-通过建立巡检大盘，定期观察核心监控指标变化趋势，可以提前发现潜在的问题，Nightingale的各个模块都会主动上报一些自身的业务监控数据，通过这些数据我们可以建立监控大盘，定期巡检。涉及到的监控指标在[变更检查](../checklist/)中都有所提及
+### Prevent problems
+Through the establishment of monitoring dashboard, regularly observe the change trend of core monitoring indicators to discover potential problems in advance. Each module of Nightingale will actively report some of its own monitoring data, through which we can build a monitoring dashboard and conduct regular inspections.Related monitoring indicators are mentioned in [Change Check] (../checklist/).
 
-### 及时发现问题
+### Timely detection of problems
 
-配置完善的告警策略，是及时发现问题的主要手段，策略配置页面支持导入，我们已经整理了一些自监控的[告警策略](https://s3-gz01.didistatic.com/n9e-pub/json/stra.json)，可以一键导入，然后批量修改一下报警接收人就可以用起来了 :-) 
+A well-configured alarm strategy is the main means of finding problems in a timely manner.The strategy configuration page supports import operations. We have compiled some self-monitored [alarm strategies] (https://s3-gz01.didistatic.com/n9e-pub/json/stra.json), you can import these indicators, and then can be used by modifying the alarm recipient. :-) 
 
 
-但当监控系统的数据转发、告警、通知组件不可用时，会导致自身告警能力不可用，所以还需要一个第三方的服务，来负责监控系统的模块存活监控，这样当监控系统告警能力失效时，我们依然可以收到告警通知。第三方监控要足够简单，这里推荐open-falcon使用的自监控服务 [anteye](https://github.com/niean/anteye) ，部署好之后，再给anteye添加一个进程存活监控告警，这样两套监控系统互相监控对方，任何一方出现问题，我们都可以及时感知
+However, when the data forwarding, alarm, and notification components of the monitoring system are unavailable, their own alarm capabilities will be unavailable, so a third-party service is also required to monitor the module survival。When the alarm capability of the monitoring system fails, we can still receive the alarm notification。Third-party monitoring should be simple enough. The self-monitoring service used by open-falcon is recommended here [anteye] (https://github.com/niean/anteye)，Add a process survival monitoring alarm to anteye, so that the two monitoring systems monitor each other, and if any party has a problem, we can timely sense.
 
-### 快速定位问题
-当收到系统自身告警之后，如果从告警通知中能一眼就定位问题，则可以直接进行止损操作。
-如果不能立即定位问题，则建议首先观察提前创建的巡检大盘，了解服务整体状态，再观察问题模块的系统和业务指标，来逐渐收敛问题，快速定位止损。
+### Quickly locate problems
+After receiving the system's own alarm, if you can quickly locate the problem from the alarm notification, you can directly perform a stop loss operation.
+If you cannot locate the problem immediately, it is recommended to first observe the inspection dashboard created in advance to understand the overall status of the service, and then observe the system and business indicators of the problem module to gradually converge the problem and quickly locate the stop loss.
