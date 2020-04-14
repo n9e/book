@@ -76,7 +76,7 @@ mysql>grant all on n9e_uic.* to n9e@localhost;
 ```
 
 已建立 n9e 用户,密码为 n9epwd123
-修改/usr/local/n9e/etc/mysql.yml.yml
+修改/usr/local/n9e/etc/mysql.yml
 
 ```
  ---
