@@ -1,27 +1,27 @@
 ---
-title: "告警相关"
-linkTitle: "告警相关"
+title: "Alarm related"
+linkTitle: "Alarm related"
 weight: 2
-date: 2020-03-17
+date: 2020-04-14
 description: >
-  本节讲解告警相关的常见问题
+  This section explains common problems related to alarms
 ---
 
-### Q1:配置了告警策略，监控指标有异常但没有发出告警
+### Q1:The alarm strategy has been configured, and the monitoring indicators are abnormal but no alarm has been sended?
 
-可能是以下几种情况
+May be the following situations:
 
-1. **查看对象挂载**：对象（通常是机器）需要挂载在配置策略的节点（或者其子孙节点）下面
-1. **查看监控数据**：确认监控策略对应的监控数据是有值的，并且是肯定会触发阈值的
-1. **阈值设置有误**：查看告警策略的告警函数设置，确认告警触发条件是否满足，确认策略的生效时间是否满足
-1. **策略被屏蔽**：查看告警策略屏蔽列表，确认策略是否被屏蔽
-1. **通知网关问题**：到告警历史页面，查看是否已经生成的告警事件，如果有告警事件，说明是通知网关的问题
-1. **策略下发问题**：
-	- 执行 `curl '127.0.0.1:5800/api/portal/stras/effective?all=1'` 拿到全量策略列表
-	- 如果列表没有此策略，查看 monapi 日志，看是否有报错信息，有报错，按照提示处理
-	- 如果有，则查看judge_instance字段，找到策略分发给了哪个judge实例，登陆到judge所在机器，
-	`curl 127.0.0.1:5840/api/judge/stra/:id` 查看是否下发给judge
-1. **judge解析策略异常**：查看judge WARNING.log 和 ERROR.log 日志，检查是否有此策略的报错信息
-1. **judge没有收到数据**：修改judge日志等级为DEBUG，`tail -f DEBUG.log|grep 监控指标` 无日志输出，说明数据没有走到judge这里
-1. **查看数据链路**：查看transfer的日志，看数据为何没有从transfer转发到judge模块
+1. **View object mount**：The object (usually a machine) needs to be mounted under the node (or its descendants) that configures the policy
+1. **View monitoring data**：Confirm that the monitoring data corresponding to the monitoring strategy is valuable and will definitely trigger the threshold
+1. **Incorrect threshold setting**：Check the alarm function settings of the alarm strategy, confirm whether the alarm trigger condition is met, and confirm whether the effective time of the strategy is met
+1. **Policy is blocked**：Check the alarm policy blocking list to confirm whether the policy is blocked
+1. **Notify gateway problems**：On the alarm history page, check whether there is an alarm event that has been generated. If there is an alarm event, the problem is to notify the gateway
+1. **Issue of strategy**：
+	- Run `curl '127.0.0.1: 5800 /api /portal /stras /effective? All = 1'` to get a list of all strategies
+	- If the list does not have this strategy, check the monapi logs to see if there are any error messages. If there are errors, follow the prompts
+	- If so, check the judge_instance field, find out which instance of the judge the strategy is distributed to, and log in to the machine where the judge is located,
+	Run `curl 127.0.0.1: 5840 /api /judge /stra /: id` to see if it has been sent to judge
+1. **judge解析策略异常**：Check the judge WARNING.log and ERROR.log logs to check if there is any error message for this strategy
+1. **judge没有收到数据**：Modify the judge log level to DEBUG, `tail -f DEBUG.log | grep monitoring indicator` No log output, indicating that the data has not reached the step of judge
+1. **查看数据链路**：Check the transfer log and analyze why the data is not transferred from the transfer to the judge module
 
