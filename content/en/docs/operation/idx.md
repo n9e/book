@@ -18,7 +18,7 @@ Some monitoring indicators will remain on the page for a period of time after th
 }
 ```
 ```bash 
-curl -d body http://index.addr/api/index/metrics
+curl -X DELETE -d body http://index.addr/api/index/metrics
 ```
 #### 2. Delete the index according to endpoint + metric + tagkv
 ```json 
@@ -35,7 +35,7 @@ curl -d body http://index.addr/api/index/metrics
 }
 ```
 ```bash 
-curl -d body http://index.addr/api/index/counter
+curl -X DELETE -d body http://index.addr/api/index/counter
 ```
 
 ## Rebuild the monitoring index
