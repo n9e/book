@@ -18,7 +18,7 @@ description: >
 }
 ```
 ```bash 
-curl -d body http://index.addr/api/index/metrics
+curl -X DELETE -d body http://index.addr/api/index/metrics
 ```
 #### 2.根据endpoint+metric+tagkv删除索引
 ```json 
@@ -35,7 +35,7 @@ curl -d body http://index.addr/api/index/metrics
 }
 ```
 ```bash 
-curl -d body http://index.addr/api/index/counter
+curl -X DELETE -d body http://index.addr/api/index/counter
 ```
 
 ## 重建监控索引
