@@ -76,7 +76,7 @@ mysql>grant all on n9e_uic.* to n9e@localhost;
 ```
 
 An n9e user has been created and the password is n9epwd123
-Modify /usr/local/n9e/etc/mysql.yml.yml
+Modify /usr/local/n9e/etc/mysql.yml
 
 ```
  ---
