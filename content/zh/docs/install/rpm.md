@@ -107,7 +107,7 @@ systemctl restart nginx
 启动所有组件
 
 ```bash
-systemctl enable --now n9e-collector n9e-tsdb n9e-transfer nn9e-monapi n9e-judge n9e-index
+systemctl enable --now n9e-collector n9e-tsdb n9e-transfer n9e-monapi n9e-judge n9e-index
 ```
 
 使用浏览器打开http://ip 即可访问，默认账号 root 密码 root
