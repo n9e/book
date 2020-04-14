@@ -28,7 +28,7 @@ Nightingale的transfer和collector两个模块都提供了上报数据的接口
 ```
 
 ### 查询metric
-`POST /api/index/metric`
+`POST /api/index/metrics`
 
 请求样例
 ```json
