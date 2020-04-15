@@ -1,33 +1,33 @@
 ---
-title: "绘图相关"
-linkTitle: "绘图相关"
+title: "Drawing related"
+linkTitle: "Drawing related"
 weight: 1
-date: 2020-03-17
+date: 2020-04-14
 description: >
-  本节讲解采集和看图相关的常见问题
+  This section explains common problems related to acquisition and monitoring charts
 ---
 
-#### Q1:监控指标已发送到服务端，但最终看不到图
+#### Q1:The monitoring indicators have been sent to the server, but in the end the graph cannot be seen
 
-此情况一般是数据格式不正确，或者数据并没有上报到服务端，假设发送的指标为 n9e.points.in
-1. 首先看下transfer和tsdb模块是否有 n9e.points.in 的错误日志   
-登陆到transfer部署的机器，执行 `tail -f /home/n9e/logs/transfer/WARNING.log|grep n9e.points.in`   
-登陆到tsdb部署的机器，执行 `tail -f /home/n9e/logs/tsdb/WARNING.log|grep n9e.points.in`
-2. 如果没有报错信息，再次确认监控指标是否上报到了服务端，修改transfer的日志等级为 DEBUG   
-执行 `tail -f /home/n9e/logs/transfer/DEBUG.log|grep n9e.points.in` 如果没有日志出现，说明没有并没有上报到服务端，排查发送端的问题
+In this case, the data format is generally incorrect, or the data is not reported to the server.Suppose the sent index is n9e.points.in
+1. First look at the transfer and tsdb modules for n9e.points.in error logs 
+Log in to the machine where the transfer is deployed and execute `tail -f /home/n9e/logs/transfer/WARNING.log|grep n9e.points.in`   
+登Lu to the machine where tsdb is deployed, execute `tail -f /home/n9e/logs/tsdb/WARNING.log|grep n9e.points.in`
+2. If there is no error message, confirm again whether the monitoring index is reported to the server, and modify the transfer log level to DEBUG   
+excute `tail -f /home/n9e/logs/transfer/DEBUG.log|grep n9e.points.in` If no log appears, it means that it has not been reported to the server, and troubleshoot the sender
 
-#### Q2:监控插件放到指定目录了，但最终看不到图
+#### Q2:The monitoring plugin is placed in the specified directory, but the picture cannot be seen in the end
 
-1. 一般遇到这种问题都是插件执行失败了，比如插件没有可执行权限，或者插件上报的数据格式不正确，可以登陆到有问题的机器，查看 /home/n9e/logs/collector/ERROR.log 有没有插件相关的错误日志，如有，解决之。如果没有错误日志，按照[Q1](#q1监控指标已发送到服务端但最终看不到图)思路排查
+1. Encounter this kind of problem is generally because the plugin execution failed.For example, the plug-in does not have executable permissions, or the data format reported by the plug-in is incorrect.You can log in to the machine in question and check /home/n9e/logs/collector/ERROR.log,Check whether there are error logs related to the plug-in, and if so, resolve them. If there is no error log, follow [Q1] (# q1 monitoring indicators have been sent to the server but the picture cannot be seen eventually)
 
-#### Q3:自己写程序，按照[数据规范](../usage/metric/)向collector或者transfer上报数据，但看不到图
+#### Q3:Write a program and report the data to the collector or transfer according to [Data Specification] (../usage/metric/), but you cannot see the picture
 
-1. 首先将程序的request body和resp body 都打印出来，查看 resp 中 err 不为空说明上报格式有问题，request body为空说明没有上报数据
-2. 如果上报正常，按照[Q1](#q1监控指标已发送到服务端但最终看不到图)思路排查
+1. First, print out the request body and resp body of the program. Check the err in the resp. If it is not empty, there is a problem with the report format. If the request body is empty, there is no data reported.
+2.If the report is normal, check according to the idea of ​​[Q1] (# q1 monitoring indicators have been sent to the server but the picture cannot be seen eventually)
 
-#### Q4:配置了日志、进程或者端口采集，但看不到相关监控图
+#### Q4:Log, process or port collection is configured, but the relevant monitoring chart cannot be seen
 
-1. 查看采集策略是否已经下发到目标机器的collector       
-`curl 目标机器IP:2058/api/collector/stra`
-2. 如果可以查到配置的采集，tail -f /home/n9e/logs/collector/ERROR.log 查看是否有错误日志
-3. 有报错则按照日志提示去处理，如果没有报错，按照[Q1](#q1监控指标已发送到服务端但最终看不到图)思路排查
+1. Check whether the collection strategy has been delivered to the collector of the target machine       
+`curl IP of target machine:2058/api/collector/stra`
+2. If you can check the configured collection result, run tail -f /home/n9e/logs/collector/ERROR.log to check whether there is an error log
+3. If there is an error, follow the log prompt to deal with it. If no error is reported, follow [Q1] (# q1 monitoring indicators have been sent to the server but the picture cannot be seen in the end).
