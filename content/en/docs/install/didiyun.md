@@ -1,30 +1,29 @@
 
 ---
-title: "利用滴滴云镜像快速体验"
-linkTitle: "镜像安装"
-date: 2020-02-26
+title: "Quick experience with Didi cloud mirroring"
+linkTitle: "Mirror installation"
+date: 2020-04-13
 description: >
-  这是最快的方式，我们把夜莺做成了滴滴云OS镜像，直接基于这个镜像创建虚拟机即可体验，全过程5分钟内搞定，创建虚拟机的时候可以选择按量付费，便宜的很
+  This is the fastest way. We made the Nightingale a Didi cloud OS image. We can directly create a virtual machine based on this image, and the whole process will be done in 5 minutes. When creating a virtual machine, you can choose to pay by volume, which is very cheap.
 ---
 
 
-## 1、[注册滴滴云领取红包](https://i.didiyun.com/27dt3TiddGd)
+## 1、[Register Didiyun to receive discount](https://i.didiyun.com/27dt3TiddGd)
 
-如果已经有账号可跳过此步骤
+If you already have an account, you can skip this step
 
-## 2、[创建云服务器DC2](https://app.didiyun.com/#/dc2/add)
+## 2、[Create Cloud Server DC2](https://app.didiyun.com/#/dc2/add)
 
-*有了账号我们开始创建云主机，使用夜莺的镜像一键安装，如果对云资源操作不熟悉，可以 [点击查看演示视频](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-install-didiyun.mp4)*
+*We started to create a cloud host and installed it with one-click mirroring of Nightingale. If you are not familiar with cloud resource operations, you can [click to view demo video](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-install-didiyun.mp4)*
 
-付费方式选择“按时长”，会便宜一些，各配置不再一一赘述。注意在**镜像**这里，选择“一键部署镜像”，然后选择Nightingale的镜像即可，如图所示：
+If the payment method is "Period", it will be cheaper, and the configuration will not be repeated one by one. Note that in **Mirror **, select "One-click Deployment Mirror", and then select Nightingale's mirror, as shown in the figure:
 
 ![](https://s3-gz01.didistatic.com/n9e-pub/image/n9e-didiyun-image-choose.png)
 
-## 3、访问平台并修改密码
+## 3、Access the platform and change the password
 
-待虚机起来之后，镜像里边内置的初始化脚本会自动安装夜莺各个模块组件，大约等待2分钟，即可安装完毕，然后浏览器里输入该虚机的eip，即可访问到平台页面，使用root账号登陆，密码也是root，不要勾选那个LDAP的选项。登陆成功之后立马点击平台右上角的个人设置，修改root密码，即刻体验吧 :-)
+After the virtual machine is started, the built-in initialization script in the image will automatically install each module component of Nightingale. Wait about 2 minutes to complete the installation. Then enter the eip of the virtual machine in the browser to access the platform page. Log in with a root account, the password is also root, do not check the LDAP option. After successful login, immediately click on the personal settings in the upper right corner of the platform, modify the root password, and experience it immediately :-)
+## 4、Some extra information
 
-## 4、交代一些额外信息
-
-镜像里自带mysql、nginx、redis，nginx监听在80，如果访问不通，需要检查安全组规则。夜莺部署在`/home/n9e`目录，配置文件在`/home/n9e/etc`目录，可以看到mysql.yml，里边可以找到mysql的root密码
+The mirror comes with mysql, nginx, redis, nginx listening at 80, if access is not available, you need to check the security group rules. Nightingale is deployed in the `/home /n9e` directory, the configuration file is in the` /home /n9e /etc` directory, you can see mysql.yml, you can find the root password of mysql.
 
