@@ -1,16 +1,16 @@
 ---
-title: "对象节点"
-linkTitle: "对象节点"
+title: "Object node"
+linkTitle: "Object node"
 weight: 5
-date: 2020-03-17
+date: 2020-04-17
 description: >
-  本节讲解对象树管理相关API
+  This section explains the APIs related to object tree management
 ---
 
-### 查看已收录的监控对象
+### View included monitoring objects
 `GET /api/portal/endpoint?field=ident&limit=10&p=1`
 
-返回样例
+Return to sample
 ```json
 {
   "dat": {
@@ -32,11 +32,11 @@ description: >
 }
 ```
 
-### 查看某个节点的对象
+### View objects of a node
 `GET /api/portal/node/:id/endpoint?field=ident&limit=10&p=1`
-- id: 对象树的节点id
+- id: Node id of object tree
 
-返回样例
+Return to sample
 ```json
 {
   "dat": {
@@ -53,23 +53,23 @@ description: >
 }
 ```
 
-### 修改监控对象别名
+### Modify monitor object alias
 `PUT /api/portal/endpoint/:id`
-- id: 监控对象的id
+- id: Monitoring object id
 
-请求样例
+Sample request
 ```json
 {
   "alias": "n9e-node010.py"
 }
 ```
 
-### 节点下挂载监控对象
+### Mount the monitoring object under the node
 `POST /api/portal/node/:id/endpoint-bind`
-- id: 对象树的节点id
-- del_old: 1解挂旧节点 0保留旧节点
+- id: Node id of object tree
+- del_old: 1 Unhang old node 0 Keep old node
 
-请求样例
+Sample request
 ```json
 {
   "idents": [
@@ -79,11 +79,11 @@ description: >
 }
 ```
 
-### 节点下解挂监控对象
+### Unlink the monitoring object under the node
 `POST /api/portal/node/:id/endpoint-unbind`
-- id: 对象树的节点id
+- id: Node id of object tree
 
-请求样例
+Sample request
 ```json
 {
   "idents": [
@@ -92,11 +92,11 @@ description: >
 }
 ```
 
-### 查看监控对象的挂载点
+### View the mount point of the monitored object
 `GET /api/portal/endpoints/bindings?idents=10.86.92.17`
-- idents: 监控对象标识
+- idents: Monitoring object identification
 
-返回样例
+Return to sample
 ```json
 {
   "dat": [
@@ -127,23 +127,23 @@ description: >
 }
 ```
 
-### 修改节点名称
+### Modify the node name
 `PUT /api/portal/node/21/name`
-- id: 对象树的节点id
+- id: Node id of object tree
 
-请求样例
+Sample request
 ```json
 {
   "name": "monapi"
 }
 ```
 
-### 节点下添加子节点
+### Add a child node under the node
 `POST /api/portal/node`
-- pid 父节点id
-- leaf 1表示为叶子节点 0表示非叶子节点
+- pid Parent node id
+- leaf 1 represents a leaf node 0 represents a non-leaf node
 
-请求样例
+Sample request
 ```json
 {
   "pid": 23,

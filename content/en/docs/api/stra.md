@@ -1,48 +1,48 @@
 ---
-title: "告警相关"
-linkTitle: "告警相关"
+title: "Alarm related"
+linkTitle: "Alarm related"
 weight: 2
-date: 2020-03-17
+date: 2020-04-17
 description: >
-  本节讲解告警策略相关API
+  This section explains the API related to the alarm strategy
 ---
 
-### 字段说明
-- name：策略名称
-- nid: 策略关联的对象树节点id
-- excl_nid: 排除关联对象树节点下的子节点id
-- tags: 监控指标的tags
-- priority: 告警等级，可以设置1，2，3
-- alert_dur: 告警统计周期，单位为秒
-- enable_stime：策略生效开始时间
-- enable_etime：策略生效终止时间
-- enable_days_of_week：策略生效日期
+### Field description
+- name：Strategy name
+- nid: The node id of the object tree associated with the policy
+- excl_nid: Exclude the child node id under the node of the associated object tree
+- tags: Tags for monitoring indicators
+- priority: Alarm level, you can set 1, 2, 3
+- alert_dur: Alarm statistics period, in seconds
+- enable_stime：Policy effective start time
+- enable_etime：End time of effective policy
+- enable_days_of_week：Strategy Effective Date
 - exprs
-  - eopt：操作符，枚举[=,!=,>,>=,<,<=]
-  - func：告警函数，支持all happen max min avg sum diff pdiff nodata
-  - metric：监控指标
-  - params：告警函数需要的参数
-  - threshold：告警函数需要的阈值
-- recovery_dur：持续多少秒则产生恢复event，0表示立即产生恢复event
-- recovery_notify：0 发送恢复通知 1不发送恢复通知
-- converge：告警通知收敛，第1个值表示收敛周期，单位秒，第2个值表示周期内允许发送告警次数
-- notify_group：告警信息接收组
-- notify_user：告警信息接收人
-- callback：告警触发之后的回调地址
-- need_upgrade：是否配置告警升级 0表示否 1表示是
+  - eopt：Operator, enumeration [=,! =,>,> =, <, <=]
+  - func：Alarm function, support all happen max min avg sum diff pdiff nodata
+  - metric：Monitoring indicators
+  - params：Parameters required by the alarm function
+  - threshold：The threshold required by the alarm function
+- recovery_dur：How many seconds the recovery event will be generated, 0 means that recovery event will be generated immediately
+- recovery_notify：0 Send recovery notification 1 Do not send recovery notification
+- converge：Alarm notification convergence, the first value indicates the convergence period, in seconds, and the second value indicates the number of alarms allowed to be sent during the period
+- notify_group：Alarm information receiving group
+- notify_user：Alarm information recipient
+- callback：Callback address after the alarm is triggered
+- need_upgrade：Whether to configure alarm escalation 0 means no 1 means yes
 - alert_upgrade
-  - duration： 告警持续多久触发升级，单位为秒
-  - level：升级的告警等级
-  - users： 升级之后发送的告警信息接收人
-  - groups： 升级之后发送的告警信息接收组
+  - duration： How long the alarm lasts to trigger the upgrade, in seconds
+  - level：Upgraded alarm level
+  - users： Recipient of alarm information sent after upgrade
+  - groups： Receive group of alarm information sent after upgrade
 
-### 创建策略
+### Create Strategy
 `POST /api/portal/stra`
 
-请求样例
+Sample request
 ```json
 {
-  "name": "all必触发", 
+  "name": "all Must trigger", 
   "nid": 21,
   "excl_nid": null,    
   "priority": 3,
@@ -76,7 +76,7 @@ description: >
   "id": 13
 }
 ```
-返回样例
+Return to sample
 ```json
 {
   "err":"",
@@ -84,14 +84,14 @@ description: >
 }
 ```
 
-### 更新策略
+### Update strategy
 `PUT /api/portal/stra`
 
-请求样例
+Sample request
 ```json
 {
   "id":1,
-  "name": "all必触发", 
+  "name": "all must triger", 
   "nid": 21,
   "excl_nid": null,    
   "priority": 3,
@@ -125,7 +125,7 @@ description: >
   "id": 13
 }
 ```
-返回样例
+Return to sample
 ```json
 {
   "err":"",
@@ -133,16 +133,16 @@ description: >
 }
 ```
 
-### 删除策略
+### Delete strategy
 `DELETE /api/portal/stra`
 
-请求样例
+Sample request
 ```json
 {
     "ids":[4]
 }
 ```
-返回样例
+Return to sample
 ```json
 {
   "err":"",
@@ -150,17 +150,17 @@ description: >
 }
 ```
 
-### 查看所有策略
+### View all strategies
 `GET /api/portal/stra?nid=1`   
-nid：服务树节点id，选填，不填则获取所有策略
+nid：Service tree node id, optional, if not filled, get all strategies
 
-返回样例
+Return to sample
 ```json
 {
   "dat": [
     {
       "id": 1,
-      "name": "io.util大于90%",
+      "name": "io.util is greater than 90%",
       "category": 1,
       "nid": 100,
       "alert_dur": 600,
@@ -209,10 +209,10 @@ nid：服务树节点id，选填，不填则获取所有策略
 }
 ```
 
-### 查看单个策略
+### View a single strategy
 `GET /api/portal/stra/:sid`
 
-返回样例
+Return to sample
 ```json
 {
   "dat":
@@ -266,10 +266,10 @@ nid：服务树节点id，选填，不填则获取所有策略
 }
 ```
 
-### 查看所有生效策略
+### View all effective strategies
 `GET /api/portal/stra/effective`
 
-返回样例
+Return to sample
 ```json
 {
   "dat": [
@@ -324,17 +324,17 @@ nid：服务树节点id，选填，不填则获取所有策略
 }
 ```
 
-### 查看未恢复告警历史
+### View unrecovered alarm history
 `GET /api/portal/event/cur?limit=10&nodepath=mon.monapi&p=1&stime=1584427852&etime=1584435052`   
-参数说明
-- limit 返回个数
-- p 页数
-- nodepath 对象树节点
-- priorities 告警级别
-- stime 筛选范围起始时间
-- etime 筛选范围终止时间
+Parameter Description
+-limit returns the number
+-p pages
+-nodepath object tree node
+-priorities alarm level
+-stime filter range start time
+-etime filtering range end time
 
-返回样例
+Return to sample
 ```json
 {
   "dat": {
@@ -342,7 +342,7 @@ nid：服务树节点id，选填，不填则获取所有策略
       {
         "id": 16,
         "sid": 14,
-        "sname": "某磁盘无法正常读写",
+        "sname": "A disk cannot be read and written normally",
         "node_path": "mon.monapi",
         "nid": 21,
         "endpoint": "192.168.1.2",
@@ -382,7 +382,7 @@ nid：服务树节点id，选填，不填则获取所有策略
         ],
         "groups": [],
         "status": [
-          "已收敛"
+         "Converged"
         ],
         "claimants": [
           "qinyening",
@@ -403,17 +403,17 @@ nid：服务树节点id，选填，不填则获取所有策略
 }
 ```
 
-### 查看全部告警历史
+### View all alarm history
 `GET /api/portal/event/his?limit=10&nodepath=mon.monapi&p=1&stime=1584427852&etime=1584435052`   
-参数说明
-- limit 返回个数
-- p 页数
-- nodepath 对象树节点
-- priorities 告警级别
-- stime 筛选范围起始时间
-- etime 筛选范围终止时间
+Parameter Description
+-limit returns the number
+-p pages
+-nodepath object tree node
+-priorities alarm level
+-stime filter range start time
+-etime filtering range end time
 
-返回样例
+Return to sample
 ```json
 {
   "dat": {
@@ -421,7 +421,7 @@ nid：服务树节点id，选填，不填则获取所有策略
       {
         "id": 16,
         "sid": 14,
-        "sname": "某磁盘无法正常读写",
+        "sname": "A disk cannot be read and written normally ",
         "node_path": "mon.monapi",
         "nid": 21,
         "endpoint": "192.168.1.2",
@@ -461,7 +461,7 @@ nid：服务树节点id，选填，不填则获取所有策略
         ],
         "groups": [],
         "status": [
-          "已收敛"
+         "Converged"
         ],
         "claimants": [
           "qinyening",
@@ -482,7 +482,7 @@ nid：服务树节点id，选填，不填则获取所有策略
 }
 ```
 
-### 创建告警屏蔽
+### Create alarm mask
 `POST /api/portal/maskconf`   
 请求样例
 ```json
@@ -498,14 +498,14 @@ nid：服务树节点id，选填，不填则获取所有策略
 }
 ```
 
-### 解除告警屏蔽
+### Unmask the alarm
 `DELETE /api/portal/maskconf/:id` 
 - id：屏蔽配置id  
 
-### 查看告警屏蔽
+### View alarm mask
 `GET /api/portal/node/:id/maskconf`   
 
-返回样例
+Return to sample
 ```json
 {
   "dat": [
@@ -515,7 +515,7 @@ nid：服务树节点id，选填，不填则获取所有策略
       "node_path": "didi.mon.judge",
       "metric": "cpu.idle",
       "tags": "",
-      "cause": "快速屏蔽",
+      "cause": "Quick shield ",
       "user": "qinyening",
       "btime": 1584436521,
       "etime": 1584440121,

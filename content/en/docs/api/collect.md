@@ -1,33 +1,33 @@
 ---
-title: "采集配置"
-linkTitle: "采集配置"
+title: "Collection configuration"
+linkTitle: "Collection configuration"
 weight: 3
-date: 2020-03-17
+date: 2020-04-17
 description: >
-  本节讲解采集配置相关API
+  This section explains the APIs related to acquisition and configuration.
 ---
-### 字段说明
-支持创建 `port` `proc` `log` 三种采集策略
-字段说明
-- nid：关联的对象树节点
-- name：采集名称
-- tags：采集额外上报的tags
-- step：探测的周期
-- comment：备注
-- port 独有字段
-	- port：探测的端口端口号
-	- timeout: 探测端口的超时时间，单位为秒
-- proc 独有字段
-  - collect_method：进程采集方式有 cmd 和 name 两种 
-  - target：进程采集的目标，选cmd时为命令行，name时为进程名
+###Field description
+Support the creation of three collection strategies of `port`` proc` `log`
+Field description
+- nid：Associated object tree node
+- name：Collection name
+- tags：Collect additional reported tags
+- step：Probing period
+- comment：Remarks
+- port Unique field
+	- port：Port number detected
+	- timeout: Timeout period of the probe port, in seconds
+- proc Unique field
+  - collect_method：There are two kinds of process collection methods: cmd and name
+  - target：The target of the process collection, when cmd is selected, it is the command line, and when name is the process name
 
-log采集字段解释到[日志监控](../../usage/logger/)页面查看
+The explanation of the log collection field can be viewed on the [Log Monitoring] (../../usage/logger/) page
 
 
-### 创建采集
+### Create Acquisition
 `POST /api/portal/collect` 
 
-请求样例
+Sample request
 ```json
 [
   {
@@ -64,7 +64,7 @@ log采集字段解释到[日志监控](../../usage/logger/)页面查看
       "func_type": "FLOW",
       "name": "LOG.aa",
       "func": "cnt",
-      "unit": "次数",
+      "unit": "frequency",
       "file_path": "/home/xiaoju/alarm/log/DEBUG.log",
       "time_format": "dd/mmm/yyyy:HH:MM:SS",
       "step": 10,
@@ -73,10 +73,10 @@ log采集字段解释到[日志监控](../../usage/logger/)页面查看
   }
 ]
 ```
-### 更新采集
+### Update collection
 `PUT /api/portal/collect` 
 
-请求样例
+Sample request
 ```json
 //proc
 {
@@ -115,7 +115,7 @@ log采集字段解释到[日志监控](../../usage/logger/)页面查看
     "func_type": "FLOW",
     "name": "LOG.aa",
     "func": "cnt",
-    "unit": "次数",
+    "unit": "frequency",
     "file_path": "/home/xiaoju/alarm/log/DEBUG.log",
     "time_format": "dd/mmm/yyyy:HH:MM:SS",
     "step": 10,
@@ -123,10 +123,10 @@ log采集字段解释到[日志监控](../../usage/logger/)页面查看
   }
 }
 ```
-### 删除采集
+### Delete acquisition
 `DELETE /api/portal/collect` 
 
-请求样例
+Sample request
 ```json
 [
   {
@@ -140,12 +140,12 @@ log采集字段解释到[日志监控](../../usage/logger/)页面查看
 ]
 ```
 
-### 查看采集策略列表
+### View the collection strategy list
 `GET /api/portal/collect/list?nid=1&type=port` 
-- nid：关联的对象树节点id，选填
-- type：采集类型[proc,port,log]
+- nid：Node id of the associated object tree, optional
+- type：Collection type [proc, port, log]
 
-返回样例
+Return to sample
 ```json
 {
   "dat": [
@@ -190,11 +190,11 @@ log采集字段解释到[日志监控](../../usage/logger/)页面查看
 }
 ```
 
-### 查看单个采集策略
+### View a single acquisition strategy
 `GET /api/portal/collect?type=proc&id=1` 
-- type：采集类型[proc,port,log]
-- id：采集策略id
-返回样例
+- type：Collection type[proc,port,log]
+- id：Collection strategy id
+Return to sample
 ```json
 {
   "dat": {
