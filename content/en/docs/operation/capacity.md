@@ -1,24 +1,24 @@
 ---
-title: "容量评估"
-linkTitle: "容量评估"
-date: 2020-03-05
+title: "Capacity assessment"
+linkTitle: "Capacity assessment"
+date: 2020-04-12
 description: >
-  本节讲解各个模块的容量评估，如何判断是否需要扩容
+  This section explains the capacity assessment of each module and how to determine whether it needs to be expanded.
 ---
 
-## 前言
-判断是否需要扩容可以通过两个方面
-1. 通过查看实例所在机器的负载，cpu、内存、io是否将要用尽
-2. 查看模块自身的处理能力，本节重点介绍各个模块需要关注哪些业务指标来判断是否达到处理上限
-
-Nightingale的各个组件启动之后，会将自身的的一些状态数据上报到监控系统，通过上报的指标可以观测其是否需要扩容，下面介绍下各个模块的监控指标
+## Preface
+You can determine whether you need to expand capacity in two ways:
+1. By viewing the load, cpu, memory, io usage of the machine, and  where the instance is located;
+2. View the processing capabilities of the module itself. This section focuses on the business indicators that each module uses to determine whether it has reached its own processing limit.
+After each component of Nightingale starts, it will report some of its own status data to the monitoring system, and the reported indicators can determine whether the system needs to be expanded.
+The following describes the monitoring indicators of each module:
 
 ## transfer
-transfer的核心业务指标如下，统计周期为10s
+The core monitoring indicators of transfer are as follows, with a statistical period of 10s.
 
-| 监控指标        | 含义   |
+| Monitoring indicators        | meaning   |
 | --------   | ----- |
-| n9e.transfer.points.in     | 接收点数| 
-| n9e.transfer.points.out.tsdb        |向tsdb发送点数| 
+| n9e.transfer.points.in     | Number of receiving points| 
+| n9e.transfer.points.out.tsdb        |Number of points sent to tsdb| 
 
-如果向tsdb发送点数一直比接收点数小很多，则说明transfer的转发能力达到了瓶颈，需要扩容了
+If the number of points sent to tsdb is always much smaller than the number of received points, it means that the transfer capability of transfer has reached a bottleneck and needs to be expanded.

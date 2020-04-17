@@ -111,7 +111,7 @@ Sample request
   ]
 }
 ```
-Return to sample
+Return sample
 ```json
 {
     "dat": [

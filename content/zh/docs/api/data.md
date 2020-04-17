@@ -11,7 +11,8 @@ description: >
 Nightingale的transfer和collector两个模块都提供了上报数据的接口    
 本地collector上报接口 `POST http://127.0.0.1:2058/api/collector/push`   
 中心transfer上报接口 `POST /api/transfer/push`      
-字段含义见[数据规范](https://n9e.didiyun.com/docs/usage/metric/)   
+字段含义见[数据规范](https://n9e.didiyun.com/docs/usage/metric/)    
+说明一下 `extra` 字段，用户可以在这个字段中添加额外的信息，比如traceId，当监控数据触发告警后，告警引擎会将 `extra` 的内容写到告警事件中，透传给告警历史页面，用户可以根据 `extra` 中的信息更快的定位问题
 
 请求样例  
 ```json
@@ -22,13 +23,14 @@ Nightingale的transfer和collector两个模块都提供了上报数据的接口
         "timestamp":1559733442,
         "step":10,
         "value":1,
-        "tags":""
+        "tags":"",
+        "extra":""
     }
 ]
 ```
 
 ### 查询metric
-`POST /api/index/metric`
+`POST /api/index/metrics`
 
 请求样例
 ```json

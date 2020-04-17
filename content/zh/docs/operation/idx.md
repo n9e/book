@@ -7,7 +7,7 @@ description: >
 ---
 
 ## 清理监控索引
-有些监控指标在用户不再上报之后，还会在页面保留一段时间(默认是1天)，有的用户会觉得影响看图操作，想把不在上报的指标删掉，所以我们提供了两种删除索引的接口
+有些监控指标在用户不再上报之后，还会在页面保留一段时间(默认是1天)，有的用户会觉得影响看图操作，想把不再上报的指标删掉，所以我们提供了两种删除索引的接口
 
 #### 1.根据endpoint+metric删除索引
 ```json
@@ -18,7 +18,7 @@ description: >
 }
 ```
 ```bash 
-curl -d body http://index.addr/api/index/metrics
+curl -X DELETE -d body http://index.addr/api/index/metrics
 ```
 #### 2.根据endpoint+metric+tagkv删除索引
 ```json 
@@ -35,7 +35,7 @@ curl -d body http://index.addr/api/index/metrics
 }
 ```
 ```bash 
-curl -d body http://index.addr/api/index/counter
+curl -X DELETE -d body http://index.addr/api/index/counter
 ```
 
 ## 重建监控索引

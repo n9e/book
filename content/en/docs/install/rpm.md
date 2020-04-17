@@ -1,28 +1,28 @@
 ---
-title: "通过rpm包安装"
-linkTitle: "RPM安装"
-date: 2020-4-04
+title: "Install via rpm package"
+linkTitle: "RPM installation"
+date: 2020-4-13
 description: >
-  使用rpm包方式，安装n9e各个组件
+  Use rpm package to install n9e components
 ---
 
-n9e 各个组件已打包为 rpm 包,可根据需要下载安装
+The n9e components have been packaged as rpm packages, which can be downloaded and installed as needed
 
-## rpm 包介绍
+## rpm package introduction
 
-| 包名                                         | 依赖包    | 介绍                 | 安装路径           |
+| Package names                                   | Dependent packages    | Introduction         | installation path           |
 | :------------------------------------------- | :-------- | :------------------- | :----------------- |
-| n9e-web-1.2.0-g59f2bb0.el7.x86_64.rpm        | 无        | n9e web 前端静态文件 | /usr/local/n9e/pub |
-| n9e-sql-1.2.0-g59f2bb0.el7.x86_64.rpm        | 无        | n9e sql 文件         | /usr/local/n9e/sql |
-| n9e-nginx-conf-1.2.0-g59f2bb0.el7.x86_64.rpm | 无        | n9e nginx 配置文件   | /usr/local/n9e/etc |
-| n9e-collector-1.2.0-g59f2bb0.el7.x86_64.rpm  | net-tools | n9e collector 组件   | /usr/local/n9e     |
-| n9e-tsdb-1.2.0-g59f2bb0.el7.x86_64.rpm       | 无        | n9e tsdb 组件        | /usr/local/n9e     |
-| n9e-transfer-1.2.0-g59f2bb0.el7.x86_64.rpm   | 无        | n9e transfer 组件    | /usr/local/n9e     |
-| n9e-monapi-1.2.0-g59f2bb0.el7.x86_64.rpm     | 无        | n9e monapi 组件      | /usr/local/n9e     |
-| n9e-judge-1.2.0-g59f2bb0.el7.x86_64.rpm      | net-tools | n9e judge 组件       | /usr/local/n9e     |
-| n9e-index-1.2.0-g59f2bb0.el7.x86_64.rpm      | net-tools | n9e index 组件       | /usr/local/n9e     |
+| n9e-web-1.2.0-g59f2bb0.el7.x86_64.rpm        | no        | n9e web Front-end static files | /usr/local/n9e/pub |
+| n9e-sql-1.2.0-g59f2bb0.el7.x86_64.rpm        | no       | n9e sql file        | /usr/local/n9e/sql |
+| n9e-nginx-conf-1.2.0-g59f2bb0.el7.x86_64.rpm | no        | n9e nginx conf   | /usr/local/n9e/etc |
+| n9e-collector-1.2.0-g59f2bb0.el7.x86_64.rpm  | net-tools | n9e collector Components   | /usr/local/n9e     |
+| n9e-tsdb-1.2.0-g59f2bb0.el7.x86_64.rpm       | no        | n9e tsdb Components        | /usr/local/n9e     |
+| n9e-transfer-1.2.0-g59f2bb0.el7.x86_64.rpm   | no        | n9e transfer Components    | /usr/local/n9e     |
+| n9e-monapi-1.2.0-g59f2bb0.el7.x86_64.rpm     | no        | n9e monapi Components      | /usr/local/n9e     |
+| n9e-judge-1.2.0-g59f2bb0.el7.x86_64.rpm      | net-tools | n9e judge Components       | /usr/local/n9e     |
+| n9e-index-1.2.0-g59f2bb0.el7.x86_64.rpm      | net-tools | n9e index Components       | /usr/local/n9e     |
 
-rpm 包下载地址
+rpm package download address
 
 [https://dl.cactifans.com/n9e/](https://dl.cactifans.com/n9e/)
 
@@ -41,24 +41,24 @@ e67638dd0e9052853d43b79af9bcf802b2a8b675  n9e-judge-1.2.0-g59f2bb0.el7.x86_64.rp
 60a035b25a509a92fec2746a3983e9b52aa39548  n9e-1.2.0-g59f2bb0.el7.x86_64.rpm-bundle.tar.gz
 ```
 
-## 说明
+## Explanation
 
-- 除 collector 组件使用 root 用户启动外，其他组件使用 n9e 用户启动
-- 日志统一在/usr/local/n9e/模块名称/
-- 按需安装对应模块即可
+- Except that the collector component is started by the root user, other components are started by the n9e user
+- The log is in the path: /usr /local /n9e /module name /
+- Install the corresponding modules as needed
 
-### 安装使用
+### Install and use
 
-## All in one 安装
+## All in one installation
 
-将所有组件安装在一台机器上
+Install all components on one machine
 
 ```
 yum install n9e-web-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-sql-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-nginx-conf-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-collector-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-tsdb-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-transfer-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-monapi-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-judge-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-index-1.2.0-g59f2bb0.el7.x86_64.rpm
 ```
 
-安装之后，需要安装 nginx，mysql 组件。
-mysql 导入表结构
+After installation, you need to install nginx, mysql components.
+mysql import table structure
 
 ```bash
 mysql -uroot -p </usr/local/n9e/sql/n9e_hbs.sql
@@ -66,7 +66,7 @@ mysql -uroot -p </usr/local/n9e/sql/n9e_mon.sql
 mysql -uroot -p </usr/local/n9e/sql/n9e_uic.sql
 ```
 
-安全考虑，建议为 n9e 独立建立 mysql 用户，在 mysql 里创建 n9e 用户并授授权（如果使用MySQL8,需使用mysql_native_password身份验证插件）
+For security reasons, it is recommended to establish a mysql user for n9e independently, create and authorize n9e user in mysql (if using MySQL8, you need to use mysql_native_password authentication plugin)
 
 ```
 mysql>create user n9e@localhost identified by 'n9epwd123';
@@ -75,8 +75,8 @@ mysql>grant all on n9e_mon.* to n9e@localhost;
 mysql>grant all on n9e_uic.* to n9e@localhost;
 ```
 
-已建立 n9e 用户,密码为 n9epwd123
-修改/usr/local/n9e/etc/mysql.yml.yml
+An n9e user has been created and the password is n9epwd123
+Modify /usr/local/n9e/etc/mysql.yml
 
 ```
  ---
@@ -97,32 +97,32 @@ hbs:
   debug: false
 ```
 
-替换 nginx 配置,并重启 nginx
+Replace nginx configuration and restart nginx
 
 ```
 cp /usr/local/n9e/etc/nginx.conf /etc/nginx/
 systemctl restart nginx
 ```
 
-启动所有组件
+Start all components
 
 ```bash
 systemctl enable --now n9e-collector n9e-tsdb n9e-transfer n9e-monapi n9e-judge n9e-index
 ```
 
-使用浏览器打开http://ip 即可访问，默认账号 root 密码 root
+Use a browser to open http: //ip to access, the default account root password root
 
-## 分布式安装
+## Distributed installation
 
-### Collector 安装(采集客户端安装)
+### Collector installation (collection client installation)
 
-collector 为 n9e 采集客户端,需要安装在客户端
+collector is the n9e collection client, which needs to be installed on the client
 
 ```bash
 yum install n9e-collector-1.2.0-g59f2bb0.el7.x86_64.rpm  -y
 ```
 
-即可完成安装。安装后修改配置文件/usr/local/n9e/etc/address.yml
+finish installation. Modify configuration file /usr/local/n9e/etc/address.yml after installation
 
 ```
 ...
@@ -148,24 +148,23 @@ systemctl enable --now n9e-collector
 
 ### 前端安装
 
-n9e 前端为静态文件，建议使用 ningx 进行配置
+The front end of n9e is a static file, it is recommended to use ningx for configuration
 
 ```bash
 yum install n9e-web-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-nginx-conf-1.2.0-g59f2bb0.el7.x86_64.rpm -y
 ```
 
-安装后静态文件路径为/usr/local/n9e/pub，同时提供一个 nginx 配置文件/usr/local/n9e/etc/nginx.conf,建议安装好 nginx 之后直接替换即可，如组件为分布式部署，建议根据实际配置修改 nginx 配置文件里对应的 upstream 服务器地址。
+After installation, the static file path is /usr /local /n9e /pub, while providing an nginx configuration file /usr/local/n9e/etc/nginx.conf. It is recommended to replace it directly after installing nginx. If the component is a distributed deployment, it is recommended to modify the corresponding upstream server address in the nginx configuration file according to the actual configuration.
 
-### 表结构安装
+### Table structure installation
 
-n9e 需要使用 mysql 数据库,安装好 mysql 数据库之后，使用
-
+n9e depends on mysql database
 ```
 yum install n9e-sql-1.2.0-g59f2bb0.el7.x86_64.rpm -y
 ```
 
-可在/usr/local/n9e/sql 目录看到 3 个 sql 文件，导入数据库即可。同时注意修改组件/usr/local/n9e/etc/mysql.yml 文件里的数据库配置信息。
+You can see 3 sql files in the /usr /local /n9e /sql directory, and import them into the database. At the same time, pay attention to modify the database configuration information in the component /usr/local/n9e/etc/mysql.yml file.
 
-### 其他组件安装
+### Installation of other components
 
-其余组件直接使用 yum 安装,注意配置/usr/local/n9e/etc 下的配置文件信息
+The rest of the components are installed directly using yum, pay attention to the configuration file information under /usr /local /n9e /etc
