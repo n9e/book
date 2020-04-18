@@ -1,16 +1,16 @@
 ---
-title: "用户管理"
-linkTitle: "用户管理"
+title: "User Management"
+linkTitle: "User Management"
 weight: 4
-date: 2020-03-17
+date: 2020-04-17
 description: >
-  本节讲解用户管理相关API
+ This section explains user management related APIs
 ---
 
-### 查看用户列表
+### View user list
 `GET /api/portal/user?limit=10&p=1`
 
-返回样例
+Return to sample
 ```json
 {
   "dat": {
@@ -18,7 +18,7 @@ description: >
       {
         "id": 1,
         "username": "root",
-        "dispname": "超管",
+        "dispname": "root",
         "phone": "18888888888",
         "email": "",
         "im": "",
@@ -31,10 +31,10 @@ description: >
 }
 ```
 
-### 新增用户
+### New users
 `POST /api/portal/user`
 
-请求样例
+Sample request
 ```json
 {
   "username": "nightingale",
@@ -46,11 +46,11 @@ description: >
 }
 ```
 
-### 查看用户组列表
+### View list of user groups
 `GET /api/portal/team?limit=10&p=1`
-- mgmt 管理种类 1为管理员管理制，0为成员管理制
+- mgmt Management type 1 is the administrator management system, 0 is the member management system
 
-返回样例
+Return to sample
 ```json
 {
   "dat": {
@@ -82,10 +82,10 @@ description: >
 ```
 
 
-### 创建用户组
+### Create User Group
 `POST /api/portal/team`
 
-请求样例
+Sample request
 ```json
 {
   "ident": "nightingale",
@@ -99,10 +99,10 @@ description: >
   ]
 }
 ```
-### 修改用户组
+### Modify user group
 `PUT /api/portal/team`
 
-请求样例
+Sample request
 ```json
 {
   "ident": "nightingale",
@@ -113,8 +113,3 @@ description: >
   ]
 }
 ```
-
-
-
-
-

@@ -1,19 +1,19 @@
 ---
-title: "监控数据"
-linkTitle: "监控数据"
+title: "Monitoring data"
+linkTitle: "Monitoring data"
 weight: 1
-date: 2020-03-17
+date: 2020-04-17
 description: >
-  本节讲解监控数据相关API
+  This section explains the API related to monitoring data.
 ---
 
-### 上报数据
-Nightingale的transfer和collector两个模块都提供了上报数据的接口    
-本地collector上报接口 `POST http://127.0.0.1:2058/api/collector/push`   
-中心transfer上报接口 `POST /api/transfer/push`      
-字段含义见[数据规范](https://n9e.didiyun.com/docs/usage/metric/)   
+### Report data
+ Nightingale's transfer and collector modules both provide interfaces for reporting data 
+local collector report API `POST http://127.0.0.1:2058/api/collector/push`   
+center transfer report API `POST /api/transfer/push`      
+For the meaning of the fields, see [Data Specification](https://n9e.didiyun.com/docs/usage/metric/)   
 
-请求样例  
+Sample request 
 ```json
 [
     {
@@ -27,16 +27,16 @@ Nightingale的transfer和collector两个模块都提供了上报数据的接口
 ]
 ```
 
-### 查询metric
-`POST /api/index/metrics`
+### Query metric
+`POST /api/index/metric`
 
-请求样例
+Sample request
 ```json
 {
     "endpoints": ["host1","host2"]
 }
 ```
-返回样例
+Return to sample
 ```json
 {
     "dat": [
@@ -50,17 +50,17 @@ Nightingale的transfer和collector两个模块都提供了上报数据的接口
 }
 ```
 
-### 查询tags
+### Query tags
 `POST /api/index/tagkv`
 
-请求样例
+Sample request
 ```json
 {
     "endpoints": ["host1","host2"],
     "metrics": ["disk.used.percent"],
 }
 ```
-返回样例
+Return to sample
 ```json
 {
     "dat": [
@@ -78,10 +78,10 @@ Nightingale的transfer和collector两个模块都提供了上报数据的接口
     "err":""
 }
 ```
-### 查询监控数据
+### Query monitoring data
 `POST /api/transfer/data`
 
-请求样例
+Sample request
 ```json
 {
   "start": 1562925134,
@@ -111,7 +111,7 @@ Nightingale的transfer和collector两个模块都提供了上报数据的接口
   ]
 }
 ```
-返回样例
+Return sample
 ```json
 {
     "dat": [
