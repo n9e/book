@@ -1,25 +1,25 @@
 ---
-title: "插件机制"
-linkTitle: "插件机制"
+title: "Plugin mechanism "
+linkTitle: "Plugin mechanism"
 date: 2020-02-19
 description: >
-  夜莺可以指定某个目录为插件目录，读取该目录下符合特定格式的文件，当成插件执行，以此扩展collector的能力
+  Nightingale can designate a certain directory as a plug-in directory, read the files in this directory that conform to a specific format, and execute it as a plug-in, thereby expanding the collector's ability
 ---
 
-collector组件虽然内置了很多监控指标的采集，但无法解决所有场景，所以提供了插件机制，以便扩展collector的功能。
+Although the collector component has a built-in collection of monitoring indicators, it cannot solve all scenarios, so a plug-in mechanism is provided to extend the function of the collector。
 
-查看collector的配置文件，里边配置了plugin的目录，我们只需把插件脚本放到这个目录下，collector就会自动探测到，然后周期性运行。对于业务系统的监控指标采集，可以把采集脚本放到业务程序发布包中，随着业务代码上线而上线（上线的时候把脚本放到collector的plugin目录下），随着业务代码升级而升级，随着业务代码的下线而下线（下线的时候把脚本从collector的plugin目录下移除），这样会比较容易管理。
+Check the collector configuration file, the plugin directory is configured inside, we only need to put the plugin script in this directory, the collector will automatically detect it, and then run periodically. For the collection of monitoring indicators of the business system, you can put the collection script in the business program release package and go online as the business code goes online (put the script in the collector's plugin directory when going online), and upgrade as the business code upgrades. As the business code goes offline and goes offline (remove the script from the collector's plugin directory when going offline), it will be easier to manage.
 
-对于插件，有如下几个要求：
+For plugins, there are several requirements:
 
-- 插件脚本必须具有可执行权限，部署完了脚本记得chmod +x一下
-- 插件脚本可以是sh、py、pl、rb，甚至可以是二进制，只要机器上有runtime环境
-- 插件脚本的命名：`${step}_xx.xx`，比如`20_uptime.sh`，`${step}`是在告诉collector多久跑一次
-- plugin目录下非`${step}_xx.xx`命名格式的文件或者目录可以存在没关系，collector不会识别为插件
-- 插件执行之后要在stdout输出一个json array，collector会截获这个输出，解析为监控指标上报
-- 如果插件执行报错了，报错消息要打印到stderr，不要打印到stdout
+- The plugin script must have executable permissions, remember to execute chmod + x after the script is deployed
+- The plugin script can be sh, py, pl, rb, or even binary, as long as there is a runtime environment on the machine
+- Plugin script naming: `$ {step} _xx.xx`, such as` 20_uptime.sh`, `$ {step}` is telling the collector how often to run
+- Files or directories in the plugin directory that are not in the `$ {step} _xx.xx` naming format can exist, it does not matter, the collector will not recognize it as a plugin
+- After the plugin is executed, a json array must be output on stdout, and the collector will intercept this output and parse it as a monitoring indicator for reporting
+- If the plug-in executes an error, the error message should be printed to stderr, not stdout
 
-下面给一个shell编写的插件例子20_uptime.sh：
+The following is an example of a plugin written by shell 20_uptime.sh:
 
 ```bash
 #!/bin/bash
@@ -39,7 +39,7 @@ echo '[
 ]'
 ```
 
-下面给一个python编写的插件例子20_plugin_status.py：
+The following is an example of a plugin written in python 20_plugin_status.py:
 
 ```python
 #!/usr/bin/env python
@@ -87,4 +87,4 @@ if __name__ == "__main__":
     main()
 ```
 
-另外，Open-Falcon的社区里可以看到很多第三方指标采集器都不是以插件机制存在，都是以独立daemon进程或者cron脚本的方式，这种方式和插件类似，只是需要自己将采集的监控数据push给collector或者transfer，也算是一种广义的插件。
+In addition, the Open-Falcon community can see that many third-party indicator collectors do not exist as plug-in mechanisms. They are all in the form of independent daemon processes or cron scripts. This method is similar to plug-ins, except that you need to monitor the collection yourself Pushing data to the collector or transfer is also a kind of generalized plug-in.

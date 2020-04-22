@@ -1,30 +1,30 @@
 ---
-title: "端口监控"
-linkTitle: "端口监控"
+title: "Port monitoring"
+linkTitle: "Port monitoring"
 date: 2020-02-23
 description: >
-  端口监控在夜莺中通过配置具体的采集策略来指定采集哪些端口，也支持读取目标机器标识文件
+  Port monitoring In Nightingale, you can specify which ports to collect by configuring specific collection strategies, and also support reading the target machine identification file
 ---
 
 
-支持两种配置方式，一个是在目标机器的指定目录创建元信息文件，一个是在页面上配置采集策略。
+Two configuration methods are supported, one is to create a meta information file in the specified directory of the target machine, and the other is to configure the collection strategy on the page.
 
-## 目标机器元信息文件方式
+## Target machine meta information file method
 
-可以查看collector的配置文件，里边有个portPath配置项，可以把要监听的端口touch一个文件放到portPath指定的路径下，collector组件会自动探测，自动采集。
+You can view the configuration file of the collector. There is a portPath configuration item. You can put a file of the port to be monitored on the path specified by portPath. The collector component will automatically detect and automatically collect.
 
-比如要采集n9e这个服务的monapi组件的端口5800的存活性，可以到portPath指定的路径（没有的话手工创建出对应目录）下，创建一个10_5800的文件，里边的内容是n9e-monapi。
+For example, to collect the survivability of port 5800 of the monapi component of the n9e service, you can create a 10_5800 file under the path specified by portPath (if not, manually create the corresponding directory), the content is n9e-monapi.
 
-- 文件名命名规范`${采集频率}_${采集的端口}`
-- 文件内容是这个模块的名称，比如n9e-monapi，这样报警的时候我们看到n9e-monapi就知道是哪个服务出问题了，不允许有空格，引号等特殊字符
+- File name naming convention `$ {acquisition frequency} _ $ {acquisition port}`
+- The content of the file is the name of this module, such as n9e-monapi. When we call the alarm, we see n9e-monapi and we know which service has a problem. Special characters such as spaces and quotation marks are not allowed.
 
-对于业务服务来说，我们在部署服务的时候，可以将这个端口文件创建出来，这样平台就可以帮我们监控这个服务了，当我们下线服务的时候，把这个端口文件顺便删除，这样平台就不再监控这个端口了。
+For business services, when we deploy services, we can create this port file, so that the platform can help us monitor this service. When we go offline, we delete this port file, so the platform This port is no longer monitored.
 
-端口采集完了，我们可以在所负责的服务的公共父节点配置一条监控策略，就可以搞定我们手下的所有的服务的所有的模块的所有的端口的监控：
+After the port collection is completed, we can configure a monitoring strategy on the public parent node of the service in charge, and we can get all ports of all modules of all services monitored:
 
-> 采集周期假设为20秒，策略统计周期可以配置为60秒，每个值都=0则报警，端口监控的metric是:proc.port.listen无需每个端口分别配置。
+> The collection period is assumed to be 20 seconds, and the policy statistics period can be configured to 60 seconds. Each value = 0 is an alarm. The metric for port monitoring is: proc.port.listen. There is no need to configure each port separately.
 
-## 页面上配置采集策略
+## Configure the collection strategy on the page
 
-这个方式比较简单，不过多赘述，采集策略配置的时候有个service字段，需要填写模块的名称，相当于目标机器元信息文件的内容部分。
+This method is relatively simple, but it will be described in more detail. There is a service field when configuring the collection strategy. You need to fill in the name of the module, which is equivalent to the content part of the target machine meta information file.
 

@@ -1,18 +1,17 @@
 ---
-title: "告警屏蔽"
-linkTitle: "告警屏蔽"
-date: 2020-02-25
+title: "Alarm shield"
+linkTitle: "Alarm shield"
+date: 2020-04-22
 description: >
-  告警屏蔽除了可以屏蔽机器之外，还可以做更细粒度的屏蔽策略，比如可以指定监控指标，可以指定某个标签
+  In addition to shielding the machine, the alarm shield can also do more fine-grained shielding strategies. For example, you can specify monitoring indicators and a certain label.
 ---
 
+Compared with Open-Falcon, which can only shield machines, Nightingale's alarm shielding has a more flexible granularity. It can configure a certain index of a certain machine, and even a certain tag of a certain index of a certain machine.
+The configuration of the alarm masking is based on the service tree, which is purely for management convenience. For example, if a machine hangs on the sre.devops.n9e.judge.hna node of the service tree, we need to block the cpu.idle alarm of this machine. You can configure the blocking policy on the sre node or sre.devops , Or lower-level nodes, can achieve shielding effect.
+Which node is appropriate for configuration?
 
-相比Open-Falcon只能屏蔽机器，夜莺的告警屏蔽做得粒度更灵活，可以配置某个机器的某个指标，甚至可以配置某个机器的某个指标的某个特定tag。
-告警屏蔽的配置是依托服务树的，这里纯粹只是为了管理方便，比如某个机器挂在服务树的sre.devops.n9e.judge.hna这个节点，我们要屏蔽这个机器的cpu.idle的报警，可以将屏蔽策略配置在sre节点，也可以配置在sre.devops节点，或者更下层的节点，都可以达到屏蔽效果。
-那放在哪个节点来配置比较合适呢？
+- If you want to shield the service-related indicators, it is generally placed on the service node, for example, this machine is used for the n9e service, then configure the shielding strategy at the n9e node.
+- If you want to shield the hardware-related indicators, you can shield it at the service node or the team node, that is, the devops node. Because the devops operation and maintenance students may also operate and maintain the services of other teams under the sre, such as the dfe team, as long as the operation and maintenance students can distinguish that this machine is devops
+- If the machine is mounted on multiple nodes, one of the nodes is configured with a shielding strategy, and the related alarm strategy of the other node will also be affected. It is best to configure the shielding strategy on the nodes above the common parent node, which seems unambiguous.
 
-- 如果是要屏蔽服务相关指标，一般是放在服务节点，比如这个机器给n9e这个服务用的，那就统一在n9e这个节点配置屏蔽策略即可。
-- 如果是要屏蔽硬件相关指标，可以在服务节点屏蔽，也可以在团队节点即devops节点屏蔽，因为devops的运维同学可能还运维了sre下的其他团队的服务，比如dfe团队，运维同学只要能区分出这个机器是devops的即可
-- 如果机器挂载在多个节点，在其中一个节点配置了屏蔽策略，另一个节点相关报警策略也会受影响，最好是在公共父节点以上的节点配置屏蔽策略，显得无歧义。
-
-说的比较绕，其实放哪层都问题不大，关键是团队自己要有个规范，后面管理起来方便，大家都知道去哪层节点查看屏蔽策略。
+The explanation is more complicated. In fact, there is no problem on which layer to put. The key is that the team must have a specification, which is convenient to manage later. Everyone knows which layer to check the blocking strategy.

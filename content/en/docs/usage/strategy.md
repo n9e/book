@@ -1,32 +1,32 @@
 ---
-title: "监控策略"
-linkTitle: "监控策略"
-date: 2020-02-27
+title: "Monitoring strategy "
+linkTitle: "Monitoring strategy "
+date: 2020-04-22
 description: >
-  Nightingale因为内置了服务树这种机器分组机制，和Open-Falcon相比，告警灵活性是一个质的提升
+  Because Nightingale has a built-in machine grouping mechanism such as service tree, compared with Open-Falcon, the alert flexibility is a great improvement
 ---
 
 
-监控策略与Open-Falcon的配置有很大区别。首先取消了策略模板的机制，每一条策略都可以单独配置告警接收人，其次，策略可以直接绑定到服务树节点上，节点下的所有机器都会继承生效，另外还增加了一些字段，下面挨个字段解释：
+The monitoring strategy is very different from the configuration of Open-Falcon. First of all, the mechanism of the policy template is canceled. Each policy can be configured with an alarm recipient separately. Secondly, the policy can be directly bound to the service tree node. All machines under the node will inherit and take effect. In addition, some fields have been added. Field explanation:
 
-- **策略名称**：描述这条策略的作用，比如“CPU利用率超过85%”
-- **生效节点**：关联的服务树节点，节点下所有机器都会应用这条策略
-- **排除节点**：生效节点下面的部分子节点可能较为特殊需要排除，可以用此配置解决
-- **报警级别**：分三级，P1最严重，报警之后事件通过所有报警通道推送，P3不严重，只用部分通道
-- **统计周期**：判断报警的时候使用最近多长时间以内的数据
-- **触发条件**：支持与条件，即两个条件都满足才报警
-- **Tag过滤**：可以配置只生效监控指标的部分tag，或者排除部分tag，比如disk.io.util只监控sda
-- **执行动作**：配置报警收敛策略和报警接收人，也支持配置回调，与自动化逻辑打通
-- **留观时长**：告警恢复后持续观察多少秒，称为留观时长，未再触发阈值才发送恢复通知
-- **静默恢复**：即只发送告警消息，不发送恢复通知，默认会发送，即不开启静默恢复
-- **生效时间**：即策略生效时间，默认7*24生效，可以配置只生效部分时间段
+- **Strategy name **: Describe the role of this strategy, such as "CPU utilization exceeds 85%"
+- **Effective node **: The associated service tree node, all machines under the node will apply this strategy
+- **Exclude node **: Some of the sub-nodes below the effective node may need to be excluded due to special circumstances, which can be solved with this configuration
+- **Alarm level **: divided into three levels, P1 is the most serious, after the alarm, the event is pushed through all alarm channels, P3 is not serious, only some channels are used
+- **Statistical Period **: Use the data within the most recent time to judge the alarm
+- **Trigger condition **: Support and condition, that is, only two conditions are met before the alarm
+-**Tag filtering **: You can configure only some tags for monitoring indicators to take effect, or exclude some tags, such as disk.io.util only monitor sda
+-**Execution Action **: Configure alarm convergence strategy and alarm recipient, and also support configuration callback to communicate with automation logic
+-**Watch time **: How many seconds to keep watching after the alarm is restored, which is called watch time, and the recovery notification is sent without triggering the threshold again
+-**Silent Recovery **: That is, only the alarm message is sent, and the recovery notification is not sent. By default, it will be sent, that is, the silent recovery is not turned on
+-**Effective time **: the effective time of the policy, the default is 7 *24 effective, you can configure only effective part of the time period
 
-策略配置页面支持导入，这里整理了一些常见策略，可以一键导入，然后批量修改一下报警接收人就可以用起来了 :-)
+The policy configuration page supports importing. Here are some common policies, which can be imported with one click, and then the alarm recipient can be modified in batches :-)
 
 ```json
 [
     {
-        "name": "内存利用率大于75%",
+        "name": "Memory utilization is greater than 75%",
         "category": 1,
         "alert_dur": 60,
         "recovery_dur": 0,
@@ -60,7 +60,7 @@ description: >
         "endpoints": null
     },
     {
-        "name": "机器loadavg大于16",
+        "name": "Machine loadavg is greater than 16 ",
         "category": 1,
         "alert_dur": 60,
         "recovery_dur": 0,
@@ -94,7 +94,7 @@ description: >
         "endpoints": null
     },
     {
-        "name": "某磁盘无法正常读写",
+        "name": "A disk cannot be read and written normally ",
         "category": 1,
         "alert_dur": 60,
         "recovery_dur": 0,
@@ -128,7 +128,7 @@ description: >
         "endpoints": null
     },
     {
-        "name": "监控agent失联",
+        "name": "Monitoring agent lost contact ",
         "category": 1,
         "alert_dur": 60,
         "recovery_dur": 0,
@@ -162,7 +162,7 @@ description: >
         "endpoints": null
     },
     {
-        "name": "磁盘利用率达到85%",
+        "name": "Disk utilization reaches 85% ",
         "category": 1,
         "alert_dur": 60,
         "recovery_dur": 0,
@@ -196,7 +196,7 @@ description: >
         "endpoints": null
     },
     {
-        "name": "磁盘利用率达到88%",
+        "name": "Disk utilization reaches 88% ",
         "category": 1,
         "alert_dur": 60,
         "recovery_dur": 0,
@@ -230,7 +230,7 @@ description: >
         "endpoints": null
     },
     {
-        "name": "磁盘利用率达到92%",
+        "name": "Disk utilization reaches 92% ",
         "category": 1,
         "alert_dur": 60,
         "recovery_dur": 0,
@@ -264,7 +264,7 @@ description: >
         "endpoints": null
     },
     {
-        "name": "端口挂了",
+        "name": "Port hung ",
         "category": 1,
         "alert_dur": 60,
         "recovery_dur": 0,
@@ -298,7 +298,7 @@ description: >
         "endpoints": null
     },
     {
-        "name": "网卡入方向丢包",
+        "name": "The network card loses packets in the incoming direction",
         "category": 1,
         "alert_dur": 60,
         "recovery_dur": 0,
@@ -332,7 +332,7 @@ description: >
         "endpoints": null
     },
     {
-        "name": "网卡出方向丢包",
+        "name": "The network card loses packets in the outbound direction",
         "category": 1,
         "alert_dur": 60,
         "recovery_dur": 0,
@@ -366,7 +366,7 @@ description: >
         "endpoints": null
     },
     {
-        "name": "进程总数超过3000",
+        "name": "The total number of processes exceeds 3000",
         "category": 1,
         "alert_dur": 60,
         "recovery_dur": 0,
@@ -400,7 +400,7 @@ description: >
         "endpoints": null
     },
     {
-        "name": "进程挂了",
+        "name": "Process hung",
         "category": 1,
         "alert_dur": 60,
         "recovery_dur": 0,
