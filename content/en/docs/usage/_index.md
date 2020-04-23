@@ -1,6 +1,6 @@
 ---
-title: "use"
-linkTitle: "use"
+title: "Usage"
+linkTitle: "Usage"
 weight: 4
 date: 2020-04-22
 description: >
