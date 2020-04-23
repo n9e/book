@@ -139,14 +139,14 @@ transfer:
 ...
 ```
 
-collector 需要与 monapi 与 transfer 通信，需要修改 127.0.0.1 地址为实际的组件地址，多个组件可写多行，配置文件为 yaml 格式，修改时注意格式。
-修改后，使用以下命令启动
+The collector needs to communicate with monapi and transfer, so the 127.0.0.1 address needs to be modified to the actual component address. Multiple components can write multiple lines, the configuration file is in yaml format, pay attention to the format when modifying.
+After modification, use the following command to start
 
 ```
 systemctl enable --now n9e-collector
 ```
 
-### 前端安装
+### Front-end installation
 
 The front end of n9e is a static file, it is recommended to use ningx for configuration
 
