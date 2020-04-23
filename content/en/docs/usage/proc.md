@@ -1,24 +1,22 @@
 ---
-title: "进程监控"
-linkTitle: "进程监控"
+title: "Process monitoring"
+linkTitle: "Process monitoring "
 date: 2020-02-23
 description: >
-  进程监控在夜莺中通过配置具体的采集策略来指定采集哪些进程，也支持读取目标机器标识文件
+  Process monitoring in Nightingale by configuring specific collection strategies to specify which processes to collect, and also supports reading the target machine identification file
 ---
 
 
-支持两种配置方式，一个是在目标机器的指定目录创建元信息文件，一个是在页面上配置采集策略。
+Two configuration methods are supported, one is to create a meta information file in the specified directory of the target machine, and the other is to configure the collection strategy on the page.
+## Target machine meta information file method
 
-## 目标机器元信息文件方式
+The processing logic of process monitoring and port monitoring is similar. Both touch a file locally and tell the collector which process to monitor. If you want to monitor multiple processes, you need to touch multiple files.
 
-进程监控和端口监控的处理逻辑类似，都是在本地touch一个文件，告诉collector去监控哪个进程，如果要监控多个进程，就需要touch多个文件。
+For port monitoring, the port number is unique, but for processes, the process name (see process name can be `cat /proc /<pid> /status`) is not unique, such as processes written in Python The names are all processes written in python and java, and the process names are java. Then what kind of file should we touch to tell the collector exactly which process we want to collect?
 
-对于端口监控而言，端口号具备唯一性，但对进程而言，进程名（查看进程名可以`cat /proc/<pid>/status`）不具备唯一性，比如python语言写的进程，进程名都是python，java语言写的进程，进程名都是java，那我们应该touch一个什么样的文件，来准确告诉collector我们要采集具体哪个进程呢？
+We need to find something that can easily distinguish a process, here we have two ways. One is to use the process name, and the other is to use the process cmdline (see `/proc /<pid> /cmdline`),For example, if you touch a 10_name_n9e-monapi file, you can collect a process named n9e-monapi. Because n9e-monapi is written by go, the process name is n9e-monapi, so this configuration is OK.If the process name cannot be distinguished well, you can touch a 10_cmdline_xx file, assuming that the process pid to be monitored is 5648, and xx is a substring of `/proc /5648 /cmdline`.As long as this substring can be distinguished from the cmdline of other processes, there is no need to use the entire cmdline content.Example: We started a java process using `java -c uic.properties`, and its cmdline is:` java-cuic.properties`. To monitor this process, we only need to touch a 10_cmdline_uic.properties file.
 
-我们需要找一个能方便区分一个进程的东西，这里我们有两个办法，一个是使用进程的名字，一个是使用进程的cmdline（参看`/proc/<pid>/cmdline`），比如touch一个10_name_n9e-monapi文件，就可以采集进程名为n9e-monapi的进程，因为n9e-monapi是go写的，进程名就是n9e-monapi，所以这么配置是OK的。如果进程name无法很好的区分，可以touch一个10_cmdline_xx的文件，假设要监控的进程pid是5648，xx就是`/proc/5648/cmdline`的一个子串即可，只要这个子串能与其他进程的cmdline区分开，就无需使用整个cmdline内容。举例：我们使用`java -c uic.properties`启动了一个java进程，其cmdline为：`java-cuic.properties`，我们要监控这个进程只需要touch一个10_cmdline_uic.properties的文件即可。
+For the file content, just like the port monitoring, you can write the module name of the process. When the monitoring data is reported, it will bring this information and report it as a tag
+## Configure the collection strategy on the page
 
-对于文件内容，和端口监控一样，可以写进程的模块名，监控数据上报的时候，就会带上这个信息，作为一个tag上报
-
-## 页面上配置采集策略
-
-这个方式比较简单，不过多赘述，采集策略配置的时候有个service字段，需要填写模块的名称，相当于目标机器元信息文件的内容部分
+This method is relatively simple, but I will repeat it. There is a service field during the configuration of the collection strategy. You need to fill in the name of the module, which is equivalent to the content part of the target machine meta information file.

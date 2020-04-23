@@ -1,19 +1,19 @@
 ---
-title: "日志监控"
-linkTitle: "日志监控"
+title: "Log monitoring"
+linkTitle: "Log monitoring"
 date: 2020-02-21
 description: >
-  夜莺相比Open-Falcon，直接内置了日志监控，可以在目标机器放置日志采集策略文件，也可以在页面上配置日志采集策略
+  Compared with Open-Falcon, Nightingale has built-in log monitoring. You can place the log collection strategy file on the target machine, or you can configure the log collection strategy on the page
 ---
 
-日志监控，是一种外挂式的采集。通过读取进程打印的日志，来进行监控数据的采集与汇聚计算。汇聚成标准的时间序列数据之后，推送给Nightingale统一的后端存储。
+Log monitoring is an external collection. By reading the log printed by the process, the monitoring data is collected and aggregated. After being aggregated into standard time series data, it is pushed to Nightingale's unified back-end storage.
 
-日志监控支持两种配置方式，一种是在目标机器的指定目录创建元信息配置文件，一种是在页面上配置采集策略。日志采集部分最原始的代码是fork自：[falcon-log-agent](https://github.com/didi/falcon-log-agent)。
+Log monitoring supports two configuration methods, one is to create a meta information configuration file in the specified directory of the target machine; one is to configure the collection strategy on the page. The original code of the log collection part is forked from：[falcon-log-agent](https://github.com/didi/falcon-log-agent)。
 
-## 元信息配置文件方式
+## Meta information configuration file method
 
-查看collector的配置文件，logPath就是针对此项的配置（默认取值：/home/n9e/etc/log），可以把日志采集策略文件（命名格式`log.<xx>.json`）放到这个目录，collector组件会自动探测，进行采集。
-举个例子：
+Check the collector configuration file, logPath is the configuration for this item (default value: /home /n9e /etc /log）。You can put the log collection strategy file (name format `log. <Xx> .json`) into this directory. The collector component will automatically detect and collect.
+for example:
 
 ```json
 {
@@ -25,36 +25,36 @@ description: >
     "tags": {},
     "func": "cnt",
     "degree": 6,
-    "unit": "次数",
-    "comment": "有进程oom了"
+    "unit": "frequency",
+    "comment": "Process oom"
 }
 ```
 
-- **name**：指标名，对应上报后数据的metric字段
-- **file_path**：要采集的日志文件
-- **time_format**：日志打印时采用的时间戳格式
-- **pattern**：正则表达式，系统会根据所配置正则逐行匹配file_path指定的日志文件
-- **interval**：采集周期，即每隔多少秒产生一个监控数据点
-- **tags**：支持通过正则的方式，采集出所需要的其他维度，使用不同的标签来标记
-- **func**：计算方法，即对采集出的多行日志进行计算，得出最后时间点的方法
-- **degree**：计算精度，监控指标的值最终计算的时候采用的精度，维持默认即可
-- **unit**：监控指标的单位，仅用作标记，并不会改变监控数值
-- **comment**：备注，描述信息
+- **name**：Indicator name, corresponding to the metric field of the data after reporting
+- **file_path**：Log files to be collected
+- **time_format**：Timestamp format used when the log is printed
+- **pattern**：Regular expression, the system will match the log file specified by file_path line by line according to the configured regularity
+- **interval**：Acquisition cycle, that is, how many seconds to generate a monitoring data point
+- **tags**：Support to collect other dimensions needed by regular way and use different tags to mark
+- **func**：Calculation method, that is, the method of calculating the collected multi-line logs to obtain the last time point
+- **degree**：Calculation accuracy, the accuracy adopted when the value of the monitoring index is finally calculated, just keep the default
+- **unit**：The unit of the monitoring indicator is only used as a marker and does not change the monitoring value
+- **comment**：Remarks, descriptive information
 
-如此，上面的这条json配置代表什么意思呢？表示会每隔10s采集一次 /var/log/messages 文件，匹配 "Out of Memory" 这个关键字，看总共可以匹配到多少行（即cnt函数），把行数作为监控指标的值上报。这样服务端就可以配置告警策略，当log.sys.oom的值大于0就报警，说明系统出现了OOM。
+What does the above json configuration mean? It means that the /var /log /messages file will be collected every 10s, matching the keyword "Out of Memory", how many lines can be matched (ie cnt function), and the number of lines is reported as the value of the monitoring index. In this way, the server can configure an alarm strategy. When the value of log.sys.oom is greater than 0, it will alarm, indicating that OOM appears in the system.
 
-下面我们对关键的字段进行更详细的解释：
+Below we explain the key fields in more detail:
 
 **file_path**
 
-文件路径支持固定路径和动态路径两种。固定路径的日志文件的名称不会变更，动态路径目的是为了支持按时间片切割并在文件名中有所体现的日志文件。
-例如，上面的/var/log/messages就是固定路径；动态路径格式举例： `/opt/appx/log/${%Y%m%d}/appx.log.${%Y%m%d%H}`
+The file path supports both fixed and dynamic paths. The name of the log file of the fixed path will not change, the purpose of the dynamic path is to support the log file that is cut by time slice and reflected in the file name。
+For example, the above /var /log /messages is a fixed path; examples of dynamic path formats： `/opt/appx/log/${%Y%m%d}/appx.log.${%Y%m%d%H}`
 
 **time_format**
 
-日志监控要求日志中必须有确定的时间戳，以保证计算的准确性。在日志落盘延迟、日志量太大的情况下，只要不达到计算的瓶颈，仍然可以保证数据的准确性。
+Log monitoring requires a certain time stamp in the log to ensure the accuracy of the calculation. In the case of delayed log placement and a large log volume, as long as the calculation bottleneck is not reached, the accuracy of the data can still be guaranteed.
 
-目前Nightingale支持的时间格式如下：
+The time formats currently supported by Nightingale are as follows:
 
 ```
 dd/mmm/yyyy:HH:MM:SS
@@ -69,17 +69,17 @@ mmm dd HH:MM:SS
 
 **pattern**
 
-用来匹配的正则表达式，正则表达式用来匹配日志中满足条件的行，将命中的行进行归纳和计算。
+The regular expression used to match. The regular expression is used to match the lines in the log that meet the conditions, and the hit lines are summarized and calculated.
 
-由于Golang正则表达式使用RE2语法，而RE2去掉了反向引用和零宽断言。因此，如果我们想排除掉一些关键字，可以使用我们内置的语法糖： 
+Regular expressions in Golang use RE2 syntax, and RE2 removes backreferences and zero-width assertions. Therefore, if we want to exclude some keywords, we can use our built-in syntactic sugar:
 
 ```
 ```EXCLUDE```
 ```
 
-可以使用这个语法糖来分割前方的命中正则配置和后方的排除正则配置，组装成一个pattern。
+You can use this syntactic sugar to split the front hit regular configuration and the rear exclude regular configuration and assemble it into a pattern.
 
-例如：
+E.g:
 
 ```
 code=[45]00```EXCLUDE```SpeciallyErrorNo
@@ -87,9 +87,9 @@ code=[45]00```EXCLUDE```SpeciallyErrorNo
 
 **func**
 
-采集方式**func**，当通过配置的正则筛选出一批符合规则的行，应该以何种方式进行归纳汇总，进而得出我们想要的结果。
+Collection method **func **, when a batch of rows that meet the rules is filtered out through the configured regularity, in what way should be summarized, and then we can get the results we want.
 
-目前支持的汇总方式有：
+The currently supported summary methods are:
 
 - cnt
 - avg
@@ -98,18 +98,18 @@ code=[45]00```EXCLUDE```SpeciallyErrorNo
 - min
 
 ```
-举例如下：
-假设正则表达式配置为 Return Success : (\d+)s Used
+Examples are as follows:
+Assume that the regular expression is configured as Return Success: (\ d +) s Used
  
-某一个周期内日志滚动：
+The log rolls in a certain period:
 2017/12/01 12:12:01 Return Success : 1s Used
 2017/12/01 12:12:02 Return Success : 2s Used
 2017/12/01 12:12:03 Return Success : 4s Used
 2017/12/01 12:12:04 Return Success : 2s Used
 2017/12/01 12:12:05 Return Success : 1s Used
  
-首先，根据正则获取到括号内的值：1、2、4、2、1
-接下来，根据不同的计算方式，会得到不同的结果：
+First, get the values ​​in parentheses according to the regularity: 1, 2, 4, 2, 1
+Next, according to different calculation methods, you will get different results:
 avg   : (1 + 2 + 4 + 2 + 1) / 5 = 2
 cnt   : 5
 sum   : (1 + 2 + 4 + 2 + 1) = 10
@@ -119,19 +119,19 @@ min   : Min(1, 2, 4, 2, 1) = 1
 
 **tags**
 
-func一节举例的日志相对简单，只是一个耗时打印，如果我们的系统有多个接口，我们在采集的时候希望同时采集到耗时对应的接口信息，并将其作为tags上报，这样服务端看图的时候就可以清晰的得知各个接口的耗时情况，应该如何做呢？
+The log in the func section is relatively simple, just a time-consuming print. If our system has multiple interfaces, we hope to collect the interface information corresponding to the time-consuming at the same time, and report it as tags, so that the server sees In the picture, you can clearly know the time-consuming situation of each interface. What should you do?
 
 ```
-举例某一个周期内日志滚动：
+For example, the log rolls in a certain period:
 2017/12/01 12:12:01 Return Success : 1s Used by /a
 2017/12/01 12:12:02 Return Success : 2s Used by /b
 2017/12/01 12:12:03 Return Success : 4s Used by /a
 2017/12/01 12:12:04 Return Success : 2s Used by /a
 2017/12/01 12:12:05 Return Success : 1s Used by /b
 
-此时我们的pattern不变，还是：Return Success : (\d+)s Used，pattern只是表示能否匹配到某行日志
+When our pattern does not change, still: Return Success: (\ d +) s Used, pattern just means whether it can match a certain line of logs
 
-tags字段此时配置为：
+The tags field is now configured as:
 {
     "...": "...",
     "tags": {
@@ -140,12 +140,12 @@ tags字段此时配置为：
     "...": "..."
 }
 
-只是为了提取 /a 或者 /b 这样的字符串，其实正则配置为 Used by (\/\w+) 即可，但是，
-这个正则是配置在json的""内的，\ 需要被转义，所以变成上面这样了，如果是在web端配置，无需转义
+Just to extract strings like /a or /b, in fact, the regular configuration can be Used by (\ /\ w +), but,
+This regular is configured in the "" of json, \ needs to be escaped, so it becomes the above, if it is configured on the web side, no escape is required
 ```
 
-注意：**如果无法匹配出tag的值，则视为该条数据未匹配到，该条日志将不再计入统计。**
+Note: **If the tag value cannot be matched, it is deemed that the data is not matched, and the log will no longer be counted. **
 
-## 页面上配置采集策略
+## Configure the collection strategy on the page
 
-页面功能各字段与配置文件基本一一对应，此处不过多赘述。另外，web上有一个配置验证的字段，可以放一条真实日志看正则是否能够正常匹配。
+The fields of the page function basically correspond to the configuration files one by one, but I won't repeat them here. In addition, there is a field for configuration verification on the web, you can put a real log to see if the regular can be properly matched.
