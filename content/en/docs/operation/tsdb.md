@@ -26,9 +26,9 @@ The following is the default storage duration configuration of tsdb, you can mod
 rrd:
   rra:
     1:    720,   # Store 720 original points
-	6:    4320,  # 6 points are archived as one point, and 4320 points are saved
-	180:  1440,  # 180 points are archived as a point, saving 1440 points
-	1080: 2880,  # 1080 points are archived as one point, and 2880 points are saved
+    6:    4320,  # 6 points are archived as one point, and 4320 points are saved
+    180:  1440,  # 180 points are archived as a point, saving 1440 points
+    1080: 2880,  # 1080 points are archived as one point, and 2880 points are saved
 ```
 
 If you want to see the comparison chart with the data from a week ago, that is, the week-on-week data, it is recommended to adjust the second archiving strategy from 4320 to 11520. In this case, the archiving accuracy is consistent, it is easier to see the picture, and it is conducive to the future of the ring alarm strategy However, this also brings a disadvantage-the amount of monitoring data storage becomes larger.
