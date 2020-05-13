@@ -21,6 +21,8 @@ description: >
 - [解释address.yml](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-usage-address.mp4)
 - [解释identity配置](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-usage-identity.mp4)
 
+上面的视频不够细致，最新的更细致的讲解视频已经放到 [B站](https://search.bilibili.com/all?keyword=%E5%BC%80%E6%BA%90%E8%BF%90%E7%BB%B4%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9FNightingale-%E7%B3%BB%E5%88%97) 请移步观看
+
 ## 告警发送
 
 Nightingale的理念，是将告警事件扔到redis里就不管了，接下来由各种sender来读取redis里的事件并发送，毕竟发送报警的方式太多了，适配起来比较费劲，希望社区同仁能够共建。
