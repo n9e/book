@@ -34,3 +34,7 @@ Add the WeChat of Didiyun ’s assistant, and the assistant will pull into the  
 ### Business support
 
 For the operation and maintenance system platform, we have a full set of commercial solutions, and the commercial version of the monitoring system will be more powerful. If your company needs support from a professional team, please contact us：<nightingale@didiglobal.com> :-)
+
+![](https://s3-gz01.didistatic.com/n9e-pub/ecmc-img/screen.png)
+
+![](https://s3-gz01.didistatic.com/n9e-pub/ecmc-img/event-his.png)
