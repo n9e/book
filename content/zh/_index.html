@@ -7,47 +7,47 @@ linkTitle = "Nightingale"
 {{< blocks/cover title="Welcome to Nightingale" image_anchor="top" height="full" color="orange" >}}
 <div class="mx-auto">
 	<a class="btn btn-lg btn-primary mr-3 mb-4" href="{{< relref "/docs" >}}">
-		Learn More <i class="fas fa-arrow-alt-circle-right ml-2"></i>
+		文档 <i class="fas fa-arrow-alt-circle-right ml-2"></i>
 	</a>
 	<a class="btn btn-lg btn-secondary mr-3 mb-4" href="https://github.com/didi/nightingale">
-		Download <i class="fab fa-github ml-2 "></i>
+		下载 <i class="fab fa-github ml-2 "></i>
 	</a>
-	<p class="lead mt-5">A Distributed and High-Performance Monitoring System</p>
+	<p class="lead mt-5">一款分布式高性能的运维监控系统</p>
 	{{< blocks/link-down color="info" >}}
 </div>
 {{< /blocks/cover >}}
 
 
 {{% blocks/lead color="primary" %}}
-Nightingale is a fork of Open-Falcon, and all the core modules have been greatly optimized.
+夜莺Fork自Open-Falcon，各核心模块做了大幅优化，引入了滴滴的生产实践经验
 
-Nightingale is the next generation of Open-Falcon.
+可以把夜莺看做是Open-Falcon的下一代
 {{% /blocks/lead %}}
 
 {{< blocks/section color="white" >}}
 
-{{% blocks/feature icon="fa-expand" title="Scalability" %}}
-Scalable monitoring system is necessary to support rapid business growth. Each module of Nightingale is super easy to scale horizontally.
+{{% blocks/feature icon="fa-expand" title="可伸缩" %}}
+对于快速发展的业务，一款可伸缩的监控系统是很有必要的。夜莺的每个模块都可以方便的水平扩展
 {{% /blocks/feature %}}
 
-{{% blocks/feature icon="fa-bolt" title="Performance" %}}
-With RRA(Round Robin Archive) mechanism and memory TSDB, the one-year history data of 100+ metrics could be returned in just one second.
+{{% blocks/feature icon="fa-bolt" title="高性能" %}}
+得益于内存TSDB和RRD的归档机制，可以在秒级返回成百上千条监控指标，满足高性能监控大盘的需求
 {{% /blocks/feature %}}
 
-{{% blocks/feature icon="fa-chart-line" title="High Availability" %}}
-No critical single point of failure, easy to operate and deploy. The system will not be affected if any machine is hung up.
+{{% blocks/feature icon="fa-chart-line" title="高可用" %}}
+没有严重的单点故障，易于部署和运维。任一机器挂掉对集群无影响
 {{% /blocks/feature %}}
 
-{{% blocks/feature icon="fa-puzzle-piece" title="Flexibility" %}}
-Nightingale collector is compatible with falcon-agent. Plugin mechanism and log collector are built-in.
+{{% blocks/feature icon="fa-puzzle-piece" title="可扩展" %}}
+夜莺的客户端组件与falcon-agent兼容，内置了插件机制和日志监控机制
 {{% /blocks/feature %}}
 
-{{% blocks/feature icon="fa-rocket" title="Efficiency" %}}
-Integrated with object tree, Nightingale supports strategy inheritance, multiple alerting method, and callback for recovery.
+{{% blocks/feature icon="fa-rocket" title="高效" %}}
+夜莺集成了对象树（大厂标配），支持策略继承、多种告警函数，也支持告警回调用于故障自愈
 {{% /blocks/feature %}}
 
-{{% blocks/feature icon="fa-cubes" title="Easy Deployment" %}}
-All modules have been rewritten in go, which reduces the number of modules and greatly reduces the difficulty of deployment.
+{{% blocks/feature icon="fa-cubes" title="易于部署" %}}
+所有后端模块全部使用Go语言编写，减少了模块数量，大幅减小部署难度
 {{% /blocks/feature %}}
 
 {{< /blocks/section >}}
