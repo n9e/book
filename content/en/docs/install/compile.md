@@ -41,7 +41,7 @@ When the configuration file is in the etc directory, you need to take a look at 
 
 ## 4、Start each module process
 
-发布包里默认提供了一个control脚本，用来启停服务，直接执行`./control start all`即可启动所有模块。`./control status`可以查看各模块进程是否都已启动。夜莺共有6个核心模块，注意一下进程数是否正确。最后安装一下nginx，nginx有个示例配置文件在etc/nginx.conf，注意修改pub目录指向真实路径。至此，单机版就部署成功了。访问nginx即可看到页面。如果发现nginx日志里出现权限报错，检查机器selinux配置，尝试关闭selinux解决。
+There's a control script in tarball for start/stop processes. `./control start all` to start all processes. `./control status` to check all processes. Nightingale has 6 core modules. Please pay attention to whether the number of processes is correct. Finally, install nginx. Nginx has a sample configuration file in `etc/nginx.conf`, modify pub directory to real path. At this point, the stand-alone version is deployed successfully. Visit nginx to see the page. If the permission error is found in the nginx log, check the SELinux configuration of the machine and try to close SELinux.
 
 ```bash
 setenforce 0
