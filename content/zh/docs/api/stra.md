@@ -267,7 +267,7 @@ nid：服务树节点id，选填，不填则获取所有策略
 ```
 
 ### 查看所有生效策略
-`GET /api/portal/stra/effective`
+`GET /api/portal/stras/effective?all=1`
 
 返回样例
 ```json
