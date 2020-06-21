@@ -21,12 +21,6 @@ windows版本的collector
 
 采集交换机的指标
 
-#### [mymon](https://github.com/n9e/mymon)
-
-可以用来监控mysql
-
-#### [jmxmon](https://github.com/toomanyopenfiles/jmxmon)
-
-可以用来采集jvm信息
+另外，夜莺通过插件机制可以整合各类Prometheus的Exporter，把Prometheus的Exporter作为夜莺的采集器，具体如何整合请参考 [夜莺新版插件机制](https://www.bilibili.com/video/BV19C4y1a7zh/)
 
 
