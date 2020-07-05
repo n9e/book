@@ -267,4 +267,4 @@ nginx作为反向代理，根据不同location代理了monapi、transfer、index
 
 ### sender
 
-如《[通过源码编译安装](../compile/)》一节所述，sender可以参看[mail-sender](https://github.com/n9e/mail-sender)，期待您编写wechat-sender、dingding-sender、sms-sender、slack-sender，共建社区 :-)
+如《[通过源码编译安装](../compile/)》一节所述，sender可以参看[社区已有的Sender](https://github.com/n9e?q=sender&type=&language=)，没有提供voice-sender和sms-sender，是因为各家通道商接口各异没有标准。
