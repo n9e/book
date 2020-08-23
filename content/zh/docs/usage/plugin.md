@@ -10,6 +10,7 @@ description: >
 > 好处：
 > - 支持给插件传参数，传环境变量，传Stdin，非常灵活
 > - 分发插件的时候可以无差别分发到所有机器，不同机器执行不同的插件直接在web上即可控制
+> - 详见[开源运维监控系统Nightingale-系列10-新版插件以及与Prometheus Exporter整合] (https://www.bilibili.com/video/BV19C4y1a7zh)
 
 collector组件虽然内置了很多监控指标的采集，但无法解决所有场景，所以提供了插件机制，以便扩展collector的功能。
 
