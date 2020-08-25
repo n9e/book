@@ -85,73 +85,74 @@ Nightingale的transfer和collector两个模块都提供了上报数据的接口
 
 请求样例
 ```json
-{
-  "start": 1562925134,
-  "end": 1562925234,
-  "series": [
+[
     {
-      "endpoints": [
-        "127.0.0.1",
-        "127.0.0.2"
-      ],
-      "metric": "proc.num",
-      "tagkv": [
-        {
-          "tagk": "target",
-          "tagv": [
-            "collector"
-          ]
-        },
-        {
-          "tagk": "service",
-          "tagv": [
-            "n9e-collector"
-          ]
-        }
-      ]
+        "start": 1598338900,
+        "end": 1598338940,
+        "endpoints": ["10.254.226.221"],
+        "counters": ["cpu.idle"],
+        "step": 20,
+        "dstype": "GAUGE"
+    },
+    {
+        "start": 1598338900,
+        "end": 1598338940,
+        "endpoints": ["10.254.88.96"],
+        "counters": ["disk.bytes.used.percent/mount=/"],
+        "step": 20,
+        "dstype": "GAUGE"
     }
-  ]
-}
+]
 ```
 返回样例
 ```json
 {
-    "dat": [
+  "dat": [
+    {
+      "start": 1598338900,
+      "end": 1598338940,
+      "endpoint": "10.254.226.221",
+      "counter": "cpu.idle",
+      "dstype": "GAUGE",
+      "step": 20,
+      "values": [
         {
-            "start": 1562925134,
-            "end": 1562925234,
-            "endpoint": "127.0.0.1",
-            "counter": "proc.num/service=n9e-collector,target=collector",
-            "step": 10,
-            "values": [
-                {
-                    "timestamp": 1562925120,
-                    "value": 1
-                }
-            ]
+          "timestamp": 1598338900,
+          "value": 98.648649
         },
         {
-            "start": 1562925134,
-            "end": 1562925234,
-            "endpoint": "127.0.0.2",
-            "counter": "proc.num/service=n9e-collector,target=collector",
-            "step": 10,
-            "values": [
-                {
-                    "timestamp": 1562925210,
-                    "value": 0
-                },
-                {
-                    "timestamp": 1562925220,
-                    "value": 0
-                },
-                {
-                    "timestamp": 1562925230,
-                    "value": 0
-                }
-            ]
+          "timestamp": 1598338920,
+          "value": 98.316498
+        },
+        {
+          "timestamp": 1598338940,
+          "value": 98.307953
         }
-    ],
-    "err": ""
+      ]
+    },
+    {
+      "start": 1598338900,
+      "end": 1598338940,
+      "endpoint": "10.254.88.96",
+      "counter": "disk.bytes.used.percent/mount=/",
+      "dstype": "GAUGE",
+      "step": 20,
+      "values": [
+        {
+          "timestamp": 1598338900,
+          "value": 14.636725
+        },
+        {
+          "timestamp": 1598338920,
+          "value": 14.636725
+        },
+        {
+          "timestamp": 1598338940,
+          "value": 14.63682
+        }
+      ]
+    }
+  ],
+  "err": ""
 }
 ```
