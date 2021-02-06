@@ -67,9 +67,9 @@ Nightingale 是在 Open-Falcon 的基础上衍化发展而来，Open-Falcon 作�
 - 我们的官网是 [https://n9e.didiyun.com](https://n9e.didiyun.com/)，相关文档会首发于此。
 - 您可以在 [Github](https://github.com/didi/nightingale) 上关注 [Nightingale](https://github.com/didi/nightingale)，欢迎您试用和参与社区。
 - 您可以通过[滴滴云的夜莺镜像](http://n9e.didiyun.com/docs/install/didiyun/)，一键安装和体验。
-- 您也可添加滴滴云小助手的微信，由小助手拉进互助交流群。
+- 您也可添加夜莺小助手的微信，由小助手拉进互助交流群。
 
-<img src="https://s3-gz01.didistatic.com/n9e-pub/image/didiyun-xiaozhushou-wechat.jpeg" width="150">
+<img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png" width="150">
 
 #### 致谢和说明
 

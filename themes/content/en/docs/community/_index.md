@@ -26,9 +26,9 @@ Nightingale是一套衍生自Open-Falcon的互联网监控解决方案，融入�
 
 ### 互助交流
 
-添加滴滴云小助手的微信，由小助手拉进互助交流群
+添加夜莺小助手的微信，由小助手拉进互助交流群
 
-<img src="https://s3-gz01.didistatic.com/n9e-pub/image/didiyun-xiaozhushou-wechat.jpeg" width="150" alt="didiyun-xiaozhushou"/>
+<img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png" width="150" alt="didiyun-helper"/>
 
 
 ### 商业支持

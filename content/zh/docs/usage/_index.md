@@ -1,6 +1,6 @@
 ---
-title: "使用"
-linkTitle: "使用"
+title: "使用手册"
+linkTitle: "使用手册"
 weight: 4
 date: 2020-02-29
 description: >

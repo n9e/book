@@ -22,13 +22,13 @@ Team members：[ulricqin](https://github.com/ulricqin) [710leo](https://github.c
 
 ### Contact us
 
-<img src="https://s3-gz01.didistatic.com/n9e-pub/image/didiyun-wechat.jpg" width="150" alt="didiyun"/>
+<img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png" width="150" alt="n9e"/>
 
 ### Help and communication
 
-Add the WeChat of Didiyun ’s assistant, and the assistant will pull into the  assistance group.
+Add the WeChat of Nightingale's assistant, and the assistant will pull into the assistance group.
 
-<img src="https://s3-gz01.didistatic.com/n9e-pub/image/didiyun-xiaozhushou-wechat.jpeg" width="150" alt="didiyun-xiaozhushou"/>
+<img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png" width="150" alt="n9e-helper"/>
 
 
 ### Business support

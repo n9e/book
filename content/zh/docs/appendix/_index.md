@@ -5,30 +5,13 @@ linkTitle: "附录"
 weight: 10
 date: 2020-03-15
 description: >
-  一些散置在各个章节的视频教程、告警发送组件等
+  夜莺周边的一些资料，社区同仁贡献的一些教程
 ---
 
-## 视频教程
-
-相关视频如下，请一定要看完，再问问题...
-
-- [夜莺整体架构详解](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-arch-intro.mp4)
-- [快速安装演示](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-install-didiyun.mp4)
-- [源码安装演示](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-install-src.mp4)
-- [collector单独部署](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-install-collector.mp4)
-- [夜莺平台快速入门（一）](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-usage-001.mp4)
-- [夜莺平台快速入门（二）](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-usage-002.mp4)
-- [解释address.yml](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-usage-address.mp4)
-- [解释identity配置](https://s3-gz01.didistatic.com/n9e-pub/video/n9e-usage-identity.mp4)
-
-上面的视频不够细致，最新的更细致的讲解视频已经放到 [B站](https://search.bilibili.com/all?keyword=%E5%BC%80%E6%BA%90%E8%BF%90%E7%BB%B4%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9FNightingale-%E7%B3%BB%E5%88%97) 请移步观看
-
-## 告警发送
-
-Nightingale的理念，是将告警事件扔到redis里就不管了，接下来由各种sender来读取redis里的事件并发送，毕竟发送报警的方式太多了，适配起来比较费劲，希望社区同仁能够共建。
-
-这里提供一些典型的告警发送组件，供参考：
-
-- [mail-sender](https://github.com/n9e/mail-sender)
-- [wechat-sender](https://github.com/n9e/wechat-sender)
-- [dingtalk-sender](https://github.com/n9e/dingtalk-sender)
+- [常用监控插件，欢迎一起共建此仓库](https://github.com/n9e/plugin)
+- [Nightingale前端代码仓库](https://github.com/n9e/fe)
+- [Nightingale中的交换机监控](https://my.oschina.net/u/3771209/blog/4842460)
+- [Nightingale如何监控Windows机器](https://github.com/n9e/win-collector)
+- [Nightingale中ping监控和url监控](https://github.com/shanghai-edu/n9e-probe)
+- [Nightingale中K8S容器监控](https://github.com/n9e/docker-mon)
+- [Nightingale对Java程序埋点监控](https://github.com/lynxcat/micrometer-registry-nightingale)

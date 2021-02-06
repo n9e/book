@@ -29,7 +29,7 @@ pygmentsStyle = "tango"
 
 # Configure how URLs look like per section.
 [permalinks]
-blog = "/:section/:year/:month/:day/:slug/"
+blog = "/:section/:slug/"
 
 ## Configuration for BlackFriday markdown parser: https://github.com/russross/blackfriday
 [blackfriday]
@@ -149,7 +149,7 @@ no = 'Sorry to hear that. Please <a href="https://github.com/USERNAME/REPOSITORY
 #        desc = "Discussion and help from your fellow users"
 [[params.links.user]]
 	name ="Wechat"
-	url = "https://s3-gz01.didistatic.com/n9e-pub/image/didiyun-xiaozhushou-wechat.jpeg"
+	url = "https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png"
 	icon = "fab fa-weixin"
     desc = "Contact us for help and join our group"
 
