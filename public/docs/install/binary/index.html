@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.65.3" />
+
+<META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>二进制方式部署 | Nightingale</title><meta property="og:title" content="二进制方式部署" />
+<meta property="og:description" content="一步一步手把手教学，讲解如何搭建夜莺服务端各个组件，当前是v3版本，模块较多，等v4的时候，会合并服务端组件，敬请期待
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/docs/install/binary/" />
+<meta property="article:published_time" content="2020-02-24T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-02-06T11:19:59+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta itemprop="name" content="二进制方式部署">
+<meta itemprop="description" content="一步一步手把手教学，讲解如何搭建夜莺服务端各个组件，当前是v3版本，模块较多，等v4的时候，会合并服务端组件，敬请期待
+">
+<meta itemprop="datePublished" content="2020-02-24T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-02-06T11:19:59&#43;08:00" />
+<meta itemprop="wordCount" content="196">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="二进制方式部署"/>
+<meta name="twitter:description" content="一步一步手把手教学，讲解如何搭建夜莺服务端各个组件，当前是v3版本，模块较多，等v4的时候，会合并服务端组件，敬请期待
+"/>
+
+
+
+
+
+
+
+<link rel="preload" href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" as="style">
+<link href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" rel="stylesheet" integrity="">
+
+
+<script
+  src="https://s3-gz01.didistatic.com/n9e-pub/js/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+
+    <title>二进制方式部署 | Nightingale</title>
+  </head>
+  <body class="td-page">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+        <a class="navbar-brand" href="/">
+		<span class="navbar-logo">
+			<img src="https://s3-gz01.didistatic.com/n9e-pub/n9e-book/logo/n9e-logo-white.png" width="140">
+		
+	</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link active" href="/docs/" ><span class="active">文档</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/blog/" ><span>博客</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/community/" ><span>社区</span></a>
+			</li>
+			
+			
+			
+			<li class="nav-item dropdown d-none d-lg-block">
+				
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	中文
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/en/">English</a>
+	
+</div>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            
+
+
+
+
+<div id="td-sidebar-menu" class="td-sidebar__inner">
+  
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  
+  <nav class="collapse td-sidebar-nav pt-2 pl-4" id="td-section-nav">
+    
+    <div class="nav-item dropdown d-block d-lg-none">
+      
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	中文
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/en/">English</a>
+	
+</div>
+    </div>
+    
+    
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">文档</a>
+  </li>
+  <ul>
+    <li class="collapse show" id="docs">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/intro/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">夜莺介绍</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsintro">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/install/" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">安装部署</a>
+  </li>
+  <ul>
+    <li class="collapse show" id="docsinstall">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page  active" id="m-docsinstallbinary" href="/docs/install/binary/">二进制方式部署</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsinstalldocker" href="/docs/install/docker/">容器方式部署</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsinstallm3db" href="/docs/install/m3db/">存储切换M3方式</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/usage/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">使用手册</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsusage">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagemetric" href="/docs/usage/metric/">监控指标</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagestrategy" href="/docs/usage/strategy/">监控策略</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagefuncs" href="/docs/usage/funcs/">告警函数</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagemaskconf" href="/docs/usage/maskconf/">告警屏蔽</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusageport" href="/docs/usage/port/">端口监控</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusageproc" href="/docs/usage/proc/">进程监控</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagelogger" href="/docs/usage/logger/">日志监控</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusageplugin" href="/docs/usage/plugin/">插件机制</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusageprober" href="/docs/usage/prober/">组件采集</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/operation/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">运维操作</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsoperation">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsoperationtsdb" href="/docs/operation/tsdb/">绘图相关</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsoperationidx" href="/docs/operation/idx/">索引相关</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsoperationchecklist" href="/docs/operation/checklist/">变更检查</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsoperationmonitor" href="/docs/operation/monitor/">自监控</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/api/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">API</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsapi">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsapidata" href="/docs/api/data/">监控数据</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsapinotice" href="/docs/api/notice/">告警通知</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/faq/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">常见问题</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfaq">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/appendix/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">附录</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsappendix">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+  </nav>
+</div>
+
+
+
+
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+            
+
+
+
+
+
+
+<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+
+
+
+
+
+<a href="https://github.com/n9e/book/edit/master/content/zh/docs/install/binary.md" target="_blank"><i class="fa fa-edit fa-fw"></i> 编辑此页</a>
+<a href="https://github.com/n9e/book/issues/new?title=%e4%ba%8c%e8%bf%9b%e5%88%b6%e6%96%b9%e5%bc%8f%e9%83%a8%e7%bd%b2" target="_blank"><i class="fab fa-github fa-fw"></i> 提交文档问题</a>
+
+
+<a href="https://github.com/didi/nightingale/issues/new" target="_blank"><i class="fas fa-tasks fa-fw"></i> 提交项目问题</a>
+
+</div>
+
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#setup01">setup01</a></li>
+    <li><a href="#setup02">setup02</a></li>
+    <li><a href="#setup03">setup03</a></li>
+    <li><a href="#setup04">setup04</a></li>
+    <li><a href="#setup05">setup05</a></li>
+    <li><a href="#setup06">setup06</a></li>
+    <li><a href="#setup07">setup07</a></li>
+    <li><a href="#setup08">setup08</a></li>
+    <li><a href="#setup09">setup09</a></li>
+    <li><a href="#setup10">setup10</a></li>
+    <li><a href="#setup11">setup11</a></li>
+  </ul>
+</nav>
+
+
+
+
+<div style="">
+	<img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png" width="180" alt="n9e-helper"/>
+</div>
+
+
+
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+            
+  
+
+            <nav aria-label="breadcrumb" class="d-none d-md-block d-print-none">
+	<ol class="breadcrumb spb-1">
+		
+
+
+
+
+
+
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="/docs/">文档</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="/docs/install/">安装部署</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item active" aria-current="page">
+	<a href="/docs/install/binary/">二进制方式部署</a>
+</li>
+
+	</ol>
+</nav	>
+
+            
+<div class="td-content">
+	<h1>二进制方式部署</h1>
+	<div class="lead">一步一步手把手教学，讲解如何搭建夜莺服务端各个组件，当前是v3版本，模块较多，等v4的时候，会合并服务端组件，敬请期待</div>
+	<h2 id="setup01">setup01</h2>
+<p>准备一台系统为 CentOS7.X 的虚拟机或物理机，并安装完成 <code>mysql</code>、<code>redis</code>、<code>nginx</code>软件，简单 <code>yum</code> 安装即可，生产环境可寻求运维或DBA同学帮忙部署。</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+curl -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+yum install -y mariadb* redis nginx
+</code></pre></div><h2 id="setup02">setup02</h2>
+<p>下载我们已经编译好的二进制包到 <code>/home/n9e</code> 目录，如果想要更换安装目录，需要修改 <code>nginx.conf</code>，建议先用这个目录，熟悉之后，在进行自定义。</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">mkdir -p /home/n9e
+<span style="color:#204a87">cd</span> /home/n9e
+wget http://116.85.64.82/n9e.tar.gz
+tar zxvf n9e.tar.gz
+</code></pre></div><h2 id="setup03">setup03</h2>
+<p>初始化数据库，这里假设使用 <code>root</code> 账号，密码为 <code>1234</code>，如果不是这个账号密码，需要修改 <code>/home/n9e/etc/mysql.yml</code>。</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#204a87">cd</span> /home/n9e/sql
+mysql -uroot -p1234 &lt; n9e_ams.sql
+mysql -uroot -p1234 &lt; n9e_hbs.sql
+mysql -uroot -p1234 &lt; n9e_job.sql
+mysql -uroot -p1234 &lt; n9e_mon.sql
+mysql -uroot -p1234 &lt; n9e_rdb.sql
+</code></pre></div><h2 id="setup04">setup04</h2>
+<p>redis 配置修改，默认配置的 <code>6379</code> 端口，密码为空，如果默认配置不对，可以执行如下命令，看到多个配置文件里有 redis 相关配置，挨个检查并修改即可。</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#204a87">cd</span> /home/n9e/etc
+grep redis -r .
+</code></pre></div><h2 id="setup05">setup05</h2>
+<p>下载前端静态资源文件，放到默认的 <code>/home/n9e</code> 目录下，如果要更改目录，需要修改后面提到的 <code>nginx.conf</code> 文件。</p>
+<p>前端的源码单独拆了一个 repo，地址是： <a href="https://github.com/n9e/fe">https://github.com/n9e/fe</a> 没有和 nightingale 放在一起。</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#204a87">cd</span> /home/n9e
+wget http://116.85.64.82/pub.tar.gz
+tar zxvf pub.tar.gz
+</code></pre></div><h2 id="setup06">setup06</h2>
+<p>覆盖 <code>nginx.conf</code>，建议大家还是看一下这个配置，熟悉一下 nginx 的配置，夜莺不同 web 侧组件就是通过 nginx 的不同 <code>location</code> 区分的，覆盖完了配置记得 <code>reload</code> 一下或者重启 nginx。</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cp etc/nginx.conf /etc/nginx/nginx.conf
+systemctl restart nginx
+</code></pre></div><h2 id="setup07">setup07</h2>
+<p>检查 <code>identity.yml</code>，要保证这个 shell 可以正常获取本机 ip，如果实在不能正常获取，自己又不懂 shell，那么在 <code>specify</code> 字段写固定也可以。</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#8f5902;font-style:italic"># 用来做心跳，给服务端上报本机ip</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">ip</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">specify</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">shell</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>ifconfig<span style="color:#f8f8f8;text-decoration:underline"> </span>`route|grep<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;^default&#39;</span>|awk<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;{print $NF}&#39;</span>`|grep<span style="color:#f8f8f8;text-decoration:underline"> </span>inet|awk<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;{print $2}&#39;</span>|head<span style="color:#f8f8f8;text-decoration:underline"> </span>-n<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># MON、JOB的客户端拿来做本机标识</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">ident</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">specify</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">shell</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>ifconfig<span style="color:#f8f8f8;text-decoration:underline"> </span>`route|grep<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;^default&#39;</span>|awk<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;{print $NF}&#39;</span>`|grep<span style="color:#f8f8f8;text-decoration:underline"> </span>inet|awk<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;{print $2}&#39;</span>|head<span style="color:#f8f8f8;text-decoration:underline"> </span>-n<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><h2 id="setup08">setup08</h2>
+<p>检查 <code>agent.yml</code> 的几个 shell，挨个检查是否可以跑通，跑不通就改成适合自己环境的，实在不会改，直接写固定，比如 <code>disk</code> 部分，如果固定为 <code>80Gi</code> ，那么就可以写为：<code>disk: echo 80Gi</code>。</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#204a87;font-weight:bold">report</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#8f5902;font-style:italic"># ...</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">sn</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>dmidecode<span style="color:#f8f8f8;text-decoration:underline"> </span>-s<span style="color:#f8f8f8;text-decoration:underline"> </span>system-serial-number<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>tail<span style="color:#f8f8f8;text-decoration:underline"> </span>-n<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">fields</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">cpu</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>cat<span style="color:#f8f8f8;text-decoration:underline"> </span>/proc/cpuinfo<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>grep<span style="color:#f8f8f8;text-decoration:underline"> </span>processor<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>wc<span style="color:#f8f8f8;text-decoration:underline"> </span>-l<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">mem</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>cat<span style="color:#f8f8f8;text-decoration:underline"> </span>/proc/meminfo<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>grep<span style="color:#f8f8f8;text-decoration:underline"> </span>MemTotal<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>awk<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;{printf &#34;%dGi&#34;, $2/1024/1024}&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">disk</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>df<span style="color:#f8f8f8;text-decoration:underline"> </span>-m<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>grep<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;/dev/&#39;</span><span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>grep<span style="color:#f8f8f8;text-decoration:underline"> </span>-v<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;/var/lib&#39;</span><span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>grep<span style="color:#f8f8f8;text-decoration:underline"> </span>-v<span style="color:#f8f8f8;text-decoration:underline"> </span>tmpfs<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>awk<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;{sum += $2};END{printf &#34;%dGi&#34;, sum/1024}&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><h2 id="setup09">setup09</h2>
+<p>启动各个进程，包括 <code>mysql</code>、<code>redis</code>、<code>nginx</code>，夜莺的各个组件直接用 <code>control</code> 脚本启动即可，后续上生产环境，可以用<code>systemd</code> 之类的进行托管。</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#204a87">cd</span> /home/n9e
+./control start all
+</code></pre></div><h2 id="setup10">setup10</h2>
+<p>登录 web，账号 <code>root</code>，密码 <code>root.2020</code>，登入后第一步先要修改密码，如果 <code>nginx</code> 报权限类的错误，检查 <code>selinux</code> 是否关闭以及防火墙策略是否异常，如下命令可关闭 <code>selinux</code> 和防火墙。</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">setenforce <span style="color:#0000cf;font-weight:bold">0</span>
+sed -i <span style="color:#4e9a06">&#39;s#SELINUX=enforcing#SELINUX=disabled#&#39;</span> /etc/selinux/config
+systemctl disable firewalld.service
+systemctl stop firewalld.service
+systemctl stop NetworkManager
+systemctl disable NetworkManager
+</code></pre></div><h2 id="setup11">setup11</h2>
+<p>如果前10步骤都部署完成但仍然没有搭建起来，你可能需要<a href="https://mp.weixin.qq.com/s/OAEQ-ec-QM74U0SGoVCXkg">查看视频教程</a>。</p>
+
+	
+	
+	<div class="text-muted mt-5 pt-3 border-top">最后修改 2021-02-06: <a  href="https://github.com/n9e/book/commit/bb04a83591e8161b0afecd63defc5b9f4fc11cd0">v2 (bb04a83)</a>
+</div>
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Wechat" aria-label="Wechat">
+    <a class="text-white" target="_blank" href="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Email" aria-label="Email">
+    <a class="text-white" target="_blank" href="mailto:nightingale@didiglobal.com">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/didi/nightingale">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" href="https://n9e.slack.com/">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">&copy; 2021 DiDi&#39;s Nightingale team All Rights Reserved</small>
+        
+	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+<script src="/js/main.min.29b0315468c00226fa6f4556a9cebc0ac4fe1ce1457a01b22c0a06b329877383.js" integrity="sha256-KbAxVGjAAib6b0VWqc68CsT&#43;HOFFegGyLAoGsymHc4M=" crossorigin="anonymous"></script>
+
+
+
+  </body>
+</html>

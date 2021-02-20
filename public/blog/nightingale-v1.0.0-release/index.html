@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.65.3" />
+
+<META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>Nightingale v1.0.0 release | Nightingale</title><meta property="og:title" content="Nightingale v1.0.0 release" />
+<meta property="og:description" content="站在Open-Falcon巨人的肩膀上，滴滴监控Nightingale v1.0.0正式发布！这是一个新的征程，我们始终不忘初心，将运维监控做到极致！
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/nightingale-v1.0.0-release/" />
+<meta property="article:published_time" content="2020-02-29T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-02-06T11:19:59+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta itemprop="name" content="Nightingale v1.0.0 release">
+<meta itemprop="description" content="站在Open-Falcon巨人的肩膀上，滴滴监控Nightingale v1.0.0正式发布！这是一个新的征程，我们始终不忘初心，将运维监控做到极致！
+">
+<meta itemprop="datePublished" content="2020-02-29T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-02-06T11:19:59&#43;08:00" />
+<meta itemprop="wordCount" content="87">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Nightingale v1.0.0 release"/>
+<meta name="twitter:description" content="站在Open-Falcon巨人的肩膀上，滴滴监控Nightingale v1.0.0正式发布！这是一个新的征程，我们始终不忘初心，将运维监控做到极致！
+"/>
+
+
+
+
+
+
+
+<link rel="preload" href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" as="style">
+<link href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" rel="stylesheet" integrity="">
+
+
+<script
+  src="https://s3-gz01.didistatic.com/n9e-pub/js/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+
+    <title>Nightingale v1.0.0 release | Nightingale</title>
+  </head>
+  <body class="td-page td-blog">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+        <a class="navbar-brand" href="/">
+		<span class="navbar-logo">
+			<img src="https://s3-gz01.didistatic.com/n9e-pub/n9e-book/logo/n9e-logo-white.png" width="140">
+		
+	</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/docs/" ><span>文档</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link active" href="/blog/" ><span class="active">博客</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/community/" ><span>社区</span></a>
+			</li>
+			
+			
+			
+			<li class="nav-item dropdown d-none d-lg-block">
+				
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	中文
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/en/">English</a>
+	
+</div>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            
+
+
+
+
+<div id="td-sidebar-menu" class="td-sidebar__inner">
+  
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  
+  <nav class="collapse td-sidebar-nav pt-2 pl-4" id="td-section-nav">
+    
+    <div class="nav-item dropdown d-block d-lg-none">
+      
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	中文
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/en/">English</a>
+	
+</div>
+    </div>
+    
+    
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/blog/" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">博客</a>
+  </li>
+  <ul>
+    <li class="collapse show" id="blog">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/blog/posts/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Posts</a>
+  </li>
+  <ul>
+    <li class="collapse " id="blogposts">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-blogmysql-redis-mongo-monitoring" href="/blog/mysql-redis-mongo-monitoring/">MySQL Redis 等基础组件监控</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/blog/releases/" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">Releases</a>
+  </li>
+  <ul>
+    <li class="collapse show" id="blogreleases">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page  active" id="m-blognightingale-v100-release" href="/blog/nightingale-v1.0.0-release/">Nightingale v1.0.0 release</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+  </nav>
+</div>
+
+
+
+
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+            
+
+
+
+
+
+
+<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+
+
+
+
+
+<a href="https://github.com/n9e/book/edit/master/content/zh/blog/releases/release-v1.0.0.md" target="_blank"><i class="fa fa-edit fa-fw"></i> 编辑此页</a>
+<a href="https://github.com/n9e/book/issues/new?title=Nightingale%20v1.0.0%20release" target="_blank"><i class="fab fa-github fa-fw"></i> 提交文档问题</a>
+
+
+<a href="https://github.com/didi/nightingale/issues/new" target="_blank"><i class="fas fa-tasks fa-fw"></i> 提交项目问题</a>
+
+</div>
+
+
+
+
+
+
+
+
+
+<div style="">
+	<img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png" width="180" alt="n9e-helper"/>
+</div>
+
+
+
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 pl-md-5 pr-md-4" role="main">
+            <a class="btn btn-lg -bg-orange td-rss-button d-none d-lg-block" href="/blog/releases/index.xml" target="_blank">
+              RSS <i class="fa fa-rss ml-2 "></i>
+            </a>
+            
+<div class="td-content">
+	<h1>Nightingale v1.0.0 release</h1>
+	<div class="lead">站在Open-Falcon巨人的肩膀上，滴滴监控Nightingale v1.0.0正式发布！这是一个新的征程，我们始终不忘初心，将运维监控做到极致！</div>
+	<div class="td-byline mb-4">
+		
+		<time datetime="2020-02-29" class="text-muted">2020-02-29</time>
+	</div>
+	<p>夜莺（Nightingale）是滴滴基础平台联合滴滴云研发和开源的企业级监控解决方案。旨在满足云原生时代企业级的监控需求。Nightingale在产品完成度、系统高可用、以及用户体验方面，达到了企业级的要求，可满足不同规模用户的场景，小到几台机器，大到数十万都可以完美支撑。兼顾云原生和裸金属，支持应用监控和系统监控，插件机制灵活，插件丰富完善，具有高度的灵活性和可扩展性。</p>
+<p>Nightingale 在 <a href="https://github.com/open-falcon">Open-Falcon</a> 的基础上，结合滴滴内部的最佳实践，在性能、可维护性、易用性方面做了大量的改进，作为集团统一的监控解决方案，支撑了滴滴内部数十亿监控指标，覆盖了从系统、容器、到应用等各层面的监控需求，周活跃用户数千。五年磨一剑，取之开源，回馈开源。</p>
+<p><img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-tree.png" alt=""></p>
+<p>Nightingale采用树状节点导航，我们称之为对象树。对象树本质上是一种对监控对象的分组管理机制，方便查找和查看监控对象，以及对监控对象设置监控策略等管理动作。 一棵典型的树可从上到下描述为组织架构关系、产品服务模块关系、机房和机器挂载关系，该导航树可根据用户需求自行灵活定制。</p>
+<p><img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-stra.png" alt=""></p>
+<p>监控策略应用到某个节点后，该节点下的所有子节点挂载的所有的机器都会应用这个策略，任何一台机器触发相关阈值都会产生告警。</p>
+<p><img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-screen.png" alt=""></p>
+<p>监控大盘的定制做了大幅易用性改进，支持了图表阈值，支持了图表分类，新增图表和排序管理都是所见即所得的方式，巡检大盘的定制从此不再是困难。</p>
+<p>Nightingale 是在 Open-Falcon 的基础上衍化发展而来，Open-Falcon 作为国内使用最广泛的监控解决方案之一，为 Nightingale 的设计开发提供了大量的借鉴意义。</p>
+<h4 id="与open-falcon的不同点">与Open-Falcon的不同点</h4>
+<ul>
+<li><strong>告警引擎重构</strong>：Open-Falcon的告警策略，在监控数据推送上来的同时会触发策略判断，这种「推」的模式优势是策略的判断时效性非常高，但是不利于更高级的告警策略的支持和扩展，比如多条件的组合报警就很难支持。Nightingale 转为推拉结合模式，通过推模式保证大部分策略判断的效率，通过拉模式支持了与条件告警和nodata告警。</li>
+<li><strong>引入了导航对象树</strong>：将 Open-Falcon 采用的扁平 HostGroup，转为 Nightingale 的导航对象树，对象树本质上是一种对监控对象的分组管理机制，方便查找和查看监控对象，以及对监控对象设置监控策略等管理动作。 同时在 Nightingale中，去除了告警模板的概念，告警策略直接与树节点绑定，简化设计，大幅提升灵活度和易用性。</li>
+<li><strong>索引模块升级换代</strong>：Open-Falcon使用 MySQL 存储 metrics 的索引数据，在扩展性和灵活性上存在瓶颈。Nightingale 根据监控需求，设计开发了全新的内存索引模块index，查询方式更多样，查询效率更高，避免了原来MySQL索引数据达到亿级别时面临的维护优化工作。</li>
+<li><strong>时序数据库优化</strong>：在 Open-Falcon 存储模块 Graph 的基础上，引入 Facebook 的 Gorilla 压缩方案，近期几个小时的数据采用内存存储，大幅提升数据查询效率，长期数据仍然使用rrdtool数据格式存储在硬盘上。同时进一步完善了时序数据库的性能和稳定性。</li>
+<li><strong>告警引擎高可用改进</strong>：告警引擎judge模块通过心跳机制做到了故障自动摘除，再也不用担心单个judge宕机导致部分策略失效，需要人工介入的问题，index模块也是采用类似方式保证可用性。</li>
+<li><strong>原生内置日志监控功能</strong>：Nightingale 客户端原生内置了日志匹配和指标抽取能力，在 web 控制台页面上支持了日志匹配规则的配置，同时也支持读取目标机器特定目录下的配置文件的方式，让业务指标监控更为易用。</li>
+<li><strong>可运维性增强</strong>：将portal(falcon-plus中的api)、uic、dashboard、hbs、alarm合并为一个模块：monapi，简化了系统整体部署难度，原来的部分模块间调用变成进程内方法调用，性能更高。</li>
+<li><strong>配置文件中心化</strong>：配置文件做了易用性改造，抽取数据库通用配置到mysql.yml，抽取端口实例地址等关联配置到address.yml，大批配置在代码里给了默认值，使得配置文件更清晰，易于维护。</li>
+</ul>
+<h4 id="与open-falcon的相同点">与Open-Falcon的相同点</h4>
+<ul>
+<li>数据模型没有变化，仍然是metric、endpoint、tags的组织方式，agent基本是可以复用的，Nightingale中的agent叫collector，融合了原来Open-Falcon的agent和falcon-log-agent的逻辑，各种监控插件也都是可以复用的。</li>
+<li>数据流向和整体处理逻辑是类似的，仍然使用灵活的推模型，分为数据存储和告警判断两条链路。</li>
+</ul>
+<h4 id="nightingale架构">Nightingale架构</h4>
+<p><img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-arch.png" alt=""></p>
+<ul>
+<li>collector即agent，可以采集机器常见指标，原生支持日志监控，支持插件机制，支持业务通过接口直接上报数据；</li>
+<li>transfer提供rpc接口接收collector上报的数据，然后通过一致性哈希，将数据转发给多台tsdb和多台judge；</li>
+<li>tsdb即open-falcon中的graph组件，用于存储历史数据，支持配置为双写模式提升系统容灾能力，tsdb会把监控数据转发一份给index建索引；</li>
+<li>index是内存索引模块，替换原来的mysql方案，在内存里构建索引，便于后续数据检索，在检索的灵活性和检索性能方面大幅提升；</li>
+<li>judge是告警引擎，从monapi(portal)同步监控策略，然后对接收到的数据做告警判断，如满足阈值，则生成告警事件推送到redis队列；</li>
+<li>monapi(alarm)从redis队列中读取judge生成的事件，进行二次处理，补充一些元信息，生成告警消息，重新推送回redis队列；</li>
+<li>各发送组件，比如mail-sender、sms-sender等，从redis读取告警消息，发送告警，抽象出各类sender是为了后续定制方便；</li>
+<li>monapi集成了原来多个模块的功能，提供接口给js调用，api前缀为/api/portal，数据查询走transfer，去除了 open-falcon 中原来的query组件，api前缀为/api/transfer，索引查询的api前缀/api/index，于是，在前端统一搭建nginx，即可通过不同location将请求转发到不同后端；</li>
+<li>数据库仍然使用MySQL，主要存储的内容包括：用户信息、团队信息、树节点信息、告警策略、监控大盘、屏蔽策略、采集策略、部分组件心跳信息等；</li>
+</ul>
+<h4 id="仍在进行中的工作">仍在进行中的工作</h4>
+<ol>
+<li>提供监控指标聚合组件，现在的架构可以解决机器级、模块级的监控，但是集群维度的监控指标，是需要聚合整个集群的所有模块、机器的指标，做一些加和、求平均之类的操作，相关聚合组件，我们在紧锣密鼓的开源过程中；</li>
+<li>与k8s无缝集成的工作，也在进行之中；</li>
+<li>完善更多监控插件，之前Open-Falcon社区里的很多插件都是可以直接用的，我们会尽量补充社区没有的插件，并对社区已有的插件，进行二次整理和维护，让Nightingale周边更完善；</li>
+</ol>
+<h4 id="联系我们">联系我们</h4>
+<ul>
+<li>我们的官网是 <a href="https://n9e.didiyun.com/">https://n9e.didiyun.com</a>，相关文档会首发于此。</li>
+<li>您可以在 <a href="https://github.com/didi/nightingale">Github</a> 上关注 <a href="https://github.com/didi/nightingale">Nightingale</a>，欢迎您试用和参与社区。</li>
+<li>您可以通过<a href="http://n9e.didiyun.com/docs/install/didiyun/">滴滴云的夜莺镜像</a>，一键安装和体验。</li>
+<li>您也可添加夜莺小助手的微信，由小助手拉进互助交流群。</li>
+</ul>
+<img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png" width="150">
+<h4 id="致谢和说明">致谢和说明</h4>
+<ul>
+<li><a href="http://open-falcon.org">Open-Falcon</a> 是小米运维团队开源的企业级监控解决方案，在国内广泛使用。</li>
+<li><a href="http://n9e.didiyun.com">Nightingale</a> 采用 Apache-2.0 开源协议，Copyright © 滴滴 2020。</li>
+</ul>
+
+	
+
+	<ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5">
+  <li>
+    <a  class="btn btn-primary  disabled"><span class="mr-1">←</span> 上一页</a>
+  </li>
+    <a  class="btn btn-primary  disabled">下一页 <span class="ml-1">→</span></a>
+  </li>
+</ul>
+
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Wechat" aria-label="Wechat">
+    <a class="text-white" target="_blank" href="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Email" aria-label="Email">
+    <a class="text-white" target="_blank" href="mailto:nightingale@didiglobal.com">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/didi/nightingale">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" href="https://n9e.slack.com/">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">&copy; 2021 DiDi&#39;s Nightingale team All Rights Reserved</small>
+        
+	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+<script src="/js/main.min.29b0315468c00226fa6f4556a9cebc0ac4fe1ce1457a01b22c0a06b329877383.js" integrity="sha256-KbAxVGjAAib6b0VWqc68CsT&#43;HOFFegGyLAoGsymHc4M=" crossorigin="anonymous"></script>
+
+
+
+  </body>
+</html>

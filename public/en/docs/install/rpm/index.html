@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.65.3" />
+
+<META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>Install via rpm package | Nightingale</title><meta property="og:title" content="Install via rpm package" />
+<meta property="og:description" content="Use rpm package to install n9e components
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/docs/install/rpm/" />
+<meta property="article:modified_time" content="2020-04-23T16:41:17+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta itemprop="name" content="Install via rpm package">
+<meta itemprop="description" content="Use rpm package to install n9e components
+">
+<meta itemprop="dateModified" content="2020-04-23T16:41:17&#43;08:00" />
+<meta itemprop="wordCount" content="587">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Install via rpm package"/>
+<meta name="twitter:description" content="Use rpm package to install n9e components
+"/>
+
+
+
+
+
+
+
+<link rel="preload" href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" as="style">
+<link href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" rel="stylesheet" integrity="">
+
+
+<script
+  src="https://s3-gz01.didistatic.com/n9e-pub/js/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+
+    <title>Install via rpm package | Nightingale</title>
+  </head>
+  <body class="td-page">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+        <a class="navbar-brand" href="/en/">
+		<span class="navbar-logo">
+			<img src="https://s3-gz01.didistatic.com/n9e-pub/n9e-book/logo/n9e-logo-white.png" width="140">
+		
+	</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link active" href="/en/docs/" ><span class="active">Documentation</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/community/" ><span>Community</span></a>
+			</li>
+			
+			
+			
+			<li class="nav-item dropdown d-none d-lg-block">
+				
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	English
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/">中文</a>
+	
+</div>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            
+
+
+
+
+<div id="td-sidebar-menu" class="td-sidebar__inner">
+  
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  
+  <nav class="collapse td-sidebar-nav pt-2 pl-4" id="td-section-nav">
+    
+    <div class="nav-item dropdown d-block d-lg-none">
+      
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	English
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/">中文</a>
+	
+</div>
+    </div>
+    
+    
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/en/docs/" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">Documentation</a>
+  </li>
+  <ul>
+    <li class="collapse show" id="endocs">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/en/docs/community/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Community</a>
+  </li>
+  <ul>
+    <li class="collapse " id="endocscommunity">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/en/docs/intro/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Introduction</a>
+  </li>
+  <ul>
+    <li class="collapse " id="endocsintro">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/en/docs/install/" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">Installation</a>
+  </li>
+  <ul>
+    <li class="collapse show" id="endocsinstall">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsinstalldidiyun" href="/en/docs/install/didiyun/">Mirror installation</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsinstallproduct" href="/en/docs/install/product/">Production installation</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsinstallcompile" href="/en/docs/install/compile/">Source code compilation</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page  active" id="m-endocsinstallrpm" href="/en/docs/install/rpm/">RPM installation</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/en/docs/usage/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Usage</a>
+  </li>
+  <ul>
+    <li class="collapse " id="endocsusage">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsusagemaskconf" href="/en/docs/usage/maskconf/">Alarm shield</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsusagemetric" href="/en/docs/usage/metric/">Monitoring indicators</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsusagestrategy" href="/en/docs/usage/strategy/">Monitoring strategy </a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsusageport" href="/en/docs/usage/port/">Port monitoring</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsusageproc" href="/en/docs/usage/proc/">Process monitoring </a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsusagelogger" href="/en/docs/usage/logger/">Log monitoring</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsusageplugin" href="/en/docs/usage/plugin/">Plugin mechanism</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/en/docs/plugin/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Plugin</a>
+  </li>
+  <ul>
+    <li class="collapse " id="endocsplugin">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/en/docs/operation/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Operation</a>
+  </li>
+  <ul>
+    <li class="collapse " id="endocsoperation">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsoperationcapacity" href="/en/docs/operation/capacity/">Capacity assessment</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsoperationchecklist" href="/en/docs/operation/checklist/">Change check</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsoperationtsdb" href="/en/docs/operation/tsdb/">Drawing related</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsoperationidx" href="/en/docs/operation/idx/">Index</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsoperationmonitor" href="/en/docs/operation/monitor/">Self-monitoring</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/en/docs/api/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">API</a>
+  </li>
+  <ul>
+    <li class="collapse " id="endocsapi">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsapidata" href="/en/docs/api/data/">Monitoring data</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsapistra" href="/en/docs/api/stra/">Alarm related</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsapicollect" href="/en/docs/api/collect/">Collection configuration</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsapiuser" href="/en/docs/api/user/">User Management</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsapitree" href="/en/docs/api/tree/">Object node</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/en/docs/faq/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">FAQ</a>
+  </li>
+  <ul>
+    <li class="collapse " id="endocsfaq">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsfaqgraph" href="/en/docs/faq/graph/">Drawing related</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-endocsfaqalert" href="/en/docs/faq/alert/">Alarm related</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/en/docs/appendix/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Appendix</a>
+  </li>
+  <ul>
+    <li class="collapse " id="endocsappendix">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+  </nav>
+</div>
+
+
+
+
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+            
+
+
+
+
+
+
+<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+
+
+
+
+
+<a href="https://github.com/n9e/book/edit/master/content/en/docs/install/rpm.md" target="_blank"><i class="fa fa-edit fa-fw"></i> Edit this page</a>
+<a href="https://github.com/n9e/book/issues/new?title=Install%20via%20rpm%20package" target="_blank"><i class="fab fa-github fa-fw"></i> Create doc issue</a>
+
+
+<a href="https://github.com/didi/nightingale/issues/new" target="_blank"><i class="fas fa-tasks fa-fw"></i> Create project issue</a>
+
+</div>
+
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#rpm-package-introduction">rpm package introduction</a></li>
+    <li><a href="#explanation">Explanation</a>
+      <ul>
+        <li><a href="#install-and-use">Install and use</a></li>
+      </ul>
+    </li>
+    <li><a href="#all-in-one-installation">All in one installation</a></li>
+    <li><a href="#distributed-installation">Distributed installation</a>
+      <ul>
+        <li><a href="#collector-installation-collection-client-installation">Collector installation (collection client installation)</a></li>
+        <li><a href="#front-end-installation">Front-end installation</a></li>
+        <li><a href="#table-structure-installation">Table structure installation</a></li>
+        <li><a href="#installation-of-other-components">Installation of other components</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+
+<div style="">
+	<img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png" width="180" alt="n9e-helper"/>
+</div>
+
+
+
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+            
+  
+
+            <nav aria-label="breadcrumb" class="d-none d-md-block d-print-none">
+	<ol class="breadcrumb spb-1">
+		
+
+
+
+
+
+
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="/en/docs/">Documentation</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="/en/docs/install/">Installation</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item active" aria-current="page">
+	<a href="/en/docs/install/rpm/">RPM installation</a>
+</li>
+
+	</ol>
+</nav	>
+
+            
+<div class="td-content">
+	<h1>Install via rpm package</h1>
+	<div class="lead">Use rpm package to install n9e components</div>
+	<p>The n9e components have been packaged as rpm packages, which can be downloaded and installed as needed</p>
+<h2 id="rpm-package-introduction">rpm package introduction</h2>
+<table>
+<thead>
+<tr>
+<th align="left">Package names</th>
+<th align="left">Dependent packages</th>
+<th align="left">Introduction</th>
+<th align="left">installation path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">n9e-web-1.2.0-g59f2bb0.el7.x86_64.rpm</td>
+<td align="left">no</td>
+<td align="left">n9e web Front-end static files</td>
+<td align="left">/usr/local/n9e/pub</td>
+</tr>
+<tr>
+<td align="left">n9e-sql-1.2.0-g59f2bb0.el7.x86_64.rpm</td>
+<td align="left">no</td>
+<td align="left">n9e sql file</td>
+<td align="left">/usr/local/n9e/sql</td>
+</tr>
+<tr>
+<td align="left">n9e-nginx-conf-1.2.0-g59f2bb0.el7.x86_64.rpm</td>
+<td align="left">no</td>
+<td align="left">n9e nginx conf</td>
+<td align="left">/usr/local/n9e/etc</td>
+</tr>
+<tr>
+<td align="left">n9e-collector-1.2.0-g59f2bb0.el7.x86_64.rpm</td>
+<td align="left">net-tools</td>
+<td align="left">n9e collector Components</td>
+<td align="left">/usr/local/n9e</td>
+</tr>
+<tr>
+<td align="left">n9e-tsdb-1.2.0-g59f2bb0.el7.x86_64.rpm</td>
+<td align="left">no</td>
+<td align="left">n9e tsdb Components</td>
+<td align="left">/usr/local/n9e</td>
+</tr>
+<tr>
+<td align="left">n9e-transfer-1.2.0-g59f2bb0.el7.x86_64.rpm</td>
+<td align="left">no</td>
+<td align="left">n9e transfer Components</td>
+<td align="left">/usr/local/n9e</td>
+</tr>
+<tr>
+<td align="left">n9e-monapi-1.2.0-g59f2bb0.el7.x86_64.rpm</td>
+<td align="left">no</td>
+<td align="left">n9e monapi Components</td>
+<td align="left">/usr/local/n9e</td>
+</tr>
+<tr>
+<td align="left">n9e-judge-1.2.0-g59f2bb0.el7.x86_64.rpm</td>
+<td align="left">net-tools</td>
+<td align="left">n9e judge Components</td>
+<td align="left">/usr/local/n9e</td>
+</tr>
+<tr>
+<td align="left">n9e-index-1.2.0-g59f2bb0.el7.x86_64.rpm</td>
+<td align="left">net-tools</td>
+<td align="left">n9e index Components</td>
+<td align="left">/usr/local/n9e</td>
+</tr>
+</tbody>
+</table>
+<p>rpm package download address</p>
+<p><a href="https://dl.cactifans.com/n9e/">https://dl.cactifans.com/n9e/</a></p>
+<p>sha1</p>
+<pre><code>43ad9fac28e59a58644a3381d966398a9e397543  n9e-web-1.2.0-g59f2bb0.el7.x86_64.rpm
+754d2be782088817a0cef8fd23b274248d2f0da2  n9e-sql-1.2.0-g59f2bb0.el7.x86_64.rpm
+126ffc6beb8ac5c175d9ca086f4cf21222362623  n9e-nginx-conf-1.2.0-g59f2bb0.el7.x86_64.rpm
+105eb15870694cb9bd381d834e3afd19c9da8fff  n9e-collector-1.2.0-g59f2bb0.el7.x86_64.rpm
+0c504c09d625fd34384ad0065c0aaeac73a04587  n9e-tsdb-1.2.0-g59f2bb0.el7.x86_64.rpm
+8b94ca07621c06bacecbebaa2adedc9c4220c790  n9e-transfer-1.2.0-g59f2bb0.el7.x86_64.rpm
+b1c4f9648606b3bf6d9aa2be3156feb26cbd183b  n9e-monapi-1.2.0-g59f2bb0.el7.x86_64.rpm
+e67638dd0e9052853d43b79af9bcf802b2a8b675  n9e-judge-1.2.0-g59f2bb0.el7.x86_64.rpm
+6bd075f4d1dd1a260e3c2491a324b5c7c53dc5fc  n9e-index-1.2.0-g59f2bb0.el7.x86_64.rpm
+60a035b25a509a92fec2746a3983e9b52aa39548  n9e-1.2.0-g59f2bb0.el7.x86_64.rpm-bundle.tar.gz
+</code></pre><h2 id="explanation">Explanation</h2>
+<ul>
+<li>Except that the collector component is started by the root user, other components are started by the n9e user</li>
+<li>The log is in the path: /usr /local /n9e /module name /</li>
+<li>Install the corresponding modules as needed</li>
+</ul>
+<h3 id="install-and-use">Install and use</h3>
+<h2 id="all-in-one-installation">All in one installation</h2>
+<p>Install all components on one machine</p>
+<pre><code>yum install n9e-web-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-sql-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-nginx-conf-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-collector-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-tsdb-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-transfer-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-monapi-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-judge-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-index-1.2.0-g59f2bb0.el7.x86_64.rpm
+</code></pre><p>After installation, you need to install nginx, mysql components.
+mysql import table structure</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mysql -uroot -p &lt;/usr/local/n9e/sql/n9e_hbs.sql
+mysql -uroot -p &lt;/usr/local/n9e/sql/n9e_mon.sql
+mysql -uroot -p &lt;/usr/local/n9e/sql/n9e_uic.sql
+</code></pre></div><p>For security reasons, it is recommended to establish a mysql user for n9e independently, create and authorize n9e user in mysql (if using MySQL8, you need to use mysql_native_password authentication plugin)</p>
+<pre><code>mysql&gt;create user n9e@localhost identified by 'n9epwd123';
+mysql&gt;grant all on n9e_hbs.* to n9e@localhost;
+mysql&gt;grant all on n9e_mon.* to n9e@localhost;
+mysql&gt;grant all on n9e_uic.* to n9e@localhost;
+</code></pre><p>An n9e user has been created and the password is n9epwd123
+Modify /usr/local/n9e/etc/mysql.yml</p>
+<pre><code> ---
+uic:
+  addr: &quot;n9e:n9epwd123@tcp(127.0.0.1:3306)/n9e_uic?charset=utf8&amp;parseTime=True&amp;loc=Asia%2FShanghai&quot;
+  max: 16
+  idle: 4
+  debug: false
+mon:
+  addr: &quot;n9e:n9epwd123@tcp(127.0.0.1:3306)/n9e_mon?charset=utf8&amp;parseTime=True&amp;loc=Asia%2FShanghai&quot;
+  max: 16
+  idle: 4
+  debug: false
+hbs:
+  addr: &quot;n9e:n9epwd123@tcp(127.0.0.1:3306)/n9e_hbs?charset=utf8&amp;parseTime=True&amp;loc=Asia%2FShanghai&quot;
+  max: 16
+  idle: 4
+  debug: false
+</code></pre><p>Replace nginx configuration and restart nginx</p>
+<pre><code>cp /usr/local/n9e/etc/nginx.conf /etc/nginx/
+systemctl restart nginx
+</code></pre><p>Start all components</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">systemctl <span style="color:#204a87">enable</span> --now n9e-collector n9e-tsdb n9e-transfer n9e-monapi n9e-judge n9e-index
+</code></pre></div><p>Use a browser to open http: //ip to access, the default account root password root</p>
+<h2 id="distributed-installation">Distributed installation</h2>
+<h3 id="collector-installation-collection-client-installation">Collector installation (collection client installation)</h3>
+<p>collector is the n9e collection client, which needs to be installed on the client</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install n9e-collector-1.2.0-g59f2bb0.el7.x86_64.rpm  -y
+</code></pre></div><p>finish installation. Modify configuration file /usr/local/n9e/etc/address.yml after installation</p>
+<pre><code>...
+monapi:
+  http: 0.0.0.0:5800
+  addresses:
+    - 127.0.0.1
+
+transfer:
+  http: 0.0.0.0:5810
+  rpc: 0.0.0.0:5811
+  addresses:
+    - 127.0.0.1
+...
+</code></pre><p>The collector needs to communicate with monapi and transfer, so the 127.0.0.1 address needs to be modified to the actual component address. Multiple components can write multiple lines, the configuration file is in yaml format, pay attention to the format when modifying.
+After modification, use the following command to start</p>
+<pre><code>systemctl enable --now n9e-collector
+</code></pre><h3 id="front-end-installation">Front-end installation</h3>
+<p>The front end of n9e is a static file, it is recommended to use ningx for configuration</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install n9e-web-1.2.0-g59f2bb0.el7.x86_64.rpm n9e-nginx-conf-1.2.0-g59f2bb0.el7.x86_64.rpm -y
+</code></pre></div><p>After installation, the static file path is /usr /local /n9e /pub, while providing an nginx configuration file /usr/local/n9e/etc/nginx.conf. It is recommended to replace it directly after installing nginx. If the component is a distributed deployment, it is recommended to modify the corresponding upstream server address in the nginx configuration file according to the actual configuration.</p>
+<h3 id="table-structure-installation">Table structure installation</h3>
+<p>n9e depends on mysql database</p>
+<pre><code>yum install n9e-sql-1.2.0-g59f2bb0.el7.x86_64.rpm -y
+</code></pre><p>You can see 3 sql files in the /usr /local /n9e /sql directory, and import them into the database. At the same time, pay attention to modify the database configuration information in the component /usr/local/n9e/etc/mysql.yml file.</p>
+<h3 id="installation-of-other-components">Installation of other components</h3>
+<p>The rest of the components are installed directly using yum, pay attention to the configuration file information under /usr /local /n9e /etc</p>
+
+	
+	
+	<div class="text-muted mt-5 pt-3 border-top">Last modified April 23, 2020: <a  href="https://github.com/n9e/book/commit/ad896baa7e2b349d3738a1c74a75b3b547fce4dc">fix install (#17) (ad896ba)</a>
+</div>
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Wechat" aria-label="Wechat">
+    <a class="text-white" target="_blank" href="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Email" aria-label="Email">
+    <a class="text-white" target="_blank" href="mailto:nightingale@didiglobal.com">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/didi/nightingale">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" href="https://n9e.slack.com/">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">&copy; 2021 DiDi&#39;s Nightingale team All Rights Reserved</small>
+        
+	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+<script src="/js/main.min.29b0315468c00226fa6f4556a9cebc0ac4fe1ce1457a01b22c0a06b329877383.js" integrity="sha256-KbAxVGjAAib6b0VWqc68CsT&#43;HOFFegGyLAoGsymHc4M=" crossorigin="anonymous"></script>
+
+
+
+  </body>
+</html>
