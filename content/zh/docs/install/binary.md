@@ -29,6 +29,13 @@ tar zxvf n9e.tar.gz
 ```
 
 ## setup03
+安装存储
+
+想用 m3db 的，参考 https://github.com/didi/nightingale/wiki/%E9%83%A8%E7%BD%B2_10_v4%E7%89%88%E6%9C%ACm3db%E6%8E%A5%E5%85%A5
+想用 n9e-tsdb 的，参考 https://github.com/n9e/n9e-tsdb#readme
+
+
+## setup04
 
 初始化数据库，这里假设使用 `root` 账号，密码为 `1234`，如果不是这个账号密码，需要修改 `/home/n9e/etc/mysql.yml`。
 
@@ -41,7 +48,7 @@ mysql -uroot -p1234 < n9e_mon.sql
 mysql -uroot -p1234 < n9e_rdb.sql
 ```
 
-## setup04
+## setup05
 
 redis 配置修改，默认配置的 `6379` 端口，密码为空，如果默认配置不对，可以执行如下命令，看到多个配置文件里有 redis 相关配置，挨个检查并修改即可。
 
@@ -50,7 +57,7 @@ cd /home/n9e/etc
 grep redis -r .
 ```
 
-## setup05
+## setup06
 
 下载前端静态资源文件，放到默认的 `/home/n9e` 目录下，如果要更改目录，需要修改后面提到的 `nginx.conf` 文件。
 
@@ -62,7 +69,7 @@ wget http://116.85.64.82/pub.tar.gz
 tar zxvf pub.tar.gz
 ```
 
-## setup06
+## setup07
 
 覆盖 `nginx.conf`，建议大家还是看一下这个配置，熟悉一下 nginx 的配置，夜莺不同 web 侧组件就是通过 nginx 的不同 `location` 区分的，覆盖完了配置记得 `reload` 一下或者重启 nginx。
 
@@ -71,7 +78,7 @@ cp etc/nginx.conf /etc/nginx/nginx.conf
 systemctl restart nginx
 ```
 
-## setup07
+## setup08
 
 检查 `identity.yml`，要保证这个 shell 可以正常获取本机 ip，如果实在不能正常获取，自己又不懂 shell，那么在 `specify` 字段写固定也可以。
 
@@ -87,7 +94,7 @@ ident:
   shell: ifconfig `route|grep '^default'|awk '{print $NF}'`|grep inet|awk '{print $2}'|head -n 1
 ```
 
-## setup08
+## setup09
 
 检查 `agent.yml` 的几个 shell，挨个检查是否可以跑通，跑不通就改成适合自己环境的，实在不会改，直接写固定，比如 `disk` 部分，如果固定为 `80Gi` ，那么就可以写为：`disk: echo 80Gi`。
 
@@ -102,7 +109,7 @@ report:
     disk: df -m | grep '/dev/' | grep -v '/var/lib' | grep -v tmpfs | awk '{sum += $2};END{printf "%dGi", sum/1024}'
 ```
 
-## setup09
+## setup10
 
 启动各个进程，包括 `mysql`、`redis`、`nginx`，夜莺的各个组件直接用 `control` 脚本启动即可，后续上生产环境，可以用`systemd` 之类的进行托管。
 
@@ -111,7 +118,7 @@ cd /home/n9e
 ./control start all
 ```
 
-## setup10
+## setup11
 
 登录 web，账号 `root`，密码 `root.2020`，登入后第一步先要修改密码，如果 `nginx` 报权限类的错误，检查 `selinux` 是否关闭以及防火墙策略是否异常，如下命令可关闭 `selinux` 和防火墙。
 
@@ -124,6 +131,6 @@ systemctl stop NetworkManager
 systemctl disable NetworkManager
 ```
 
-## setup11
+## setup12
 
 如果前10步骤都部署完成但仍然没有搭建起来，你可能需要[查看视频教程](https://mp.weixin.qq.com/s/OAEQ-ec-QM74U0SGoVCXkg)。
