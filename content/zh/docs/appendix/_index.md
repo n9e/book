@@ -30,3 +30,13 @@ description: >
 
 建议新手测试[v3.8.0](https://github.com/didi/nightingale/releases/tag/v3.8.0)，最新版本是v4，v4的功能和v3基本一样，就是把模块合并了。v4和的交换机监控还没有处理好，所以建议先测试v3.8.0，v3和v4的搭建方式都可以参考 [这里](https://n9e.didiyun.com/docs/install/binary/) 就是v3模块多点，另外v5版本再有一两个月即可发布，建议等v5出来再上生产
 
+#### 问题解答
+
+先读一下这篇文章：[提问的艺术](https://mp.weixin.qq.com/s/9NReVrEj1iqrY47u_LfCfA) 夜莺研发团队正在紧锣密鼓开发bug，拿青春时间养家糊口，请不要私聊问太小白的问题。有这几个办法得到答案：
+
+- 读上面提到的资料文档
+- 在github提issue
+- 在微信群里询问
+- 在群里发红包求助
+
+
