@@ -13,6 +13,7 @@ description: >
 - 喜马拉雅音频：[https://www.ximalaya.com/keji/45095827/](https://www.ximalaya.com/keji/45095827/)
 - B站视频教程：[https://space.bilibili.com/442531657](https://space.bilibili.com/442531657)
 - 二次开发教程：[https://xie.infoq.cn/article/30d37e98fbe52ff2a79fc04b4](https://xie.infoq.cn/article/30d37e98fbe52ff2a79fc04b4)
+- 提问必读：https://gocn.vip/topics/10811 
 
 #### 夜莺周边
 
