@@ -8,12 +8,16 @@ description: >
   夜莺周边的一些资料，社区同仁贡献的一些教程
 ---
 
+#### 写在前面
+
+开源是一帮志同道合的人在一起，群策群力做一款软件，需要大家共建社区。写文章教程、群里答疑、点个Star、贡献建议、提供PR，都是特别棒的参与方式，开源项目因为大家的支持火起来，更多人参与进来完善，这个事就可以越做越好，最终多方共赢~
+
 #### 系列资料
 
 - 喜马拉雅音频：[https://www.ximalaya.com/keji/45095827/](https://www.ximalaya.com/keji/45095827/)
 - B站视频教程：[https://space.bilibili.com/442531657](https://space.bilibili.com/442531657)
 - 二次开发教程：[https://xie.infoq.cn/article/30d37e98fbe52ff2a79fc04b4](https://xie.infoq.cn/article/30d37e98fbe52ff2a79fc04b4)
-- 提问必读：https://gocn.vip/topics/10811 
+- 提问必读：[https://gocn.vip/topics/10811](https://gocn.vip/topics/10811) 
 
 #### 夜莺周边
 
