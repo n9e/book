@@ -21,24 +21,24 @@
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
 <title>二进制方式部署 | Nightingale</title><meta property="og:title" content="二进制方式部署" />
-<meta property="og:description" content="一步一步手把手教学，讲解如何搭建夜莺服务端各个组件，当前是v3版本，模块较多，等v4的时候，会合并服务端组件，敬请期待
+<meta property="og:description" content="一步一步手把手教学，讲解如何搭建夜莺服务端各个组件，当前是v4版本，v5预计还需要1~2个月，新用户建议等v5
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/install/binary/" />
 <meta property="article:published_time" content="2020-02-24T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-04-16T19:34:43+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta property="article:modified_time" content="2021-05-12T14:12:00+08:00" /><meta property="og:site_name" content="Nightingale" />
 <meta itemprop="name" content="二进制方式部署">
-<meta itemprop="description" content="一步一步手把手教学，讲解如何搭建夜莺服务端各个组件，当前是v3版本，模块较多，等v4的时候，会合并服务端组件，敬请期待
+<meta itemprop="description" content="一步一步手把手教学，讲解如何搭建夜莺服务端各个组件，当前是v4版本，v5预计还需要1~2个月，新用户建议等v5
 ">
 <meta itemprop="datePublished" content="2020-02-24T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-04-16T19:34:43&#43;08:00" />
-<meta itemprop="wordCount" content="206">
+<meta itemprop="dateModified" content="2021-05-12T14:12:00&#43;08:00" />
+<meta itemprop="wordCount" content="31">
 
 
 
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="二进制方式部署"/>
-<meta name="twitter:description" content="一步一步手把手教学，讲解如何搭建夜莺服务端各个组件，当前是v3版本，模块较多，等v4的时候，会合并服务端组件，敬请期待
+<meta name="twitter:description" content="一步一步手把手教学，讲解如何搭建夜莺服务端各个组件，当前是v4版本，v5预计还需要1~2个月，新用户建议等v5
 "/>
 
 
@@ -482,18 +482,9 @@
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#setup01">setup01</a></li>
-    <li><a href="#setup02">setup02</a></li>
-    <li><a href="#setup03">setup03</a></li>
-    <li><a href="#setup04">setup04</a></li>
-    <li><a href="#setup05">setup05</a></li>
-    <li><a href="#setup06">setup06</a></li>
-    <li><a href="#setup07">setup07</a></li>
-    <li><a href="#setup08">setup08</a></li>
-    <li><a href="#setup09">setup09</a></li>
-    <li><a href="#setup10">setup10</a></li>
-    <li><a href="#setup11">setup11</a></li>
-    <li><a href="#setup12">setup12</a></li>
+    <li><a href="#视频教程">视频教程</a></li>
+    <li><a href="#搭建文档">搭建文档</a></li>
+    <li><a href="#开始使用">开始使用</a></li>
   </ul>
 </nav>
 
@@ -548,83 +539,24 @@
             
 <div class="td-content">
 	<h1>二进制方式部署</h1>
-	<div class="lead">一步一步手把手教学，讲解如何搭建夜莺服务端各个组件，当前是v3版本，模块较多，等v4的时候，会合并服务端组件，敬请期待</div>
-	<h2 id="setup01">setup01</h2>
-<p>准备一台系统为 CentOS7.X 的虚拟机或物理机，并安装完成 <code>mysql</code>、<code>redis</code>、<code>nginx</code>软件，简单 <code>yum</code> 安装即可，生产环境可寻求运维或DBA同学帮忙部署。</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-curl -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
-yum install -y mariadb* redis nginx
-</code></pre></div><h2 id="setup02">setup02</h2>
-<p>下载我们已经编译好的二进制包到 <code>/home/n9e</code> 目录，如果想要更换安装目录，需要修改 <code>nginx.conf</code>，建议先用这个目录，熟悉之后，在进行自定义。</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">mkdir -p /home/n9e
-<span style="color:#204a87">cd</span> /home/n9e
-wget http://116.85.64.82/n9e.tar.gz
-tar zxvf n9e.tar.gz
-</code></pre></div><h2 id="setup03">setup03</h2>
-<p>安装存储</p>
-<p>想用 m3db 的，参考 <a href="https://github.com/didi/nightingale/wiki/%E9%83%A8%E7%BD%B2_10_v4%E7%89%88%E6%9C%ACm3db%E6%8E%A5%E5%85%A5">https://github.com/didi/nightingale/wiki/%E9%83%A8%E7%BD%B2_10_v4%E7%89%88%E6%9C%ACm3db%E6%8E%A5%E5%85%A5</a>
-想用 n9e-tsdb 的，参考 <a href="https://github.com/n9e/n9e-tsdb#readme">https://github.com/n9e/n9e-tsdb#readme</a></p>
-<h2 id="setup04">setup04</h2>
-<p>初始化数据库，这里假设使用 <code>root</code> 账号，密码为 <code>1234</code>，如果不是这个账号密码，需要修改 <code>/home/n9e/etc/mysql.yml</code>。</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#204a87">cd</span> /home/n9e/sql
-mysql -uroot -p1234 &lt; n9e_ams.sql
-mysql -uroot -p1234 &lt; n9e_hbs.sql
-mysql -uroot -p1234 &lt; n9e_job.sql
-mysql -uroot -p1234 &lt; n9e_mon.sql
-mysql -uroot -p1234 &lt; n9e_rdb.sql
-</code></pre></div><h2 id="setup05">setup05</h2>
-<p>redis 配置修改，默认配置的 <code>6379</code> 端口，密码为空，如果默认配置不对，可以执行如下命令，看到多个配置文件里有 redis 相关配置，挨个检查并修改即可。</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#204a87">cd</span> /home/n9e/etc
-grep redis -r .
-</code></pre></div><h2 id="setup06">setup06</h2>
-<p>下载前端静态资源文件，放到默认的 <code>/home/n9e</code> 目录下，如果要更改目录，需要修改后面提到的 <code>nginx.conf</code> 文件。</p>
-<p>前端的源码单独拆了一个 repo，地址是： <a href="https://github.com/n9e/fe">https://github.com/n9e/fe</a> 没有和 nightingale 放在一起。</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#204a87">cd</span> /home/n9e
-wget http://116.85.64.82/pub.tar.gz
-tar zxvf pub.tar.gz
-</code></pre></div><h2 id="setup07">setup07</h2>
-<p>覆盖 <code>nginx.conf</code>，建议大家还是看一下这个配置，熟悉一下 nginx 的配置，夜莺不同 web 侧组件就是通过 nginx 的不同 <code>location</code> 区分的，覆盖完了配置记得 <code>reload</code> 一下或者重启 nginx。</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cp etc/nginx.conf /etc/nginx/nginx.conf
-systemctl restart nginx
-</code></pre></div><h2 id="setup08">setup08</h2>
-<p>检查 <code>identity.yml</code>，要保证这个 shell 可以正常获取本机 ip，如果实在不能正常获取，自己又不懂 shell，那么在 <code>specify</code> 字段写固定也可以。</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#8f5902;font-style:italic"># 用来做心跳，给服务端上报本机ip</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">ip</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">specify</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">shell</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>ifconfig<span style="color:#f8f8f8;text-decoration:underline"> </span>`route|grep<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;^default&#39;</span>|awk<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;{print $NF}&#39;</span>`|grep<span style="color:#f8f8f8;text-decoration:underline"> </span>inet|awk<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;{print $2}&#39;</span>|head<span style="color:#f8f8f8;text-decoration:underline"> </span>-n<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># MON、JOB的客户端拿来做本机标识</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">ident</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">specify</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">shell</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>ifconfig<span style="color:#f8f8f8;text-decoration:underline"> </span>`route|grep<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;^default&#39;</span>|awk<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;{print $NF}&#39;</span>`|grep<span style="color:#f8f8f8;text-decoration:underline"> </span>inet|awk<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;{print $2}&#39;</span>|head<span style="color:#f8f8f8;text-decoration:underline"> </span>-n<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></code></pre></div><h2 id="setup09">setup09</h2>
-<p>检查 <code>agent.yml</code> 的几个 shell，挨个检查是否可以跑通，跑不通就改成适合自己环境的，实在不会改，直接写固定，比如 <code>disk</code> 部分，如果固定为 <code>80Gi</code> ，那么就可以写为：<code>disk: echo 80Gi</code>。</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#204a87;font-weight:bold">report</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#8f5902;font-style:italic"># ...</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">sn</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>dmidecode<span style="color:#f8f8f8;text-decoration:underline"> </span>-s<span style="color:#f8f8f8;text-decoration:underline"> </span>system-serial-number<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>tail<span style="color:#f8f8f8;text-decoration:underline"> </span>-n<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">fields</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">cpu</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>cat<span style="color:#f8f8f8;text-decoration:underline"> </span>/proc/cpuinfo<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>grep<span style="color:#f8f8f8;text-decoration:underline"> </span>processor<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>wc<span style="color:#f8f8f8;text-decoration:underline"> </span>-l<span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">mem</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>cat<span style="color:#f8f8f8;text-decoration:underline"> </span>/proc/meminfo<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>grep<span style="color:#f8f8f8;text-decoration:underline"> </span>MemTotal<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>awk<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;{printf &#34;%dGi&#34;, $2/1024/1024}&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">disk</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>df<span style="color:#f8f8f8;text-decoration:underline"> </span>-m<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>grep<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;/dev/&#39;</span><span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>grep<span style="color:#f8f8f8;text-decoration:underline"> </span>-v<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;/var/lib&#39;</span><span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>grep<span style="color:#f8f8f8;text-decoration:underline"> </span>-v<span style="color:#f8f8f8;text-decoration:underline"> </span>tmpfs<span style="color:#f8f8f8;text-decoration:underline"> </span>|<span style="color:#f8f8f8;text-decoration:underline"> </span>awk<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;{sum += $2};END{printf &#34;%dGi&#34;, sum/1024}&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></code></pre></div><h2 id="setup10">setup10</h2>
-<p>启动各个进程，包括 <code>mysql</code>、<code>redis</code>、<code>nginx</code>，夜莺的各个组件直接用 <code>control</code> 脚本启动即可，后续上生产环境，可以用<code>systemd</code> 之类的进行托管。</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#204a87">cd</span> /home/n9e
-./control start all
-</code></pre></div><h2 id="setup11">setup11</h2>
+	<div class="lead">一步一步手把手教学，讲解如何搭建夜莺服务端各个组件，当前是v4版本，v5预计还需要1~2个月，新用户建议等v5</div>
+	<h2 id="视频教程">视频教程</h2>
+<p><a href="https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&amp;__biz=MzU3ODAxNTIzMQ==&amp;scene=1&amp;album_id=1858590667128553475&amp;count=3#wechat_redirect">手把手细致教学视频</a></p>
+<h2 id="搭建文档">搭建文档</h2>
+<ul>
+<li><a href="https://gocn.vip/topics/11958">快速学习搭建单机版本</a></li>
+</ul>
+<p>单机版本默认使用单机的m3db作为存储，m3db一定要和夜莺部署到一台机器上，且不能使用pve的虚拟机。也可以不用m3db做存储，使用 <a href="https://github.com/n9e/n9e-tsdb">n9e-tsdb</a>。如果要上生产，m3db建议使用集群版本，集群版本的搭建方式建议参照 <a href="https://m3db.io/">M3官网</a> 也可以参照<a href="https://n9e.didiyun.com/docs/install/m3db/">这个文档</a>学习搭建m3集群</p>
+<h2 id="开始使用">开始使用</h2>
 <p>登录 web，账号 <code>root</code>，密码 <code>root.2020</code>，登入后第一步先要修改密码，如果 <code>nginx</code> 报权限类的错误，检查 <code>selinux</code> 是否关闭以及防火墙策略是否异常，如下命令可关闭 <code>selinux</code> 和防火墙。</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">setenforce <span style="color:#0000cf;font-weight:bold">0</span>
 sed -i <span style="color:#4e9a06">&#39;s#SELINUX=enforcing#SELINUX=disabled#&#39;</span> /etc/selinux/config
 systemctl disable firewalld.service
 systemctl stop firewalld.service
-systemctl stop NetworkManager
-systemctl disable NetworkManager
-</code></pre></div><h2 id="setup12">setup12</h2>
-<p>如果前10步骤都部署完成但仍然没有搭建起来，你可能需要<a href="https://mp.weixin.qq.com/s/OAEQ-ec-QM74U0SGoVCXkg">查看视频教程</a>。</p>
-
+</code></pre></div>
 	
 	
-	<div class="text-muted mt-5 pt-3 border-top">最后修改 2021-04-16: <a  href="https://github.com/n9e/book/commit/54b536a68b8da4be8242a2fca39b5dcaf16d93f8">Update binary.md (54b536a)</a>
+	<div class="text-muted mt-5 pt-3 border-top">最后修改 2021-05-12: <a  href="https://github.com/n9e/book/commit/1bdda9a84e463e4a6d8041ee510080d61adac791">Update binary.md (1bdda9a)</a>
 </div>
 </div>
 
