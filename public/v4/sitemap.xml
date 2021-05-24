@@ -4,57 +4,62 @@
   
   <url>
     <loc>/v4/docs/api/data/</loc>
-    <lastmod>2020-03-17T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/intro/</loc>
-    <lastmod>2020-02-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/install/</loc>
-    <lastmod>2020-02-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/usage/</loc>
-    <lastmod>2020-02-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/operation/</loc>
-    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/api/</loc>
-    <lastmod>2020-03-17T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/faq/</loc>
-    <lastmod>2020-03-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/v4/blog/posts/</loc>
-    <lastmod>2021-02-05T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/appendix/</loc>
-    <lastmod>2020-03-15T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/v4/blog/posts/</loc>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/api/notice/</loc>
-    <lastmod>2020-03-17T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/v4/blog/releases/</loc>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/</loc>
-    <lastmod>2020-03-17T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="v5"
@@ -68,122 +73,98 @@
   </url>
   
   <url>
-    <loc>/v4/blog/releases/</loc>
-    <lastmod>2020-02-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/v4/blog/mysql-redis-mongo-monitoring/</loc>
-    <lastmod>2021-02-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/v4/</loc>
-    <lastmod>2021-02-05T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="v5"
-                href="/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="v4"
-                href="/v4/"
-                />
-  </url>
-  
-  <url>
-    <loc>/v4/blog/</loc>
-    <lastmod>2021-02-05T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/operation/tsdb/</loc>
-    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/operation/idx/</loc>
-    <lastmod>2020-03-07T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/operation/checklist/</loc>
-    <lastmod>2020-03-06T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/operation/monitor/</loc>
-    <lastmod>2020-03-04T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/blog/nightingale-v1.0.0-release/</loc>
-    <lastmod>2020-02-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/usage/metric/</loc>
-    <lastmod>2020-02-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/usage/strategy/</loc>
-    <lastmod>2020-02-28T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/usage/funcs/</loc>
-    <lastmod>2020-02-27T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/usage/maskconf/</loc>
-    <lastmod>2020-02-25T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/install/binary/</loc>
-    <lastmod>2020-02-24T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/usage/port/</loc>
-    <lastmod>2020-02-23T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/usage/proc/</loc>
-    <lastmod>2020-02-23T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/usage/logger/</loc>
-    <lastmod>2020-02-21T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/install/docker/</loc>
-    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/install/m3db/</loc>
-    <lastmod>2020-02-19T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/usage/plugin/</loc>
-    <lastmod>2020-02-19T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/docs/usage/prober/</loc>
-    <lastmod>2020-02-18T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>/v4/index.json</loc>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="v5"
@@ -197,7 +178,23 @@
   </url>
   
   <url>
+    <loc>/v4/</loc>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/"
+                />
+  </url>
+  
+  <url>
     <loc>/v4/search/</loc>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="v5"
@@ -211,7 +208,13 @@
   </url>
   
   <url>
+    <loc>/v4/blog/</loc>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/v4/community/</loc>
+    <lastmod>2021-05-24T16:58:09+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="v5"

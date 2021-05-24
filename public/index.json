@@ -24,10 +24,10 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/index.json" />
-<meta property="og:site_name" content="Nightingale" />
+<meta property="article:modified_time" content="2021-05-24T16:58:09+08:00" /><meta property="og:site_name" content="Nightingale" />
 <meta itemprop="name" content="">
 <meta itemprop="description" content="">
-
+<meta itemprop="dateModified" content="2021-05-24T16:58:09&#43;08:00" />
 <meta itemprop="wordCount" content="0">
 
 
@@ -165,7 +165,7 @@
         
       </div>
       <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
-        <small class="text-white">&copy; 2021 DiDi&#39;s Nightingale team </small>
+        <small class="text-white">&copy; 2021 DiDi&#39;s Nightingale team All Rights Reserved</small>
         
 	
       </div>
