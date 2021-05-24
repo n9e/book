@@ -2,16 +2,14 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	
 	<sitemap>
-	   	<loc>/zh/sitemap.xml</loc>
-		
-	   	<lastmod>2021-05-12T18:31:11+08:00</lastmod>
+	   	<loc>/v5/sitemap.xml</loc>
 		
 	</sitemap>
 	
 	<sitemap>
-	   	<loc>/en/sitemap.xml</loc>
+	   	<loc>/v4/sitemap.xml</loc>
 		
-	   	<lastmod>2021-02-06T11:19:59+08:00</lastmod>
+	   	<lastmod>2021-02-05T00:00:00+00:00</lastmod>
 		
 	</sitemap>
 	

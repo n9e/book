@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh" class="no-js">
+<html lang="v5" class="no-js">
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,10 +24,10 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/index.json" />
-<meta property="article:modified_time" content="2020-04-08T10:33:57+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta property="og:site_name" content="Nightingale" />
 <meta itemprop="name" content="">
 <meta itemprop="description" content="">
-<meta itemprop="dateModified" content="2020-04-08T10:33:57&#43;08:00" />
+
 <meta itemprop="wordCount" content="0">
 
 
@@ -83,16 +83,6 @@
 				
 				
 				
-				<a class="nav-link" href="/blog/" ><span>博客</span></a>
-			</li>
-			
-			<li class="nav-item mr-4 mb-2 mb-lg-0">
-				
-				
-				
-				
-				
-				
 				<a class="nav-link" href="/community/" ><span>社区</span></a>
 			</li>
 			
@@ -102,11 +92,11 @@
 				
 
 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	中文
+	v5版本
 </a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 	
-	<a class="dropdown-item" href="/en/index.json">English</a>
+	<a class="dropdown-item" href="/v4/index.json">v4版本</a>
 	
 </div>
 			</li>
@@ -175,7 +165,7 @@
         
       </div>
       <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
-        <small class="text-white">&copy; 2021 DiDi&#39;s Nightingale team All Rights Reserved</small>
+        <small class="text-white">&copy; 2021 DiDi&#39;s Nightingale team </small>
         
 	
       </div>

@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.65.3" />
+
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>告警函数 | Nightingale</title><meta property="og:title" content="告警函数" />
+<meta property="og:description" content="对各类告警函数给予说明
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/v4/docs/usage/funcs/" />
+<meta property="article:published_time" content="2020-02-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-02-27T00:00:00+00:00" /><meta property="og:site_name" content="Nightingale" />
+<meta itemprop="name" content="告警函数">
+<meta itemprop="description" content="对各类告警函数给予说明
+">
+<meta itemprop="datePublished" content="2020-02-27T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-02-27T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="177">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="告警函数"/>
+<meta name="twitter:description" content="对各类告警函数给予说明
+"/>
+
+
+
+
+
+<link rel="preload" href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" as="style">
+<link href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" rel="stylesheet" integrity="">
+
+
+<script
+  src="https://s3-gz01.didistatic.com/n9e-pub/js/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+
+  </head>
+  <body class="td-page">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+        <a class="navbar-brand" href="/en/">
+		<span class="navbar-logo">
+			<img src="https://s3-gz01.didistatic.com/n9e-pub/n9e-book/logo/n9e-logo-white.png" width="140">
+		
+	</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/en/docs/" ><span>Documentation</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link active" href="/en/v4/docs/" ><span class="active">文档</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/blog/" ><span>博客</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/en/community/" ><span>Community</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/community/" ><span>社区</span></a>
+			</li>
+			
+			
+			
+			<li class="nav-item dropdown d-none d-lg-block">
+				
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	English
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/v4/">v4版本</a>
+	
+	<a class="dropdown-item" href="/">v5版本</a>
+	
+</div>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-default td-outer">
+      <main role="main" class="td-main">
+        
+
+<table>
+<thead>
+<tr>
+<th align="left">类别</th>
+<th align="left">函数</th>
+<th align="left">含义</th>
+<th align="left">函数文案</th>
+<th align="left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">发生次数</td>
+<td align="left">all, n</td>
+<td align="left">最近n 秒 内，全发生</td>
+<td align="left">连续发生(all)</td>
+<td align="left"><br /></td>
+</tr>
+<tr>
+<td align="left">发生次数</td>
+<td align="left">happen, n, m</td>
+<td align="left">最近 n 秒 内，发生m次</td>
+<td align="left">出现(happen)</td>
+<td align="left">null点也计算在n内</td>
+</tr>
+<tr>
+<td align="left"><br /></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">数学统计</td>
+<td align="left">sum, n</td>
+<td align="left">最近 n 秒 取值 的 和</td>
+<td align="left">求和(sum)</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">数学统计</td>
+<td align="left">avg, n</td>
+<td align="left">最近 n 秒 取值 的 平均值</td>
+<td align="left">平均值(avg)</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">数学统计</td>
+<td align="left">min, n</td>
+<td align="left">最近 n 秒 取值 的 最小值</td>
+<td align="left">最小值(min)</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">数学统计</td>
+<td align="left">max, n</td>
+<td align="left">最近 n 秒 取值 的 最大值</td>
+<td align="left">最大值(max)</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><br /></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">变化率</td>
+<td align="left">pdiff, n</td>
+<td align="left">最近 n 秒 变化率, 有一个满足 则触发<br />假设, 最近3个周期的值分别为 v, v2, v3（v为最新值）<br />那么计算公式为 any( (v-v2)/v2, (v-v3)/v3 )<br /><strong>区分正负</strong></td>
+<td align="left">突增突降率(pdiff)</td>
+<td align="left"><br /></td>
+</tr>
+<tr>
+<td align="left">变化量</td>
+<td align="left">diff, n</td>
+<td align="left">最近 n 秒 的变化量, 有一个满足 则触发<br />假设, 最近3个周期的值分别为 v, v2, v3（v为最新值）<br />那么计算公式为 any( (v-v2), (v-v3) )<br /><strong>区分正负</strong></td>
+<td align="left">突增突降值(diff)</td>
+<td align="left"><br /></td>
+</tr>
+<tr>
+<td align="left"><br /></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">数据中断</td>
+<td align="left">nodata, t</td>
+<td align="left">最近 $t 秒内 无数据上报</td>
+<td align="left">数据上报中断(nodata)</td>
+<td align="left"><br /></td>
+</tr>
+<tr>
+<td align="left"><br /></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">同环比</td>
+<td align="left">c_avg_rate_abs, n</td>
+<td align="left">最近 n 秒 的取值，相比 1天或7天前取值 的变化率 的绝对值<br />假设最近的n个值为 v1, v2, v3<br />历史取到的对应n'个值为 v1&rsquo;, v2'<br />那么计算公式为<br />abs(<br />(<br />avg(v1,v2,v3) / avg(v1&rsquo;,v2&rsquo;) -1<br />)<br />* 100%<br />)</td>
+<td align="left">同比变化率(c_avg_rate_abs)</td>
+<td align="left"><br /></td>
+</tr>
+<tr>
+<td align="left">同环比</td>
+<td align="left">c_avg_rate, n</td>
+<td align="left">最近 n 秒 的取值，相比 1天或7天前取值 的变化率（<strong>区分正负</strong>)<br />假设最近的n个值为 v1, v2, v3<br />历史取到的对应n'个值为 v1&rsquo;, v2'<br />那么计算公式为<br />(<br />avg(v1,v2,v3) / avg(v1&rsquo;,v2&rsquo;) -1<br />)<br />* 100%</td>
+<td align="left">同比变化率(c_avg_rate)</td>
+<td align="left"><br /></td>
+</tr>
+<tr>
+<td align="left">数据波动</td>
+<td align="left">3-sigma离群点检测，m</td>
+<td align="left">持续 n 秒内波动值过大，超过了 m 个标准差范围，默认 m 为 3</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+
+
+
+      </main>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Wechat" aria-label="Wechat">
+    <a class="text-white" target="_blank" href="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Email" aria-label="Email">
+    <a class="text-white" target="_blank" href="mailto:nightingale@didiglobal.com">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/didi/nightingale">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" href="https://n9e.slack.com/">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">&copy; 2021 DiDi&#39;s Nightingale team All Rights Reserved</small>
+        
+	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+<script src="/js/main.min.29b0315468c00226fa6f4556a9cebc0ac4fe1ce1457a01b22c0a06b329877383.js" integrity="sha256-KbAxVGjAAib6b0VWqc68CsT&#43;HOFFegGyLAoGsymHc4M=" crossorigin="anonymous"></script>
+
+
+
+  </body>
+</html>

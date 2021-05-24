@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.65.3" />
+
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>Process monitoring | Nightingale</title><meta property="og:title" content="Process monitoring" />
+<meta property="og:description" content="Process monitoring in Nightingale by configuring specific collection strategies to specify which processes to collect, and also supports reading the target machine identification file
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/en/docs/usage/proc/" />
+<meta property="article:published_time" content="2020-02-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-04-23T14:35:32+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta itemprop="name" content="Process monitoring">
+<meta itemprop="description" content="Process monitoring in Nightingale by configuring specific collection strategies to specify which processes to collect, and also supports reading the target machine identification file
+">
+<meta itemprop="datePublished" content="2020-02-23T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-04-23T14:35:32&#43;08:00" />
+<meta itemprop="wordCount" content="378">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Process monitoring"/>
+<meta name="twitter:description" content="Process monitoring in Nightingale by configuring specific collection strategies to specify which processes to collect, and also supports reading the target machine identification file
+"/>
+
+
+
+
+
+<link rel="preload" href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" as="style">
+<link href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" rel="stylesheet" integrity="">
+
+
+<script
+  src="https://s3-gz01.didistatic.com/n9e-pub/js/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+
+  </head>
+  <body class="td-page">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+        <a class="navbar-brand" href="/en/">
+		<span class="navbar-logo">
+			<img src="https://s3-gz01.didistatic.com/n9e-pub/n9e-book/logo/n9e-logo-white.png" width="140">
+		
+	</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link active" href="/en/en/docs/" ><span class="active">Documentation</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/docs/" ><span>文档</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/blog/" ><span>博客</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/en/community/" ><span>Community</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/community/" ><span>社区</span></a>
+			</li>
+			
+			
+			
+			<li class="nav-item dropdown d-none d-lg-block">
+				
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	English
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/v4/">v4版本</a>
+	
+	<a class="dropdown-item" href="/">v5版本</a>
+	
+</div>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-default td-outer">
+      <main role="main" class="td-main">
+        
+
+<p>Two configuration methods are supported, one is to create a meta information file in the specified directory of the target machine, and the other is to configure the collection strategy on the page.</p>
+<h2 id="target-machine-meta-information-file-method">Target machine meta information file method</h2>
+<p>The processing logic of process monitoring and port monitoring is similar. Both touch a file locally and tell the collector which process to monitor. If you want to monitor multiple processes, you need to touch multiple files.</p>
+<p>For port monitoring, the port number is unique, but for processes, the process name (see process name can be <code>cat /proc /&lt;pid&gt; /status</code>) is not unique, such as processes written in Python The names are all processes written in python and java, and the process names are java. Then what kind of file should we touch to tell the collector exactly which process we want to collect?</p>
+<p>We need to find something that can easily distinguish a process, here we have two ways. One is to use the process name, and the other is to use the process cmdline (see <code>/proc /&lt;pid&gt; /cmdline</code>),For example, if you touch a 10_name_n9e-monapi file, you can collect a process named n9e-monapi. Because n9e-monapi is written by go, the process name is n9e-monapi, so this configuration is OK.If the process name cannot be distinguished well, you can touch a 10_cmdline_xx file, assuming that the process pid to be monitored is 5648, and xx is a substring of <code>/proc /5648 /cmdline</code>.As long as this substring can be distinguished from the cmdline of other processes, there is no need to use the entire cmdline content.Example: We started a java process using <code>java -c uic.properties</code>, and its cmdline is:<code> java-cuic.properties</code>. To monitor this process, we only need to touch a 10_cmdline_uic.properties file.</p>
+<p>For the file content, just like the port monitoring, you can write the module name of the process. When the monitoring data is reported, it will bring this information and report it as a tag</p>
+<h2 id="configure-the-collection-strategy-on-the-page">Configure the collection strategy on the page</h2>
+<p>This method is relatively simple, but I will repeat it. There is a service field during the configuration of the collection strategy. You need to fill in the name of the module, which is equivalent to the content part of the target machine meta information file.</p>
+
+
+
+      </main>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Wechat" aria-label="Wechat">
+    <a class="text-white" target="_blank" href="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Email" aria-label="Email">
+    <a class="text-white" target="_blank" href="mailto:nightingale@didiglobal.com">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/didi/nightingale">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" href="https://n9e.slack.com/">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">&copy; 2021 DiDi&#39;s Nightingale team All Rights Reserved</small>
+        
+	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+<script src="/js/main.min.29b0315468c00226fa6f4556a9cebc0ac4fe1ce1457a01b22c0a06b329877383.js" integrity="sha256-KbAxVGjAAib6b0VWqc68CsT&#43;HOFFegGyLAoGsymHc4M=" crossorigin="anonymous"></script>
+
+
+
+  </body>
+</html>

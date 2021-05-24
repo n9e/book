@@ -1,0 +1,48 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nightingale – New Posts</title>
+    <link>/v4/blog/posts/</link>
+    <description>Recent content in New Posts on Nightingale</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 05 Feb 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/v4/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Blog: MySQL Redis MongoDB 最简单易用的监控方案，没有之一</title>
+      <link>/v4/blog/mysql-redis-mongo-monitoring/</link>
+      <pubDate>Fri, 05 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/v4/blog/mysql-redis-mongo-monitoring/</guid>
+      <description>
+        
+        
+        &lt;p&gt;还在用Zabbix、Prometheus、Open-Falcon监控各类基础组件么？是否疲于寻找各类采集脚本、采集插件、Exporter？各种配置维护是否感觉心力憔悴？兄弟，我懂你，而且，我有招~&lt;/p&gt;
+&lt;p&gt;这里隆重介绍一下Nightingale（滴滴夜莺）的3.5版本，这个版本引入了一个新模块叫Prober，专门用来采集各类中间件，只需页面点点点，就可以完成监控配置，而且内置了监控大盘和告警策略（预计2021年2月初上线），一键搞定！&lt;/p&gt;
+&lt;h4 id=&#34;什么原理&#34;&gt;什么原理？&lt;/h4&gt;
+&lt;p&gt;其实是集成了telegraf的能力，telegraf是InfluxDB开源的一个采集器，可以采集非常多类型的中间件，比如MySQL、Redis、Mongo、ElasticSearch、RabbitMQ、Ceph、Nginx等等，具体可以查看 &lt;a href=&#34;https://github.com/influxdata/telegraf&#34;&gt;这里&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;telegraf采集各种中间件都是要配置一个ini格式的配置，夜莺呢，就是把ini格式的配置做了页面化，让大伙可以在页面上配置，同时对采集器做了区分region的分片，可以同时承载非常大量的采集任务，某个采集器挂掉，也可以自动摘除，有可靠的高可用保障。&lt;/p&gt;
+&lt;h4 id=&#34;效果如何&#34;&gt;效果如何？&lt;/h4&gt;
+&lt;p&gt;耳听为虚眼见为实，截几张图给大家看看效果，入口在采集配置下面的组件部分：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://s3-gz01.didistatic.com/n9e-pub/n9e-book/post/post-01-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;上图我测试了4种组件采集，由于这个prober的扩展非常容易，开源社区有人贡献了Nginx、ElasticSearch、Prometheus的采集（刚开源Prober一周，就有朋友新贡献了3个组件采集器，可见集成telegraf，与夜莺做整合是非常容易的），所以如果大家拉取 &lt;a href=&#34;https://github.com/didi/nightingale&#34;&gt;https://github.com/didi/nightingale&lt;/a&gt; master上面的代码编译monapi和prober，应该不但可以看到mysql redis mongodb github这4类，还可以看到nginx、elasticsearch、prometheus的选项。&lt;/p&gt;
+&lt;p&gt;下面我们看一个mongodb的采集配置页面，主要就是填写mongodb的连接地址，夜莺的Prober模块就会周期性的去连接到mongodb实例，运行采集命令收集数据，简单到爆！&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://s3-gz01.didistatic.com/n9e-pub/n9e-book/post/post-01-02.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;查看数据&#34;&gt;查看数据？&lt;/h4&gt;
+&lt;p&gt;采集到的数据在即时看图里可以非常方便的查看，如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://s3-gz01.didistatic.com/n9e-pub/n9e-book/post/post-01-03.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;当然，既然有监控数据了，自然就可以配置监控大盘，最近我们刚刚上线了内置监控大盘功能，当前只是做了 &lt;code&gt;linux_host&lt;/code&gt; 相关的基础指标大盘，后面会把各类中间件的大盘也内置到系统里，一键导入创建。&lt;/p&gt;
+&lt;h4 id=&#34;详细资料&#34;&gt;详细资料？&lt;/h4&gt;
+&lt;p&gt;上周我们请Prober的作者喻波做了一次在线分享，分享回放在这里：&lt;a href=&#34;https://www.bilibili.com/video/BV1hz4y1S7rD/&#34;&gt;https://www.bilibili.com/video/BV1hz4y1S7rD/&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.65.3" />
+
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>Compile and install through source code | Nightingale</title><meta property="og:title" content="Compile and install through source code" />
+<meta property="og:description" content="If you are familiar with golang and understand the basic source code compilation knowledge, you can compile and install in this way.All back-end components of Nightingale are written in golang and no longer have python modules.
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/en/docs/install/compile/" />
+<meta property="article:published_time" content="2020-02-25T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-27T17:16:51+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta itemprop="name" content="Compile and install through source code">
+<meta itemprop="description" content="If you are familiar with golang and understand the basic source code compilation knowledge, you can compile and install in this way.All back-end components of Nightingale are written in golang and no longer have python modules.
+">
+<meta itemprop="datePublished" content="2020-02-25T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-27T17:16:51&#43;08:00" />
+<meta itemprop="wordCount" content="563">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Compile and install through source code"/>
+<meta name="twitter:description" content="If you are familiar with golang and understand the basic source code compilation knowledge, you can compile and install in this way.All back-end components of Nightingale are written in golang and no longer have python modules.
+"/>
+
+
+
+
+
+<link rel="preload" href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" as="style">
+<link href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" rel="stylesheet" integrity="">
+
+
+<script
+  src="https://s3-gz01.didistatic.com/n9e-pub/js/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+
+  </head>
+  <body class="td-page">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+        <a class="navbar-brand" href="/en/">
+		<span class="navbar-logo">
+			<img src="https://s3-gz01.didistatic.com/n9e-pub/n9e-book/logo/n9e-logo-white.png" width="140">
+		
+	</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link active" href="/en/en/docs/" ><span class="active">Documentation</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/docs/" ><span>文档</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/blog/" ><span>博客</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/en/community/" ><span>Community</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/community/" ><span>社区</span></a>
+			</li>
+			
+			
+			
+			<li class="nav-item dropdown d-none d-lg-block">
+				
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	English
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/v4/">v4版本</a>
+	
+	<a class="dropdown-item" href="/">v5版本</a>
+	
+</div>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-default td-outer">
+      <main role="main" class="td-main">
+        
+
+<p>This section assumes that you already know the basics of golang compilation and understand the meaning of the GOPATH environment variable. It is recommended to use golang 1.12 or above. The system depends on mysql and redis. We assume that you have installed and configured the access password for mysql and redis. This section describes the stand-alone installation method.</p>
+<p>If you are a novice, it is recommended to watch the demo video directly and follow the video to operate：<a href="https://s3-gz01.didistatic.com/n9e-pub/video/n9e-install-src.mp4">Source code installation demo</a></p>
+<h2 id="1source-code-compilation">1、Source code compilation</h2>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#8f5902;font-style:italic"># This project is not managed by go module, and needs to be compiled under github.com/didi</span>
+mkdir -p <span style="color:#000">$GOPATH</span>/src/github.com/didi
+<span style="color:#204a87">cd</span> <span style="color:#000">$GOPATH</span>/src/github.com/didi
+
+<span style="color:#8f5902;font-style:italic"># Clone the code and compile and package it. It will be automatically built during packing and packaged into a tar.gz</span>
+git clone https://github.com/didi/nightingale.git
+<span style="color:#204a87">cd</span> nightingale <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> ./control build <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> ./control pack
+</code></pre></div><p>If you are too lazy to compile, you can also refer to《<a href="../didiyun/">Quick mirror experience</a>》to create a cloud host.A packaged compressed package named n9e-xx.tar.gz can be obtained in the cloud host&rsquo;s <code>/home /n9e</code> directory, and the distribution package can be directly reused on 64-bit Linux.</p>
+<h2 id="2initialize-the-database">2、Initialize the database</h2>
+<p>The sql file is ready for you, unpack the development package, and directly import mysql in the sql directory:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mysql -uroot -p &lt; sql/n9e_hbs.sql
+mysql -uroot -p &lt; sql/n9e_mon.sql
+mysql -uroot -p &lt; sql/n9e_uic.sql
+</code></pre></div><h2 id="3modify-configuration-file">3、Modify configuration file</h2>
+<p>When the configuration file is in the etc directory, you need to take a look at mysql.yml and modify the user name and password for mysql access. The redis password is empty by default. If you configure a redis access password, you need to modify the configuration files of monapi and judge accordingly to configure the redis password. In addition, under <code>etc /address.yml</code>, you can see the ports that each module listens to. If it conflicts with other local service ports, you need to modify it manually.</p>
+<h2 id="4start-each-module-process">4、Start each module process</h2>
+<p>There&rsquo;s a control script in tarball for start/stop processes. <code>./control start all</code> to start all processes. <code>./control status</code> to check all processes. Nightingale has 6 core modules. Please pay attention to whether the number of processes is correct. Finally, install nginx. Nginx has a sample configuration file in <code>etc/nginx.conf</code>, modify pub directory to real path. At this point, the stand-alone version is deployed successfully. Visit nginx to see the page. If the permission error is found in the nginx log, check the SELinux configuration of the machine and try to close SELinux.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">setenforce <span style="color:#0000cf;font-weight:bold">0</span>
+sed -i <span style="color:#4e9a06">&#39;s/SELINUX=enforcing/SELINUX=disabled/g&#39;</span> /etc/sysconfig/selinux
+</code></pre></div><h2 id="5some-extra-information">5、Some extra information</h2>
+<p>If you cannot see the machine on all object pages, or if you see the machine but cannot see the monitoring data, please check all the files in the logs directory. For example, are commands such as ifconfig and route missing? Missing net-tools library? If you encounter problems with the machine&rsquo;s initial environment, please google to solve it.</p>
+<p>The core module of Nightingale itself does not provide the alarm sending function, but just push the alarm message to redis and it is over. Because the alarm channels of different companies are different, some hope to receive by mail, some hope to use SMS, or phone, WeChat, Dingding, self-developed IM, etc. This hopes that each company will adapt itself and build a community. There are SMTP standards for sending emails, so you can use email testing at the beginning. Here is a mail sending module: [mail-sender] (<a href="https://github.com/n9e/mail-sender">https://github.com/n9e/mail-sender</a>) as an example.</p>
+
+
+
+      </main>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Wechat" aria-label="Wechat">
+    <a class="text-white" target="_blank" href="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Email" aria-label="Email">
+    <a class="text-white" target="_blank" href="mailto:nightingale@didiglobal.com">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/didi/nightingale">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" href="https://n9e.slack.com/">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">&copy; 2021 DiDi&#39;s Nightingale team All Rights Reserved</small>
+        
+	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+<script src="/js/main.min.29b0315468c00226fa6f4556a9cebc0ac4fe1ce1457a01b22c0a06b329877383.js" integrity="sha256-KbAxVGjAAib6b0VWqc68CsT&#43;HOFFegGyLAoGsymHc4M=" crossorigin="anonymous"></script>
+
+
+
+  </body>
+</html>

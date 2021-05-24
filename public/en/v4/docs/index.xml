@@ -1,0 +1,116 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nightingale – Documentation</title>
+    <link>/en/v4/docs/</link>
+    <description>Recent content in Documentation on Nightingale</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 09 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/en/v4/docs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>V4: 夜莺介绍</title>
+      <link>/en/v4/docs/intro/</link>
+      <pubDate>Sat, 29 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/v4/docs/intro/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;欢迎加入nightingale社区&#34;&gt;欢迎加入Nightingale社区&lt;/h2&gt;
+&lt;p&gt;Nightingale是一套衍生自Open-Falcon的互联网监控解决方案，融入了滴滴的最佳实践，由于改动太大，优化太多，产品上已经无法与Open-Falcon平滑兼容，故而单开一个项目。&lt;/p&gt;
+&lt;p&gt;编写Open-Falcon第一行代码是在2014年，几年下来，有上千家商业公司在生产环境使用，我们也在逐步优化，夜莺可以说是一个颠覆级版本，性能、易用性、可用性都做了大幅改进，在滴滴抗住了7.7亿（资源、组件、应用、业务各层次的监控都有）监控指标，这是一个新的征程，期待与诸君携手，把监控这个领域，做到极致！&lt;/p&gt;
+&lt;h2 id=&#34;开源代码&#34;&gt;开源代码&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://github.com/didi/nightingale&#34;&gt;💡💡💡💡💡 https://github.com/didi/nightingale (来个star支持下呀~) 💡💡💡💡💡&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;系统截图&#34;&gt;系统截图&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://s3-gz01.didistatic.com/n9e-pub/image/snapshot/n9e-screen.png&#34; alt=&#34;Nightingale&#34;&gt;&lt;/p&gt;
+&lt;p&gt;上图是监控告警子系统的监控大盘页面，夜莺已经不只是一个运维监控系统，还有一部分CMDB的能力、自动化运维的能力，很多公司都基于夜莺开发自己公司的运维平台。&lt;/p&gt;
+&lt;h2 id=&#34;各子系统简介&#34;&gt;各子系统简介&lt;/h2&gt;
+&lt;p&gt;夜莺拆成了四个子系统，分别是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;用户资源中心（RDB）&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;资产管理系统（AMS）&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;任务执行中心（JOB）&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;监控告警系统（MON）&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;下面分别介绍一下这几个子系统的设计初衷。&lt;/p&gt;
+&lt;h3 id=&#34;用户资源中心&#34;&gt;用户资源中心&lt;/h3&gt;
+&lt;p&gt;这是一个平台底座，所有的运维系统，都需要依赖此系统，内置用户、权限、角色、组织、资源的管理。最核心的是一棵组织资源树，树节点的类别和扩展字段可以自定义，组织资源树的层级结构最简单的组织方式是：&lt;code&gt;租户&amp;gt;项目&amp;gt;模块&lt;/code&gt;，复杂一点的组织方式：&lt;code&gt;租户&amp;gt;组织&amp;gt;项目&amp;gt;模块&amp;gt;集群&lt;/code&gt;，组织是可以嵌套的。&lt;/p&gt;
+&lt;p&gt;节点上挂两类对象，一个是人员权限，一个是资源，资源可以是各类资源，除了主机设备、网络设备，也可以是&lt;code&gt;rds&lt;/code&gt;实例，&lt;code&gt;redis&lt;/code&gt;实例，当然，这就需要&lt;code&gt;rds&lt;/code&gt;、&lt;code&gt;redis&lt;/code&gt;的管控系统和&lt;strong&gt;RDB&lt;/strong&gt;打通了。滴滴在做一些大的中后台商业化解决方案的时候，&lt;strong&gt;RDB&lt;/strong&gt;就是扮演了这么一个底座的角色。&lt;/p&gt;
+&lt;h3 id=&#34;资产管理系统&#34;&gt;资产管理系统&lt;/h3&gt;
+&lt;p&gt;这里的资产管理系统，是偏硬件资产的管理，这个系统的使用者一般是系统部的人，资产管理类人员，应用运维相对不太关注这个系统。开源版本开放了一个主机设备的管理，大家可以二开，增加一些网络设备管理、机柜机架位的管理、配件耗材的管理等等，有了底座，上面再长出一些其他系统都相对容易。&lt;/p&gt;
+&lt;p&gt;agent安装完成之后，会自动注册到资产管理系统，自动采集到机器的 &lt;code&gt;sn&lt;/code&gt;、&lt;code&gt;ip&lt;/code&gt;、&lt;code&gt;cpu&lt;/code&gt;、&lt;code&gt;mem&lt;/code&gt;、&lt;code&gt;disk&lt;/code&gt; 等信息，这些信息为了灵活性考虑，都是用 &lt;code&gt;shell&lt;/code&gt; 采集的，上文安装步骤一章有提到，其中最重要的是 &lt;code&gt;ip&lt;/code&gt;，系统中有很多设备，&lt;code&gt;ip&lt;/code&gt; 是需要全局唯一，其他的 &lt;code&gt;sn&lt;/code&gt;、&lt;code&gt;ip&lt;/code&gt;、&lt;code&gt;cpu&lt;/code&gt;、&lt;code&gt;mem&lt;/code&gt;、&lt;code&gt;disk&lt;/code&gt; 等，如果无法采集成功，可以写为固定值，&lt;code&gt;shell&lt;/code&gt; 里直接写 &lt;code&gt;echo&lt;/code&gt; 一个假数据即可。&lt;/p&gt;
+&lt;p&gt;每一条资产，都有一个租户的字段，代表资产归属，需要管理员去分配资产归属（修改资产的所属租户），各个租户才能使用对应的资产，分配完了之后，会出现在用户资源中心的&amp;quot;游离资源&amp;quot;菜单中，各个租户就可以把游离资源挂到资产树上去分门别类的管理使用。树节点的创建是在树上右键哈。&lt;/p&gt;
+&lt;h3 id=&#34;任务执行中心&#34;&gt;任务执行中心&lt;/h3&gt;
+&lt;p&gt;用于批量跑脚本，类似&lt;strong&gt;pssh&lt;/strong&gt;、&lt;strong&gt;ansible&lt;/strong&gt;、&lt;strong&gt;saltstack&lt;/strong&gt;，不过不支持playbook，大道至简，就用脚本撸吧，&lt;code&gt;shell&lt;/code&gt;、&lt;code&gt;python&lt;/code&gt;、&lt;code&gt;perl&lt;/code&gt;、&lt;code&gt;ruby&lt;/code&gt;，都行，只要机器上有解析器。因为是内置到夜莺里的，所以体系化会更好一些，和组织资源树的权限是打通的，可以控制不同的人对不同的机器有不同的权限，有些人可以用&lt;code&gt;root&lt;/code&gt;账号执行，有些人只能用普通账号执行，历史执行记录都可以通过web页面查看审计。任务本身支持一些控制：&lt;strong&gt;暂停点&lt;/strong&gt;、&lt;strong&gt;容忍度&lt;/strong&gt;、&lt;strong&gt;单机超时时间&lt;/strong&gt;、&lt;strong&gt;中途暂停&lt;/strong&gt;、&lt;strong&gt;中途取消&lt;/strong&gt;、&lt;strong&gt;中途Kill&lt;/strong&gt;等。&lt;/p&gt;
+&lt;p&gt;一些经常要跑的脚本，可以做成模板，模板是对脚本的一种管理方式，后续就可以基于模板创建任务，填个机器列表就可以执行。比如&lt;strong&gt;安装JDK&lt;/strong&gt;，&lt;strong&gt;调整TCP内核参数&lt;/strong&gt;，&lt;strong&gt;调整ulimit&lt;/strong&gt;等机器初始化脚本，都可以做成模板。&lt;/p&gt;
+&lt;p&gt;开源版本的任务执行中心，可以看做是一个命令通道，后续可以基于这个命令通道构建一些场景化应用，比如&lt;strong&gt;机器初始化平台&lt;/strong&gt;、&lt;strong&gt;服务变更发布平台&lt;/strong&gt;、&lt;strong&gt;配置分发系统&lt;/strong&gt;等。任务执行中心各类操作都有 &lt;code&gt;API&lt;/code&gt; 对外暴露，具体可参看：&lt;a href=&#34;https://github.com/didi/nightingale/blob/master/src/modules/job/http/router.go&#34;&gt;router.go&lt;/a&gt; 我司的命令通道每周执行任务量超过60万，就是因为各类上层业务都在依赖这个命令通道的能力。&lt;/p&gt;
+&lt;h3 id=&#34;监控告警系统&#34;&gt;监控告警系统&lt;/h3&gt;
+&lt;p&gt;这块核心逻辑和&lt;strong&gt;v2&lt;/strong&gt;版本差别不大，监控指标分成了设备相关指标和设备无关指标，因为有些自定义监控数据的场景，&lt;code&gt;endpoint&lt;/code&gt;不好定义，或者 &lt;code&gt;endpoint&lt;/code&gt; 经常变化，这种就可以使用设备无关指标的方式来处理。监控大盘做了优化，引入了更多类型的图表，但夜莺毕竟是个 &lt;code&gt;metrics&lt;/code&gt; 监控系统，处理的是数值型时序数据，所以，最有用的图表其实就是折线图，其他类型图表，看看就好，场景较少。夜莺也可以对接Grafana，有个专门的 &lt;a href=&#34;https://github.com/n9e/grafana-n9e-datasource&#34;&gt;DataSource插件&lt;/a&gt;，Grafana会更炫酷一些，只是，在数据量大的时候性能较差。&lt;/p&gt;
+&lt;h2 id=&#34;系统架构&#34;&gt;系统架构&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://s3-gz01.didistatic.com/n9e-pub/image/n9e-v3-arch.png&#34; alt=&#34;n9e系统架构图&#34;&gt;&lt;/p&gt;
+&lt;p&gt;当前是v3架构，请大家先看视频学习&lt;a href=&#34;https://www.bilibili.com/video/BV1K54y1R7wS/&#34;&gt;v2的架构&lt;/a&gt;，然后再来看这张架构图，监控部分的架构和之前没有差别，&lt;strong&gt;collector&lt;/strong&gt;揉进了一些命令执行的能力，所以改了个名字叫&lt;strong&gt;agent&lt;/strong&gt;。引入了三个新组件：&lt;strong&gt;rdb&lt;/strong&gt;、&lt;strong&gt;ams&lt;/strong&gt;、&lt;strong&gt;job&lt;/strong&gt;，&lt;strong&gt;rdb&lt;/strong&gt;是用户资源中心，&lt;strong&gt;ams&lt;/strong&gt;是资产管理系统，&lt;strong&gt;job&lt;/strong&gt;是任务执行中心。&lt;strong&gt;agent&lt;/strong&gt;除了上报监控数据给&lt;strong&gt;transfer&lt;/strong&gt;，还会上报本机信息给&lt;strong&gt;ams&lt;/strong&gt;，注册本机信息到资产管理系统，另外就是与&lt;strong&gt;job&lt;/strong&gt;模块交互，拉取要执行的任务，上报任务执行结果。&lt;/p&gt;
+&lt;h2 id=&#34;联系我们&#34;&gt;联系我们&lt;/h2&gt;
+&lt;p&gt;夜莺是Obsuite的一个子品牌，Obsuite官方公众号，夜莺相关活动、教程、资料都可以在公众号找到&lt;/p&gt;
+&lt;img src=&#34;https://s3-gz01.didistatic.com/n9e-pub/image/obsuite/obsuite-wx.jpg&#34; width=&#34;200&#34; alt=&#34;obsuite-wx&#34;/&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>V4: 安装部署</title>
+      <link>/en/v4/docs/install/</link>
+      <pubDate>Sat, 29 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/v4/docs/install/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>V4: 使用手册</title>
+      <link>/en/v4/docs/usage/</link>
+      <pubDate>Sat, 29 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/v4/docs/usage/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>V4: 常见问题</title>
+      <link>/en/v4/docs/faq/</link>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/v4/docs/faq/</guid>
+      <description>
+        
+        
+        &lt;ul&gt;
+&lt;li&gt;喜马拉雅音频：&lt;a href=&#34;https://www.ximalaya.com/keji/45095827/&#34;&gt;https://www.ximalaya.com/keji/45095827/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;B站视频教程：&lt;a href=&#34;https://space.bilibili.com/442531657&#34;&gt;https://space.bilibili.com/442531657&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;二次开发教程：&lt;a href=&#34;https://xie.infoq.cn/article/30d37e98fbe52ff2a79fc04b4&#34;&gt;https://xie.infoq.cn/article/30d37e98fbe52ff2a79fc04b4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;右侧二维码，扫描加小助手的好友，小助手拉你进互助交流群&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;机器或agent挂了nodata策略不告警&#34;&gt;机器或agent挂了，nodata策略不告警&lt;/h4&gt;
+&lt;p&gt;大概率是机器时间不对，agent所在机器的时间和夜莺服务端部署的机器时间不一致导致的，要用ntp同步一下&lt;/p&gt;
+&lt;h4 id=&#34;如何做高可用部署&#34;&gt;如何做高可用部署&lt;/h4&gt;
+&lt;p&gt;找多台机器，每台机器都部署所有服务端模块，修改address.yml，把各个addresses字段填充为实际的多台机器的IP；transfer的配置文件里，配置多个tsdb，当然了，我们更推荐大家使用 &lt;a href=&#34;/docs/install/m3db/&#34;&gt;M3DB&lt;/a&gt;；nginx.conf里各个upstream要配置多个实例。齐活。&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

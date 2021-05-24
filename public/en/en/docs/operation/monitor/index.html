@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.65.3" />
+
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>Self-monitoring | Nightingale</title><meta property="og:title" content="Self-monitoring" />
+<meta property="og:description" content="This section explains how to do self-monitoring of the monitoring system
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/en/docs/operation/monitor/" />
+<meta property="article:published_time" content="2020-04-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-04-12T17:34:25+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta itemprop="name" content="Self-monitoring">
+<meta itemprop="description" content="This section explains how to do self-monitoring of the monitoring system
+">
+<meta itemprop="datePublished" content="2020-04-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-04-12T17:34:25&#43;08:00" />
+<meta itemprop="wordCount" content="304">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Self-monitoring"/>
+<meta name="twitter:description" content="This section explains how to do self-monitoring of the monitoring system
+"/>
+
+
+
+
+
+<link rel="preload" href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" as="style">
+<link href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" rel="stylesheet" integrity="">
+
+
+<script
+  src="https://s3-gz01.didistatic.com/n9e-pub/js/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+
+  </head>
+  <body class="td-page">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+        <a class="navbar-brand" href="/en/">
+		<span class="navbar-logo">
+			<img src="https://s3-gz01.didistatic.com/n9e-pub/n9e-book/logo/n9e-logo-white.png" width="140">
+		
+	</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link active" href="/en/en/docs/" ><span class="active">Documentation</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/docs/" ><span>文档</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/blog/" ><span>博客</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/en/community/" ><span>Community</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/community/" ><span>社区</span></a>
+			</li>
+			
+			
+			
+			<li class="nav-item dropdown d-none d-lg-block">
+				
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	English
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/v4/">v4版本</a>
+	
+	<a class="dropdown-item" href="/">v5版本</a>
+	
+</div>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-default td-outer">
+      <main role="main" class="td-main">
+        
+
+<p>To do a good job of self-monitoring of the monitoring system, we start from three aspects: preventing problems, finding problems in a timely manner, and quickly positioning stop loss.</p>
+<h3 id="prevent-problems">Prevent problems</h3>
+<p>Through the establishment of monitoring dashboard, regularly observe the change trend of core monitoring indicators to discover potential problems in advance. Each module of Nightingale will actively report some of its own monitoring data, through which we can build a monitoring dashboard and conduct regular inspections.Related monitoring indicators are mentioned in [Change Check] (../checklist/).</p>
+<h3 id="timely-detection-of-problems">Timely detection of problems</h3>
+<p>A well-configured alarm strategy is the main means of finding problems in a timely manner.The strategy configuration page supports import operations. We have compiled some self-monitored [alarm strategies] (<a href="https://s3-gz01.didistatic.com/n9e-pub/json/stra.json),">https://s3-gz01.didistatic.com/n9e-pub/json/stra.json),</a> you can import these indicators, and then can be used by modifying the alarm recipient. :-)</p>
+<p>However, when the data forwarding, alarm, and notification components of the monitoring system are unavailable, their own alarm capabilities will be unavailable, so a third-party service is also required to monitor the module survival。When the alarm capability of the monitoring system fails, we can still receive the alarm notification。Third-party monitoring should be simple enough. The self-monitoring service used by open-falcon is recommended here [anteye] (<a href="https://github.com/niean/anteye">https://github.com/niean/anteye</a>)，Add a process survival monitoring alarm to anteye, so that the two monitoring systems monitor each other, and if any party has a problem, we can timely sense.</p>
+<h3 id="quickly-locate-problems">Quickly locate problems</h3>
+<p>After receiving the system&rsquo;s own alarm, if you can quickly locate the problem from the alarm notification, you can directly perform a stop loss operation.
+If you cannot locate the problem immediately, it is recommended to first observe the inspection dashboard created in advance to understand the overall status of the service, and then observe the system and business indicators of the problem module to gradually converge the problem and quickly locate the stop loss.</p>
+
+
+
+      </main>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Wechat" aria-label="Wechat">
+    <a class="text-white" target="_blank" href="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Email" aria-label="Email">
+    <a class="text-white" target="_blank" href="mailto:nightingale@didiglobal.com">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/didi/nightingale">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" href="https://n9e.slack.com/">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">&copy; 2021 DiDi&#39;s Nightingale team All Rights Reserved</small>
+        
+	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+<script src="/js/main.min.29b0315468c00226fa6f4556a9cebc0ac4fe1ce1457a01b22c0a06b329877383.js" integrity="sha256-KbAxVGjAAib6b0VWqc68CsT&#43;HOFFegGyLAoGsymHc4M=" crossorigin="anonymous"></script>
+
+
+
+  </body>
+</html>

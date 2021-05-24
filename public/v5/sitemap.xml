@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>/docs/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/docs/"
+                />
+  </url>
+  
+  <url>
+    <loc>/index.json</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/index.json"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/index.json"
+                />
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/"
+                />
+  </url>
+  
+  <url>
+    <loc>/search/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/search/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/search/"
+                />
+  </url>
+  
+  <url>
+    <loc>/community/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/community/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/community/"
+                />
+  </url>
+  
+</urlset>

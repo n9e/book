@@ -24,10 +24,10 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/en/index.json" />
-<meta property="article:modified_time" content="2020-03-11T18:06:21+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta property="og:site_name" content="Nightingale" />
 <meta itemprop="name" content="">
 <meta itemprop="description" content="">
-<meta itemprop="dateModified" content="2020-03-11T18:06:21&#43;08:00" />
+
 <meta itemprop="wordCount" content="0">
 
 
@@ -73,7 +73,7 @@
 				
 				
 				
-				<a class="nav-link" href="/en/docs/" ><span>Documentation</span></a>
+				<a class="nav-link" href="/en/en/docs/" ><span>Documentation</span></a>
 			</li>
 			
 			<li class="nav-item mr-4 mb-2 mb-lg-0">
@@ -83,7 +83,37 @@
 				
 				
 				
-				<a class="nav-link" href="/en/community/" ><span>Community</span></a>
+				<a class="nav-link" href="/en/v4/docs/" ><span>文档</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/blog/" ><span>博客</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/en/community/" ><span>Community</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/community/" ><span>社区</span></a>
 			</li>
 			
 			
@@ -96,7 +126,9 @@
 </a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 	
-	<a class="dropdown-item" href="/index.json">中文</a>
+	<a class="dropdown-item" href="/v4/">v4版本</a>
+	
+	<a class="dropdown-item" href="/">v5版本</a>
 	
 </div>
 			</li>

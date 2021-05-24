@@ -10,8 +10,8 @@ theme = ["docsy"]
 enableGitInfo = true
 
 # Language settings
-contentDir = "content/en"
-defaultContentLanguage = "zh"
+contentDir = "content/v5"
+defaultContentLanguage = "v5"
 defaultContentLanguageInSubdir = false
 # Useful when translating.
 enableMissingTranslationPlaceholders = true
@@ -53,20 +53,29 @@ anchor = "smart"
 
 [languages]
 
-[languages.en]
-title = "Nightingale"
-description = "Nightingale website"
-languageName ="English"
-# Weight used for sorting.
-weight = 1
+# [languages.en]
+# title = "Nightingale"
+# description = "Nightingale website"
+# languageName ="English"
+# # Weight used for sorting.
+# weight = 1
 
-[languages.zh]
+[languages.v4]
 title = "Nightingale"
 description = "Nightingale(夜莺监控)"
-languageName ="中文"
-contentDir = "content/zh"
+languageName ="v4版本"
+contentDir = "content/v4"
 time_format_default = "2006-01-02"
 time_format_blog = "2006-01-02"
+
+[languages.v5]
+title = "Nightingale"
+description = "Nightingale(夜莺监控)"
+languageName ="v5版本"
+contentDir = "content/v5"
+time_format_default = "2006-01-02"
+time_format_blog = "2006-01-02"
+weight = 1
 
 [markup]
   [markup.goldmark]

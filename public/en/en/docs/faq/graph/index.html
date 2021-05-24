@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.65.3" />
+
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>Drawing related | Nightingale</title><meta property="og:title" content="Drawing related" />
+<meta property="og:description" content="This section explains common problems related to acquisition and monitoring charts
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/en/docs/faq/graph/" />
+<meta property="article:published_time" content="2020-04-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-04-15T11:53:12+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta itemprop="name" content="Drawing related">
+<meta itemprop="description" content="This section explains common problems related to acquisition and monitoring charts
+">
+<meta itemprop="datePublished" content="2020-04-14T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-04-15T11:53:12&#43;08:00" />
+<meta itemprop="wordCount" content="417">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Drawing related"/>
+<meta name="twitter:description" content="This section explains common problems related to acquisition and monitoring charts
+"/>
+
+
+
+
+
+<link rel="preload" href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" as="style">
+<link href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" rel="stylesheet" integrity="">
+
+
+<script
+  src="https://s3-gz01.didistatic.com/n9e-pub/js/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+
+  </head>
+  <body class="td-page">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+        <a class="navbar-brand" href="/en/">
+		<span class="navbar-logo">
+			<img src="https://s3-gz01.didistatic.com/n9e-pub/n9e-book/logo/n9e-logo-white.png" width="140">
+		
+	</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link active" href="/en/en/docs/" ><span class="active">Documentation</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/docs/" ><span>文档</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/blog/" ><span>博客</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/en/community/" ><span>Community</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/en/v4/community/" ><span>社区</span></a>
+			</li>
+			
+			
+			
+			<li class="nav-item dropdown d-none d-lg-block">
+				
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	English
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/v4/">v4版本</a>
+	
+	<a class="dropdown-item" href="/">v5版本</a>
+	
+</div>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-default td-outer">
+      <main role="main" class="td-main">
+        
+
+<h4 id="q1the-monitoring-indicators-have-been-sent-to-the-server-but-in-the-end-the-graph-cannot-be-seen">Q1:The monitoring indicators have been sent to the server, but in the end the graph cannot be seen</h4>
+<p>In this case, the data format is generally incorrect, or the data is not reported to the server.Suppose the sent index is n9e.points.in</p>
+<ol>
+<li>First look at the transfer and tsdb modules for n9e.points.in error logs
+Log in to the machine where the transfer is deployed and execute <code>tail -f /home/n9e/logs/transfer/WARNING.log|grep n9e.points.in</code><br>
+登Lu to the machine where tsdb is deployed, execute <code>tail -f /home/n9e/logs/tsdb/WARNING.log|grep n9e.points.in</code></li>
+<li>If there is no error message, confirm again whether the monitoring index is reported to the server, and modify the transfer log level to DEBUG<br>
+excute <code>tail -f /home/n9e/logs/transfer/DEBUG.log|grep n9e.points.in</code> If no log appears, it means that it has not been reported to the server, and troubleshoot the sender</li>
+</ol>
+<h4 id="q2the-monitoring-plugin-is-placed-in-the-specified-directory-but-the-picture-cannot-be-seen-in-the-end">Q2:The monitoring plugin is placed in the specified directory, but the picture cannot be seen in the end</h4>
+<ol>
+<li>Encounter this kind of problem is generally because the plugin execution failed.For example, the plug-in does not have executable permissions, or the data format reported by the plug-in is incorrect.You can log in to the machine in question and check /home/n9e/logs/collector/ERROR.log,Check whether there are error logs related to the plug-in, and if so, resolve them. If there is no error log, follow [Q1] (# q1 monitoring indicators have been sent to the server but the picture cannot be seen eventually)</li>
+</ol>
+<h4 id="q3write-a-program-and-report-the-data-to-the-collector-or-transfer-according-to-data-specification-usagemetric-but-you-cannot-see-the-picture">Q3:Write a program and report the data to the collector or transfer according to [Data Specification] (../usage/metric/), but you cannot see the picture</h4>
+<ol>
+<li>First, print out the request body and resp body of the program. Check the err in the resp. If it is not empty, there is a problem with the report format. If the request body is empty, there is no data reported.
+2.If the report is normal, check according to the idea of ​​[Q1] (# q1 monitoring indicators have been sent to the server but the picture cannot be seen eventually)</li>
+</ol>
+<h4 id="q4log-process-or-port-collection-is-configured-but-the-relevant-monitoring-chart-cannot-be-seen">Q4:Log, process or port collection is configured, but the relevant monitoring chart cannot be seen</h4>
+<ol>
+<li>Check whether the collection strategy has been delivered to the collector of the target machine    <br>
+<code>curl IP of target machine:2058/api/collector/stra</code></li>
+<li>If you can check the configured collection result, run tail -f /home/n9e/logs/collector/ERROR.log to check whether there is an error log</li>
+<li>If there is an error, follow the log prompt to deal with it. If no error is reported, follow [Q1] (# q1 monitoring indicators have been sent to the server but the picture cannot be seen in the end).</li>
+</ol>
+
+
+
+      </main>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Wechat" aria-label="Wechat">
+    <a class="text-white" target="_blank" href="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Email" aria-label="Email">
+    <a class="text-white" target="_blank" href="mailto:nightingale@didiglobal.com">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/didi/nightingale">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" href="https://n9e.slack.com/">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">&copy; 2021 DiDi&#39;s Nightingale team All Rights Reserved</small>
+        
+	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+<script src="/js/main.min.29b0315468c00226fa6f4556a9cebc0ac4fe1ce1457a01b22c0a06b329877383.js" integrity="sha256-KbAxVGjAAib6b0VWqc68CsT&#43;HOFFegGyLAoGsymHc4M=" crossorigin="anonymous"></script>
+
+
+
+  </body>
+</html>
