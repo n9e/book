@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="v5" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.65.3" />
+
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>功能简介 | Nightingale</title><meta property="og:title" content="功能简介" />
+<meta property="og:description" content="介绍每个菜单的功能设计初衷，大家可以对全局有个了解，会顺带解释一些最佳实践，希望大家可以认真读完本章节
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/docs/usage/menus/" />
+<meta property="article:published_time" content="2021-06-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-06-01T00:00:00+00:00" /><meta property="og:site_name" content="Nightingale" />
+<meta itemprop="name" content="功能简介">
+<meta itemprop="description" content="介绍每个菜单的功能设计初衷，大家可以对全局有个了解，会顺带解释一些最佳实践，希望大家可以认真读完本章节
+">
+<meta itemprop="datePublished" content="2021-06-01T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-01T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="29">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="功能简介"/>
+<meta name="twitter:description" content="介绍每个菜单的功能设计初衷，大家可以对全局有个了解，会顺带解释一些最佳实践，希望大家可以认真读完本章节
+"/>
+
+
+
+
+
+<link rel="preload" href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" as="style">
+<link href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" rel="stylesheet" integrity="">
+
+
+<script
+  src="https://s3-gz01.didistatic.com/n9e-pub/js/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+
+    <title>功能简介 | Nightingale</title>
+  </head>
+  <body class="td-page">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+        <a class="navbar-brand" href="/">
+		<span class="navbar-logo">
+			<img src="https://s3-gz01.didistatic.com/n9e-pub/n9e-book/logo/n9e-logo-white.png" width="140">
+		
+	</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link active" href="/docs/" ><span class="active">文档</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/community/" ><span>社区</span></a>
+			</li>
+			
+			
+			
+			<li class="nav-item dropdown d-none d-lg-block">
+				
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	v5版本
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/v4/">v4版本</a>
+	
+</div>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            
+
+
+
+
+<div id="td-sidebar-menu" class="td-sidebar__inner">
+  
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  
+  <nav class="collapse td-sidebar-nav pt-2 pl-4" id="td-section-nav">
+    
+    <div class="nav-item dropdown d-block d-lg-none">
+      
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	v5版本
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/v4/">v4版本</a>
+	
+</div>
+    </div>
+    
+    
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">文档</a>
+  </li>
+  <ul>
+    <li class="collapse show" id="docs">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/intro/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">夜莺介绍</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsintro">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/install/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">安装部署</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsinstall">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/usage/" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">使用说明</a>
+  </li>
+  <ul>
+    <li class="collapse show" id="docsusage">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page  active" id="m-docsusagemenus" href="/docs/usage/menus/">功能简介</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/appendix/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">附录</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsappendix">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsappendixdatamodel" href="/docs/appendix/datamodel/">DataModel</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+  </nav>
+</div>
+
+
+
+
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+            
+
+
+
+
+
+
+<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+
+
+
+
+
+<a href="https://github.com/n9e/book/edit/master/content/v5/docs/usage/menus.md" target="_blank"><i class="fa fa-edit fa-fw"></i> 编辑此页</a>
+<a href="https://github.com/n9e/book/issues/new?title=%e5%8a%9f%e8%83%bd%e7%ae%80%e4%bb%8b" target="_blank"><i class="fab fa-github fa-fw"></i> 提交文档问题</a>
+
+
+<a href="https://github.com/didi/nightingale/issues/new" target="_blank"><i class="fas fa-tasks fa-fw"></i> 提交项目问题</a>
+
+</div>
+
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#监控看图">监控看图</a></li>
+    <li><a href="#资源管理">资源管理</a></li>
+    <li><a href="#策略配置">策略配置</a></li>
+    <li><a href="#事件管理">事件管理</a></li>
+  </ul>
+</nav>
+
+
+
+
+<div style="">
+	<img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png" width="180" alt="n9e-helper"/>
+</div>
+
+
+
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+            
+  
+
+            <nav aria-label="breadcrumb" class="d-none d-md-block d-print-none">
+	<ol class="breadcrumb spb-1">
+		
+
+
+
+
+
+
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="/docs/">文档</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="/docs/usage/">使用说明</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item active" aria-current="page">
+	<a href="/docs/usage/menus/">功能简介</a>
+</li>
+
+	</ol>
+</nav	>
+
+            
+<div class="td-content">
+	<h1>功能简介</h1>
+	<div class="lead">介绍每个菜单的功能设计初衷，大家可以对全局有个了解，会顺带解释一些最佳实践，希望大家可以认真读完本章节</div>
+	<p>监控的菜单分四大块：监控看图、资源管理、策略配置、事件管理，下面分别解释各块的功能。</p>
+<h2 id="监控看图">监控看图</h2>
+<p>监控数据采集到之后，最频繁的操作就是看图，查看监控数据的历史趋势，通常会有两个看图场景：</p>
+<ul>
+<li>即时看图：因为要查问题，或者分析趋势，即时查询一些监控指标的数据，即所谓的ad-hoc的查询。即时看图的做法，是直接输入metric(指标名字)右侧就出图了，这种交互体验比较适合查看应用、业务的指标，但是查看机器的指标的逻辑会有差异，看机器的监控数据，通常都是先找到一批机器，然后再去看指标，这种看图场景我们也支持，不过不是放在即时看图里，而是放到了资源管理-看图的页面了</li>
+<li>监控大盘：把经常要看的图表，分门别类组织成一张张大盘，大盘里会有多张图，这些图的排布本身就是一个经验的传递。比如Oracle数据库，新入门的小白对于Oracle应该查看哪些指标，以及各个指标的含义是比较懵的，那此时一个前辈大咖做好的大盘，就是一个非常值得借鉴的输入。</li>
+</ul>
+<p>还有一个指标释义的功能菜单，这个是对metric的中文释义的一个维护。在查看metric的很多场景都会把这个释义展示出来方便理解。agentd内置的指标，我们会梳理出一个中文释义，内置到数据库里。后续如果朋友要自己写插件，就需要自己提供一个metric英文名字和中文释义的对应关系，然后在指标释义这个菜单里导入。</p>
+<h2 id="资源管理">资源管理</h2>
+<p>资源管理这个功能，是为了应对物理机、虚拟机的场景，Zabbix中有个HostGroup，就是为了应对机器的场景，当然Zabbix主要就是处理设备的监控，应用、业务层面的监控相对难搞一些，Prometheus中压根就不会对资源管理的场景建模，所以在应对物理机服务混部的场景，就会有些难受，比如5台高配机器混部了20个应用，每个应用都要做端口监控，或者每个应用都有特定的采集脚本要跑，这种采集配置只能直接固化到机器上，没法在WEB上统一管理。</p>
+<p>资源管理这里，核心功能是对机器做分组，不同分组下可以关联不同的机器，不同的分组也可以关联不同的采集策略，这种视图对运维场景比较友好。如果你是研发人员，只关心应用、业务层面的监控，并且是用SDK埋点的方式，有良好的指标标签来组织数据，那资源管理这个页面，你可能压根都用不到。</p>
+<p>之前的夜莺版本，资源管理使用树形结构，非常直观，但是理解成本确实会高一些。v5尝试了一种新方案，使用前缀匹配的资源分组，类似Open-Falcon和Zabbix，可以为设备建立分组，非常直观简单，比如<code>n9e.server</code>这个分组下面，放置夜莺的服务端机器，<code>n9e.mysql</code>这个分组下面，放置夜莺的数据库机器。这些分组上面都可以绑定一些采集策略，分组下面的所有设备资源都生效。但是假设，有个采集插件不但要在<code>n9e.server</code>分组的机器上生效，还要在<code>n9e.mysql</code>分组的机器上生效，难道我要配置两次？那就太麻烦了！怎么办？</p>
+<p>在v5里，可以创建一个<code>n9e.</code>的分组，下面不需要绑定机器，直接在<code>n9e.</code>这个分组上配置采集策略（配置的时候勾选前缀匹配那个复选框），这个采集策略就会同时生效到前缀是<code>n9e.</code>的分组上，显然，<code>n9e.server</code>和<code>n9e.mysql</code>这俩分组都是以<code>n9e.</code>作为前缀的，所以，这俩分组下面的机器就都生效了。其实是一种变相的树形结构，这种组织方式称为classpath，据说aws内部就是用的这种方式。</p>
+<h2 id="策略配置">策略配置</h2>
+<p>策略配置有两个子菜单：告警策略、告警屏蔽。一个是配置告警规则，让什么样的数据可以报警，一个是配置屏蔽规则，让什么样的事件不发送通知。</p>
+<p>告警规则的配置，支持两种模式：Nightingale自带的模式、Prometheus的promql的模式。Nightingale的模式相对简单，只要配置指标匹配条件，圈定要判别的监控数据即可，对于Prometheus的模式，因为需要编写promql学习成本会高一些，不过在一些特定的场景下，promql的方式会更适合。</p>
+<p>“对于Nightingale的模式，只要配置指标匹配条件，圈定要判别的监控数据即可”，这句话如何理解呢？要解释好这个问题，需要从监控数据的DataModel说起了，请参考《<a href="/docs/appendix/datamodel/">DataModel</a>》章节。监控系统每秒钟会接收成千上万的数据，大部分数据其实是不会拿来做告警判断的，那告警规则和哪些数据关联，这个就需要有个筛选匹配的机制，怎么筛选监控数据？监控数据带有metric、ident、tags等字段，那我们就可以把这些字段作为筛选条件，比如 <code>ident=10.4.5.6 and metric=system_cpu_idle</code> 告警策略里的资源过滤、标签过滤，就是在配置这个规则。</p>
+<p>Prometheus模式对于用过Prometheus的朋友来说，相对就容易上手一些，其实就是配置的规则里边的expr字段。比如 <code>tomcat_threads_busy_threads{job=&quot;acs-ms&quot;} /  tomcat_threads_config_max_threads{job=&quot;acs-ms&quot;} &gt; 0.5</code></p>
+<p>告警屏蔽是用于什么场景？比如有些告警事件虽然触发了，但是不想发送，就可以配置屏蔽规则，屏蔽规则是屏蔽的告警事件的发送，所以，就看事件有哪些字段是可以用来做筛选的，和监控数据类似，核心也是metric、ident、tags，事件的tags是个集合体，包括原始监控数据上报的tags、资源的tags、告警规则的附加tags，这些tags组成了灵活的维度属性，可以从各种维度去检索告警事件，后续做分析统计。</p>
+<h2 id="事件管理">事件管理</h2>
+<p>事件管理比较简单，就是展示所有未恢复的告警，每天上下班的时候应该都要巡检一下，避免漏掉了报警。如果告警之后触发了恢复，会自动从未恢复的告警列表里删掉。有的时候触发了告警之后，ident发生了变化，比如机器改了ip，这种情况这个事件就永远都不会恢复了，因为监控系统会当做不同的监控数据对待。此时就需要我们手工点击忽略按钮删除这条记录了。</p>
+<p>v4及之前的版本支持的告警合并、告警认领、告警升级相关功能，在v5里拿掉了，不是说这些功能不重要，而是因为这些功能太通用，夜莺需要、Zabbix也需要、Prometheus也需要，值得抽象为一个单独的产品。</p>
+
+	
+	
+	<div class="text-muted mt-5 pt-3 border-top">最后修改 2021-06-01
+</div>
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Wechat" aria-label="Wechat">
+    <a class="text-white" target="_blank" href="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Email" aria-label="Email">
+    <a class="text-white" target="_blank" href="mailto:nightingale@didiglobal.com">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/didi/nightingale">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" href="https://n9e.slack.com/">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">&copy; 2021 DiDi&#39;s Nightingale team All Rights Reserved</small>
+        
+	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+<script src="/js/main.min.29b0315468c00226fa6f4556a9cebc0ac4fe1ce1457a01b22c0a06b329877383.js" integrity="sha256-KbAxVGjAAib6b0VWqc68CsT&#43;HOFFegGyLAoGsymHc4M=" crossorigin="anonymous"></script>
+
+
+
+  </body>
+</html>

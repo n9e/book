@@ -13,5 +13,103 @@
       
     
     
+    <item>
+      <title>Docs: DataModel</title>
+      <link>/docs/appendix/datamodel/</link>
+      <pubDate>Tue, 01 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/appendix/datamodel/</guid>
+      <description>
+        
+        
+        &lt;p&gt;首先举个例子：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;ident&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;10.4.5.6&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;alias&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;c3-cloud-ceph01.bj&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;metric&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;system_fs_inodes_used&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;tags&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;device&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/dev/vda1&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;},&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1624062385&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;value:&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;351&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;“资源”一词的解释：资源即某个监控实体，比如某个机器、交换机、防火墙、调制解调器等等。夜莺提供了资源分组的能力，用于应对传统的物理机、虚拟机的服务混部监控场景，ident和alias字段就是用于标识资源&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;ident：资源唯一标识，如果是机器的监控指标，这个字段大都填充为机器ip，如果是跟设备无关的指标，这个字段可以为空&lt;/li&gt;
+&lt;li&gt;alias：资源名称，如果是机器，这个字段很可能是填充为hostname，当然，如果是设备无关的指标，这个字段也是空，即使是设备的指标，这个字段也允许为空&lt;/li&gt;
+&lt;li&gt;metric：监控指标的名字&lt;/li&gt;
+&lt;li&gt;tags：监控数据的维度信息，上例中从监控指标的名字可以得知代表inode的使用量，但是一个机器有多个盘，具体是哪个盘还需要表达出来，这种就用tags来描述&lt;/li&gt;
+&lt;li&gt;time：UNIX时间戳，单位是秒&lt;/li&gt;
+&lt;li&gt;value：监控数据此刻的值，只能是数值，服务端最终都转换为浮点数处理&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;夜莺的服务端和客户端都提供了监控数据上报的接口，如果是要把监控数据上报给服务端，就用上例中的数据结构组装为list上报即可，比如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -X POST -H &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; http://n9e-server-address/api/n9e/push -d &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;[
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;ident&amp;#34;: &amp;#34;10.4.5.6&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;alias&amp;#34;: &amp;#34;c3-cloud-ceph01.bj&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;metric&amp;#34;: &amp;#34;system_fs_inodes_used&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;tags&amp;#34;: {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;device&amp;#34;: &amp;#34;/dev/vda1&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;time&amp;#34;: 1624062385,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;value: 351
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;ident&amp;#34;: &amp;#34;10.4.5.6&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;alias&amp;#34;: &amp;#34;c3-cloud-ceph01.bj&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;metric&amp;#34;: &amp;#34;system_fs_inodes_used&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;tags&amp;#34;: {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;device&amp;#34;: &amp;#34;/dev/vda2&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;time&amp;#34;: 1624062385,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;value: 35109
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    }
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;]&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果监控数据不是直接推送给服务端，而是推给了客户端，比如插件的方式或者直接调用客户端的推送接口，此时数据结构略有变化，增加了一个type字段来标识监控数据的类型，不同类型的监控数据，客户端会做预处理，然后将处理之后的数据推给服务端，推给服务端的时候会拿掉type信息。即type字段只在客户端处理，服务端会忽略这个字段。客户端支持的type类型以及相关解释如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;count: xx&lt;/li&gt;
+&lt;li&gt;summary: yy&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 功能简介</title>
+      <link>/docs/usage/menus/</link>
+      <pubDate>Tue, 01 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/usage/menus/</guid>
+      <description>
+        
+        
+        &lt;p&gt;监控的菜单分四大块：监控看图、资源管理、策略配置、事件管理，下面分别解释各块的功能。&lt;/p&gt;
+&lt;h2 id=&#34;监控看图&#34;&gt;监控看图&lt;/h2&gt;
+&lt;p&gt;监控数据采集到之后，最频繁的操作就是看图，查看监控数据的历史趋势，通常会有两个看图场景：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;即时看图：因为要查问题，或者分析趋势，即时查询一些监控指标的数据，即所谓的ad-hoc的查询。即时看图的做法，是直接输入metric(指标名字)右侧就出图了，这种交互体验比较适合查看应用、业务的指标，但是查看机器的指标的逻辑会有差异，看机器的监控数据，通常都是先找到一批机器，然后再去看指标，这种看图场景我们也支持，不过不是放在即时看图里，而是放到了资源管理-看图的页面了&lt;/li&gt;
+&lt;li&gt;监控大盘：把经常要看的图表，分门别类组织成一张张大盘，大盘里会有多张图，这些图的排布本身就是一个经验的传递。比如Oracle数据库，新入门的小白对于Oracle应该查看哪些指标，以及各个指标的含义是比较懵的，那此时一个前辈大咖做好的大盘，就是一个非常值得借鉴的输入。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;还有一个指标释义的功能菜单，这个是对metric的中文释义的一个维护。在查看metric的很多场景都会把这个释义展示出来方便理解。agentd内置的指标，我们会梳理出一个中文释义，内置到数据库里。后续如果朋友要自己写插件，就需要自己提供一个metric英文名字和中文释义的对应关系，然后在指标释义这个菜单里导入。&lt;/p&gt;
+&lt;h2 id=&#34;资源管理&#34;&gt;资源管理&lt;/h2&gt;
+&lt;p&gt;资源管理这个功能，是为了应对物理机、虚拟机的场景，Zabbix中有个HostGroup，就是为了应对机器的场景，当然Zabbix主要就是处理设备的监控，应用、业务层面的监控相对难搞一些，Prometheus中压根就不会对资源管理的场景建模，所以在应对物理机服务混部的场景，就会有些难受，比如5台高配机器混部了20个应用，每个应用都要做端口监控，或者每个应用都有特定的采集脚本要跑，这种采集配置只能直接固化到机器上，没法在WEB上统一管理。&lt;/p&gt;
+&lt;p&gt;资源管理这里，核心功能是对机器做分组，不同分组下可以关联不同的机器，不同的分组也可以关联不同的采集策略，这种视图对运维场景比较友好。如果你是研发人员，只关心应用、业务层面的监控，并且是用SDK埋点的方式，有良好的指标标签来组织数据，那资源管理这个页面，你可能压根都用不到。&lt;/p&gt;
+&lt;p&gt;之前的夜莺版本，资源管理使用树形结构，非常直观，但是理解成本确实会高一些。v5尝试了一种新方案，使用前缀匹配的资源分组，类似Open-Falcon和Zabbix，可以为设备建立分组，非常直观简单，比如&lt;code&gt;n9e.server&lt;/code&gt;这个分组下面，放置夜莺的服务端机器，&lt;code&gt;n9e.mysql&lt;/code&gt;这个分组下面，放置夜莺的数据库机器。这些分组上面都可以绑定一些采集策略，分组下面的所有设备资源都生效。但是假设，有个采集插件不但要在&lt;code&gt;n9e.server&lt;/code&gt;分组的机器上生效，还要在&lt;code&gt;n9e.mysql&lt;/code&gt;分组的机器上生效，难道我要配置两次？那就太麻烦了！怎么办？&lt;/p&gt;
+&lt;p&gt;在v5里，可以创建一个&lt;code&gt;n9e.&lt;/code&gt;的分组，下面不需要绑定机器，直接在&lt;code&gt;n9e.&lt;/code&gt;这个分组上配置采集策略（配置的时候勾选前缀匹配那个复选框），这个采集策略就会同时生效到前缀是&lt;code&gt;n9e.&lt;/code&gt;的分组上，显然，&lt;code&gt;n9e.server&lt;/code&gt;和&lt;code&gt;n9e.mysql&lt;/code&gt;这俩分组都是以&lt;code&gt;n9e.&lt;/code&gt;作为前缀的，所以，这俩分组下面的机器就都生效了。其实是一种变相的树形结构，这种组织方式称为classpath，据说aws内部就是用的这种方式。&lt;/p&gt;
+&lt;h2 id=&#34;策略配置&#34;&gt;策略配置&lt;/h2&gt;
+&lt;p&gt;策略配置有两个子菜单：告警策略、告警屏蔽。一个是配置告警规则，让什么样的数据可以报警，一个是配置屏蔽规则，让什么样的事件不发送通知。&lt;/p&gt;
+&lt;p&gt;告警规则的配置，支持两种模式：Nightingale自带的模式、Prometheus的promql的模式。Nightingale的模式相对简单，只要配置指标匹配条件，圈定要判别的监控数据即可，对于Prometheus的模式，因为需要编写promql学习成本会高一些，不过在一些特定的场景下，promql的方式会更适合。&lt;/p&gt;
+&lt;p&gt;“对于Nightingale的模式，只要配置指标匹配条件，圈定要判别的监控数据即可”，这句话如何理解呢？要解释好这个问题，需要从监控数据的DataModel说起了，请参考《&lt;a href=&#34;/docs/appendix/datamodel/&#34;&gt;DataModel&lt;/a&gt;》章节。监控系统每秒钟会接收成千上万的数据，大部分数据其实是不会拿来做告警判断的，那告警规则和哪些数据关联，这个就需要有个筛选匹配的机制，怎么筛选监控数据？监控数据带有metric、ident、tags等字段，那我们就可以把这些字段作为筛选条件，比如 &lt;code&gt;ident=10.4.5.6 and metric=system_cpu_idle&lt;/code&gt; 告警策略里的资源过滤、标签过滤，就是在配置这个规则。&lt;/p&gt;
+&lt;p&gt;Prometheus模式对于用过Prometheus的朋友来说，相对就容易上手一些，其实就是配置的规则里边的expr字段。比如 &lt;code&gt;tomcat_threads_busy_threads{job=&amp;quot;acs-ms&amp;quot;} /  tomcat_threads_config_max_threads{job=&amp;quot;acs-ms&amp;quot;} &amp;gt; 0.5&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;告警屏蔽是用于什么场景？比如有些告警事件虽然触发了，但是不想发送，就可以配置屏蔽规则，屏蔽规则是屏蔽的告警事件的发送，所以，就看事件有哪些字段是可以用来做筛选的，和监控数据类似，核心也是metric、ident、tags，事件的tags是个集合体，包括原始监控数据上报的tags、资源的tags、告警规则的附加tags，这些tags组成了灵活的维度属性，可以从各种维度去检索告警事件，后续做分析统计。&lt;/p&gt;
+&lt;h2 id=&#34;事件管理&#34;&gt;事件管理&lt;/h2&gt;
+&lt;p&gt;事件管理比较简单，就是展示所有未恢复的告警，每天上下班的时候应该都要巡检一下，避免漏掉了报警。如果告警之后触发了恢复，会自动从未恢复的告警列表里删掉。有的时候触发了告警之后，ident发生了变化，比如机器改了ip，这种情况这个事件就永远都不会恢复了，因为监控系统会当做不同的监控数据对待。此时就需要我们手工点击忽略按钮删除这条记录了。&lt;/p&gt;
+&lt;p&gt;v4及之前的版本支持的告警合并、告警认领、告警升级相关功能，在v5里拿掉了，不是说这些功能不重要，而是因为这些功能太通用，夜莺需要、Zabbix也需要、Prometheus也需要，值得抽象为一个单独的产品。&lt;/p&gt;
+
+      </description>
+    </item>
+    
   </channel>
 </rss>
