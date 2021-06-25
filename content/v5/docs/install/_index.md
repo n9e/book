@@ -12,18 +12,14 @@ description: >
 
 ## 部署存储
 
-> TODO: 部署存储这个章节还需要补充一下
-
 存储是可插拔的方式，简单起见，我们选择单机版Prometheus来快速开始，部署Prometheus的方式如下：
 
 ```bash
-mkdir -p /opt/app/prometheus
+mkdir -p /opt/prometheus
 
-wget https://github.com/prometheus/prometheus/releases/download/v2.28.0/prometheus-2.28.0.linux-amd64.tar.gz -O /root/prometheus-2.28.0.linux-amd64.tar.gz
-cd /root
-tar xf /root/prometheus-2.28.0.linux-amd64.tar.gz
-/bin/cp -far /root/prometheus-2.28.0.linux-amd64/*  /opt/app/prometheus/
-
+wget https://s3-gz01.didistatic.com/n9e-pub/prome/prometheus-2.28.0.linux-amd64.tar.gz -O prometheus-2.28.0.linux-amd64.tar.gz
+tar xf prometheus-2.28.0.linux-amd64.tar.gz
+cp -far prometheus-2.28.0.linux-amd64/*  /opt/prometheus/
 
 # service 
 cat <<EOF >/etc/systemd/system/prometheus.service
@@ -34,7 +30,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/opt/app/prometheus/prometheus  --config.file=/opt/app/prometheus/prometheus.yml --storage.tsdb.path=/opt/app/prometheus/data --web.enable-lifecycle --enable-feature=remote-write-receiver --query.lookback-delta=2m 
+ExecStart=/opt/prometheus/prometheus  --config.file=/opt/prometheus/prometheus.yml --storage.tsdb.path=/opt/prometheus/data --web.enable-lifecycle --enable-feature=remote-write-receiver --query.lookback-delta=2m 
 
 Restart=on-failure
 RestartSecs=5s
@@ -53,10 +49,11 @@ systemctl daemon-reload
 systemctl enable prometheus
 systemctl restart prometheus
 systemctl status prometheus
-
 ```
 
-## 部署服务端
+TODO：部署服务端、客户端
+
+<!-- ## 部署服务端
 
 服务端依赖mysql数据库，请自行安装，v5版本的数据库表结构和之前的版本不兼容，所以没法复用之前版本的数据库，这点请注意。
 
@@ -109,4 +106,4 @@ tar zcvf n9e-agentd.tar.gz n9e-agentd etc/agentd.yml service/n9e-agentd.service
 
 OK，把n9e-agentd.tar.gz分发到你要监控的机器上，解包之后修改agentd.yml中的服务端连接地址（搜索endpoint关键字），即可启动测试。
 
-
+ -->

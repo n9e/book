@@ -19,7 +19,7 @@
   
   <url>
     <loc>/docs/install/</loc>
-    <lastmod>2021-06-23T22:02:52+08:00</lastmod>
+    <lastmod>2021-06-25T20:20:32+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="v4"
@@ -34,7 +34,7 @@
   
   <url>
     <loc>/docs/usage/</loc>
-    <lastmod>2021-06-24T00:00:00+00:00</lastmod>
+    <lastmod>2021-06-24T20:35:17+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="v4"
@@ -64,7 +64,7 @@
   
   <url>
     <loc>/docs/appendix/</loc>
-    <lastmod>2021-06-24T00:00:00+00:00</lastmod>
+    <lastmod>2021-06-24T20:35:17+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="v4"
@@ -78,13 +78,8 @@
   </url>
   
   <url>
-    <loc>/docs/appendix/datamodel/</loc>
-    <lastmod>2021-06-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/docs/usage/menus/</loc>
-    <lastmod>2021-06-01T00:00:00+00:00</lastmod>
+    <lastmod>2021-06-24T20:35:17+08:00</lastmod>
   </url>
   
   <url>
