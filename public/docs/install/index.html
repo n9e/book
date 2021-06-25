@@ -353,7 +353,7 @@
 	<h1>安装部署</h1>
 	<div class="lead">阅读本章节，一定要先阅读《<a href="/docs/intro/">夜莺介绍</a>》，了解整体的架构，这样出了问题方能有思路排查。因为大部分生产环境都是使用CentOS7，后面的讲解我们都将基于此发行版展开，所有二进制都是X86架构下编译而成，这点请注意。</div>
 	<blockquote>
-<p>演示环境：<img src="http://116.85.46.86/" alt="http://116.85.46.86/"> 用户名：demo，密码：demo.2021</p>
+<p>演示环境：<a href="http://116.85.46.86/">http://116.85.46.86/</a> 用户名：demo，密码：demo.2021</p>
 </blockquote>
 <p>回顾《<a href="/docs/intro/">夜莺介绍</a>》中的架构讲解，整个数据流是<code>agentd-&gt;server&lt;-&gt;storage</code>，即agentd采集监控数据，推送给server，server会做各种处理，然后交由存储来持久化数据，后续server要读取数据的时候就从存储来读。所以，我们的部署顺序就是从被依赖方开始部署：1.部署存储 2.部署服务端 3.部署客户端</p>
 <h2 id="部署存储">部署存储</h2>
@@ -478,7 +478,7 @@ OK，把n9e-agentd.tar.gz分发到你要监控的机器上，解包之后修改a
 
 	
 	
-	<div class="text-muted mt-5 pt-3 border-top">最后修改 2021-06-25: <a  href="https://github.com/n9e/book/commit/4cab2aa6f28284f81fcefc23cec6760e64c21d18">add api.md (4cab2aa)</a>
+	<div class="text-muted mt-5 pt-3 border-top">最后修改 2021-06-25: <a  href="https://github.com/n9e/book/commit/e91a57cd0ba581774a8fc006a00d2048ee01de37">code refactor (e91a57c)</a>
 </div>
 </div>
 
