@@ -59,5 +59,7 @@ curl -X POST -H "Content-Type: application/json" http://n9e-server-address/api/n
 
 如果监控数据不是直接推送给服务端，而是推给了客户端，比如插件的方式或者直接调用客户端的推送接口，此时数据结构略有变化，增加了一个type字段来标识监控数据的类型，不同类型的监控数据，客户端会做预处理，然后将处理之后的数据推给服务端，推给服务端的时候会拿掉type信息。即type字段只在客户端处理，服务端会忽略这个字段。客户端支持的type类型以及相关解释如下：
 
+TODO: 下面内容待补充
+
 - count: xx
 - summary: yy
