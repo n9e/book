@@ -31,7 +31,7 @@
         &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;device&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/dev/vda1&amp;#34;&lt;/span&gt;
     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;},&lt;/span&gt;
     &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1624062385&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-    &lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;value:&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;351&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;351&lt;/span&gt;
 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
 &lt;p&gt;“资源”一词的解释：资源即某个监控实体，比如某个机器、交换机、防火墙、调制解调器等等。夜莺提供了资源分组的能力，用于应对传统的物理机、虚拟机的服务混部监控场景，ident和alias字段就是用于标识资源&lt;/p&gt;
