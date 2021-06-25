@@ -17,12 +17,43 @@ description: >
 存储是可插拔的方式，简单起见，我们选择单机版Prometheus来快速开始，部署Prometheus的方式如下：
 
 ```bash
-mkdir -p /opt/prom
-cd /opt/prom
-wget xxx
-tar zxf xxx
-cd xxx
-sh install.sh
+mkdir -p /opt/app/prometheus
+
+wget https://github.com/prometheus/prometheus/releases/download/v2.28.0/prometheus-2.28.0.linux-amd64.tar.gz -O /root/prometheus-2.28.0.linux-amd64.tar.gz
+cd /root
+tar xf /root/prometheus-2.28.0.linux-amd64.tar.gz
+/bin/cp -far /root/prometheus-2.28.0.linux-amd64/*  /opt/app/prometheus/
+
+
+# service 
+cat <<EOF >/etc/systemd/system/prometheus.service
+[Unit]
+Description="prometheus"
+Documentation=https://prometheus.io/
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/app/prometheus/prometheus  --config.file=/opt/app/prometheus/prometheus.yml --storage.tsdb.path=/opt/app/prometheus/data --web.enable-lifecycle --enable-feature=remote-write-receiver --query.lookback-delta=2m 
+
+Restart=on-failure
+RestartSecs=5s
+SuccessExitStatus=0
+LimitNOFILE=65536
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=prometheus
+
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable prometheus
+systemctl restart prometheus
+systemctl status prometheus
+
 ```
 
 ## 部署服务端
