@@ -17,7 +17,7 @@ description: >
         "device": "/dev/vda1"
     },
     "time": 1624062385,
-    "value: 351
+    "value": 351
 }
 ```
 
