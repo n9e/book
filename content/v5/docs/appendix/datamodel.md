@@ -33,7 +33,7 @@ description: >
 夜莺的服务端和客户端都提供了监控数据上报的接口，如果是要把监控数据上报给服务端，就用上例中的数据结构组装为list上报即可，比如：
 
 ```bash
-curl -X POST -H "Content-Type: application/json" http://n9e-server-address/api/n9e/push -d '[
+curl -X POST -H "Content-Type: application/json" http://n9e-server-address/v1/n9e/push -d '[
     {
         "ident": "10.4.5.6",
         "alias": "c3-cloud-ceph01.bj",

@@ -48,21 +48,6 @@
   </url>
   
   <url>
-    <loc>/docs/</loc>
-    <lastmod>2021-06-22T20:18:31+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="v4"
-                href="/v4/docs/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="v5"
-                href="/docs/"
-                />
-  </url>
-  
-  <url>
     <loc>/docs/appendix/</loc>
     <lastmod>2021-06-24T20:35:17+08:00</lastmod>
     <xhtml:link
@@ -74,6 +59,21 @@
                 rel="alternate"
                 hreflang="v5"
                 href="/docs/appendix/"
+                />
+  </url>
+  
+  <url>
+    <loc>/docs/</loc>
+    <lastmod>2021-06-22T20:18:31+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/docs/"
                 />
   </url>
   

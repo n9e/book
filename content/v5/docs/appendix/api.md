@@ -8,8 +8,9 @@ description: >
 
 ## 数据上报
 
-TODO:
+TODO: 
 
+post方式，给个curl的例子
 
 ## 数据读取
 
