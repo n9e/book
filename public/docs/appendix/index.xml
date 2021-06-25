@@ -14,5 +14,166 @@
       
     
     
+    <item>
+      <title>Docs: DataModel</title>
+      <link>/docs/appendix/datamodel/</link>
+      <pubDate>Fri, 25 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/appendix/datamodel/</guid>
+      <description>
+        
+        
+        &lt;p&gt;首先举个例子：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;ident&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;10.4.5.6&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;alias&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;c3-cloud-ceph01.bj&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;metric&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;system_fs_inodes_used&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;tags&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;device&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/dev/vda1&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;},&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1624062385&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;value:&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;351&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;“资源”一词的解释：资源即某个监控实体，比如某个机器、交换机、防火墙、调制解调器等等。夜莺提供了资源分组的能力，用于应对传统的物理机、虚拟机的服务混部监控场景，ident和alias字段就是用于标识资源&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;ident：资源唯一标识，如果是机器的监控指标，这个字段大都填充为机器ip，如果是跟设备无关的指标，这个字段可以为空&lt;/li&gt;
+&lt;li&gt;alias：资源名称，如果是机器，这个字段很可能是填充为hostname，当然，如果是设备无关的指标，这个字段也是空，即使是设备的指标，这个字段也允许为空&lt;/li&gt;
+&lt;li&gt;metric：监控指标的名字&lt;/li&gt;
+&lt;li&gt;tags：监控数据的维度信息，上例中从监控指标的名字可以得知代表inode的使用量，但是一个机器有多个盘，具体是哪个盘还需要表达出来，这种就用tags来描述&lt;/li&gt;
+&lt;li&gt;time：UNIX时间戳，单位是秒&lt;/li&gt;
+&lt;li&gt;value：监控数据此刻的值，只能是数值，服务端最终都转换为浮点数处理&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;夜莺的服务端和客户端都提供了监控数据上报的接口，如果是要把监控数据上报给服务端，就用上例中的数据结构组装为list上报即可，比如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -X POST -H &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; http://n9e-server-address/v1/n9e/push -d &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;[
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;ident&amp;#34;: &amp;#34;10.4.5.6&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;alias&amp;#34;: &amp;#34;c3-cloud-ceph01.bj&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;metric&amp;#34;: &amp;#34;system_fs_inodes_used&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;tags&amp;#34;: {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;device&amp;#34;: &amp;#34;/dev/vda1&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;time&amp;#34;: 1624062385,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;value: 351
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;ident&amp;#34;: &amp;#34;10.4.5.6&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;alias&amp;#34;: &amp;#34;c3-cloud-ceph01.bj&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;metric&amp;#34;: &amp;#34;system_fs_inodes_used&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;tags&amp;#34;: {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;device&amp;#34;: &amp;#34;/dev/vda2&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;time&amp;#34;: 1624062385,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;value: 35109
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    }
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;]&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果监控数据不是直接推送给服务端，而是推给了客户端，比如插件的方式或者直接调用客户端的推送接口，此时数据结构略有变化，增加了一个type字段来标识监控数据的类型，不同类型的监控数据，客户端会做预处理，然后将处理之后的数据推给服务端，推给服务端的时候会拿掉type信息。即type字段只在客户端处理，服务端会忽略这个字段。客户端支持的type类型以及相关解释如下：&lt;/p&gt;
+&lt;p&gt;TODO: 下面内容待补充&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;count: xx&lt;/li&gt;
+&lt;li&gt;summary: yy&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 告警函数</title>
+      <link>/docs/appendix/funcs/</link>
+      <pubDate>Wed, 23 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/appendix/funcs/</guid>
+      <description>
+        
+        
+        &lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;函数&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;连续发生(all)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;最近 n 秒内的每个值都触发阈值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;发生次数(happen)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;最近 n 秒内，有 m 次触发阈值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;求和(sum)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;最近 n 秒内所有的点之和触发阈值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;平均值(avg)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;最近 n 秒内所有的点的平均值触发阈值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;最小值(min)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;最近 n 秒内所有的点的最小值触发阈值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;最大值(max)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;最近 n 秒内所有的点的最大值触发阈值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;突增突降率(pdiff) &lt;strong&gt;区分正负&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;最近 n 秒的变化率, 有一个触发阈值则告警，举例：最近3个周期的值分别为 v1, v2, v3（v1为最新值）那么计算公式为 any( (v1-v2)/v2, (v1-v3)/v3 )&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;突增突降值(diff) &lt;strong&gt;区分正负&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;最近 n 秒的变化量, 有一个触发阈值则告警，举例：最近3个周期的值分别为 v1, v2, v3（v1为最新值）那么计算公式为 any( (v1-v2), (v1-v3) )&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;同比变化值(c_avg) &lt;strong&gt;区分正负&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;最近 n 秒的几个值取平均，相比1天或7天前同时段值的变化值，举例：最近n个值是 v1，v2，v3，过去同时段的值是 v1&amp;rsquo;，v2&amp;rsquo;，v3&amp;rsquo;，那么计算公式为 avg(v1,v2,v3)-avg(v1&amp;rsquo;,v2&amp;rsquo;,v3&amp;rsquo;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;同比变化值的绝对值(c_avg_abs)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;最近 n 秒的几个值取平均，相比1天或7天前同时段值的变化值，举例：最近n个值是 v1，v2，v3，过去同时段的值是 v1&amp;rsquo;，v2&amp;rsquo;，v3&amp;rsquo;，那么计算公式为 abs(avg(v1,v2,v3)-avg(v1&amp;rsquo;,v2&amp;rsquo;,v3&amp;rsquo;))&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;同比变化率(c_avg_rate) &lt;strong&gt;区分正负&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;最近 n 秒的几个值取平均，相比1天或7天前同时段值的变化率，举例：最近n个值是 v1，v2，v3，过去同时段的值是 v1&amp;rsquo;，v2&amp;rsquo;，v3&amp;rsquo;，那么计算公式为 (avg(v1,v2,v3)-avg(v1&amp;rsquo;,v2&amp;rsquo;,v3&amp;rsquo;))/avg(v1&amp;rsquo;,v2&amp;rsquo;,v3&amp;rsquo;)*100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;同比变化率的绝对值(c_avg_rate_abs)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;最近 n 秒的几个值取平均，相比1天或7天前同时段值的变化率的绝对值，举例：最近n个值是 v1，v2，v3，过去同时段的值是 v1&amp;rsquo;，v2&amp;rsquo;，v3&amp;rsquo;，那么计算公式为 abs((avg(v1,v2,v3)-avg(v1&amp;rsquo;,v2&amp;rsquo;,v3&amp;rsquo;))/avg(v1&amp;rsquo;,v2&amp;rsquo;,v3&amp;rsquo;))*100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;3-sigma离群点检测&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;持续 n 秒内波动值过大，超过了 m 个标准差范围，默认 m 为 3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: API调用</title>
+      <link>/docs/appendix/api/</link>
+      <pubDate>Mon, 21 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/appendix/api/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;数据上报&#34;&gt;数据上报&lt;/h2&gt;
+&lt;p&gt;TODO:&lt;/p&gt;
+&lt;p&gt;post方式，给个curl的例子&lt;/p&gt;
+&lt;h2 id=&#34;数据读取&#34;&gt;数据读取&lt;/h2&gt;
+&lt;p&gt;TODO:&lt;/p&gt;
+&lt;h2 id=&#34;二次开发&#34;&gt;二次开发&lt;/h2&gt;
+&lt;p&gt;夜莺的http接口主要有两个前缀，&lt;code&gt;/api/n9e&lt;/code&gt;相关的是给前端JavaScript使用，用cookie做认证，写操作会有CSRF校验。&lt;code&gt;/v1/n9e&lt;/code&gt;前缀的接口是给第三方系统用的。&lt;code&gt;/v1/n9e&lt;/code&gt;相关的接口如何认证呢？使用token；token从哪里找呢？去页面上，个人中心密钥里；调用接口的时候如何传递token呢？使用Authorization这个Header。比如某个第三方系统要调用夜莺的接口，先由管理员去用户中心为这个系统创建个账号，然后用这个账号登录，生成token(密钥)即可。&lt;/p&gt;
+&lt;p&gt;举例，拉取用户列表的接口，使用curl来调用，样例如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -H &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Authorization: token-from-web-gen&amp;#34;&lt;/span&gt; http://&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;n9e&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-server&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;/v1/n9e/users
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
   </channel>
 </rss>

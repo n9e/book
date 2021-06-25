@@ -1,7 +1,7 @@
 ---
-title: "API"
-linkTitle: "API"
-date: 2021-06-26
+title: "API调用"
+linkTitle: "API调用"
+date: 2021-06-21
 description: >
   介绍夜莺对外暴露的API，用于自行采集监控数据上报、读取监控数据分析、对夜莺页面做二次开发等场景。重点讲解监控数据上报、读取的接口，二次开发相关的接口，在http下的router.go里可以找到所有接口，会简略介绍，需要大家自行翻阅代码。
 ---

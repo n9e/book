@@ -7,7 +7,6 @@
 
 <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 
-<link rel="alternate" type="application/rss&#43;xml" href="/docs/index.xml">
 
 
 <link rel="shortcut icon" href="/favicons/favicon.ico" >
@@ -21,15 +20,26 @@
 <link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-<title>Documentation | Nightingale</title><meta property="og:title" content="Documentation" />
-<meta property="og:description" content="Nightingale(夜莺监控)" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="/docs/" />
-<meta property="og:site_name" content="Nightingale" />
-<meta itemprop="name" content="Documentation">
-<meta itemprop="description" content="Nightingale(夜莺监控)"><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Documentation"/>
-<meta name="twitter:description" content="Nightingale(夜莺监控)"/>
+<title>告警函数 | Nightingale</title><meta property="og:title" content="告警函数" />
+<meta property="og:description" content="告警策略的配置，对于Nightingale模式，支持多种内置函数，这些内置函数是作用在统计周期内的各个监控数据上，即统计周期&#43;监控数据&#43;告警函数得到一个值，这个值与阈值做比对判断是否触发告警，本章节对各类告警函数做详细解释说明
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/docs/appendix/funcs/" />
+<meta property="article:published_time" content="2021-06-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-06-25T20:53:09+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta itemprop="name" content="告警函数">
+<meta itemprop="description" content="告警策略的配置，对于Nightingale模式，支持多种内置函数，这些内置函数是作用在统计周期内的各个监控数据上，即统计周期&#43;监控数据&#43;告警函数得到一个值，这个值与阈值做比对判断是否触发告警，本章节对各类告警函数做详细解释说明
+">
+<meta itemprop="datePublished" content="2021-06-23T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-25T20:53:09&#43;08:00" />
+<meta itemprop="wordCount" content="93">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="告警函数"/>
+<meta name="twitter:description" content="告警策略的配置，对于Nightingale模式，支持多种内置函数，这些内置函数是作用在统计周期内的各个监控数据上，即统计周期&#43;监控数据&#43;告警函数得到一个值，这个值与阈值做比对判断是否触发告警，本章节对各类告警函数做详细解释说明
+"/>
 
 
 
@@ -46,9 +56,9 @@
 
 
 
-    <title>Documentation | Nightingale</title>
+    <title>告警函数 | Nightingale</title>
   </head>
-  <body class="td-section">
+  <body class="td-page">
     <header>
       
 <nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
@@ -92,7 +102,7 @@
 </a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 	
-	<a class="dropdown-item" href="/v4/docs/">v4版本</a>
+	<a class="dropdown-item" href="/v4/">v4版本</a>
 	
 </div>
 			</li>
@@ -132,7 +142,7 @@
 </a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 	
-	<a class="dropdown-item" href="/v4/docs/">v4版本</a>
+	<a class="dropdown-item" href="/v4/">v4版本</a>
 	
 </div>
     </div>
@@ -146,7 +156,7 @@
 
 <ul class="td-sidebar-nav__section pr-md-3">
   <li class="td-sidebar-nav__section-title">
-    <a  href="/docs/" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">文档</a>
+    <a  href="/docs/" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">文档</a>
   </li>
   <ul>
     <li class="collapse show" id="docs">
@@ -163,10 +173,10 @@
 
 <ul class="td-sidebar-nav__section pr-md-3">
   <li class="td-sidebar-nav__section-title">
-    <a  href="/docs/intro/" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">夜莺介绍</a>
+    <a  href="/docs/intro/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">夜莺介绍</a>
   </li>
   <ul>
-    <li class="collapse show" id="docsintro">
+    <li class="collapse " id="docsintro">
       
       
       
@@ -186,10 +196,10 @@
 
 <ul class="td-sidebar-nav__section pr-md-3">
   <li class="td-sidebar-nav__section-title">
-    <a  href="/docs/install/" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">安装部署</a>
+    <a  href="/docs/install/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">安装部署</a>
   </li>
   <ul>
-    <li class="collapse show" id="docsinstall">
+    <li class="collapse " id="docsinstall">
       
       
       
@@ -209,10 +219,10 @@
 
 <ul class="td-sidebar-nav__section pr-md-3">
   <li class="td-sidebar-nav__section-title">
-    <a  href="/docs/usage/" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">使用说明</a>
+    <a  href="/docs/usage/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">使用说明</a>
   </li>
   <ul>
-    <li class="collapse show" id="docsusage">
+    <li class="collapse " id="docsusage">
       
       
       
@@ -238,7 +248,7 @@
 
 <ul class="td-sidebar-nav__section pr-md-3">
   <li class="td-sidebar-nav__section-title">
-    <a  href="/docs/appendix/" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">附录</a>
+    <a  href="/docs/appendix/" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">附录</a>
   </li>
   <ul>
     <li class="collapse show" id="docsappendix">
@@ -254,7 +264,7 @@
       
       
       
-      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsappendixfuncs" href="/docs/appendix/funcs/">告警函数</a>
+      <a class="td-sidebar-link td-sidebar-link__page  active" id="m-docsappendixfuncs" href="/docs/appendix/funcs/">告警函数</a>
       
       
       
@@ -294,8 +304,8 @@
 
 
 
-<a href="https://github.com/n9e/book/edit/master/content/v5/docs/_index.md" target="_blank"><i class="fa fa-edit fa-fw"></i> 编辑此页</a>
-<a href="https://github.com/n9e/book/issues/new?title=Documentation" target="_blank"><i class="fab fa-github fa-fw"></i> 提交文档问题</a>
+<a href="https://github.com/n9e/book/edit/master/content/v5/docs/appendix/funcs.md" target="_blank"><i class="fa fa-edit fa-fw"></i> 编辑此页</a>
+<a href="https://github.com/n9e/book/issues/new?title=%e5%91%8a%e8%ad%a6%e5%87%bd%e6%95%b0" target="_blank"><i class="fab fa-github fa-fw"></i> 提交文档问题</a>
 
 
 <a href="https://github.com/didi/nightingale/issues/new" target="_blank"><i class="fas fa-tasks fa-fw"></i> 提交项目问题</a>
@@ -328,8 +338,28 @@
 
 
 
-<li class="breadcrumb-item active" aria-current="page">
+
+
+
+
+
+
+<li class="breadcrumb-item" >
 	<a href="/docs/">文档</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="/docs/appendix/">附录</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item active" aria-current="page">
+	<a href="/docs/appendix/funcs/">告警函数</a>
 </li>
 
 	</ol>
@@ -337,70 +367,77 @@
 
             
 <div class="td-content">
-	<h1>Documentation</h1>
-	
-	
-        <div class="section-index">
-    
-    
-    
-    
-    <hr class="panel-line">
-        
-            
-                <div class="entry">
-                    <h5>
-                        <a href="/docs/intro/">夜莺介绍</a>
-                    </h5>
-                    <p>夜莺是新一代国产智能监控系统。对云原生场景、传统物理机虚拟机场景，都有很好的支持，10分钟完成搭建，1小时熟悉使用，经受了滴滴生产环境海量数据的验证，希望打造国产监控的标杆之作，一起参与进来吧！</p>
-                </div>
-            
-        
-            
-                <div class="entry">
-                    <h5>
-                        <a href="/docs/install/">安装部署</a>
-                    </h5>
-                    <p>阅读本章节，一定要先阅读《<a href="/docs/intro/">夜莺介绍</a>》，了解整体的架构，这样出了问题方能有思路排查。因为大部分生产环境都是使用CentOS7，后面的讲解我们都将基于此发行版展开，所有二进制都是X86架构下编译而成，这点请注意。</p>
-                </div>
-            
-        
-            
-                <div class="entry">
-                    <h5>
-                        <a href="/docs/usage/">使用说明</a>
-                    </h5>
-                    <p>概述页面上各个功能菜单的设计逻辑，对于部分难以理解的功能会展开讲解，作为一个监控系统，难点在服务端设计，麻烦的点在采集完备性，后续希望社区朋友一起补充各类采集文档，一起完善！</p>
-                </div>
-            
-        
-            
-                <div class="entry">
-                    <h5>
-                        <a href="/docs/appendix/">附录</a>
-                    </h5>
-                    <p>附录杂项，通常是被其他章节引用的内容。会有部分设计理念、部分函数解释等。</p>
-                </div>
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-    
-</div>
+	<h1>告警函数</h1>
+	<div class="lead">告警策略的配置，对于Nightingale模式，支持多种内置函数，这些内置函数是作用在统计周期内的各个监控数据上，即统计周期+监控数据+告警函数得到一个值，这个值与阈值做比对判断是否触发告警，本章节对各类告警函数做详细解释说明</div>
+	<table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">连续发生(all)</td>
+<td align="left">最近 n 秒内的每个值都触发阈值</td>
+</tr>
+<tr>
+<td align="left">发生次数(happen)</td>
+<td align="left">最近 n 秒内，有 m 次触发阈值</td>
+</tr>
+<tr>
+<td align="left">求和(sum)</td>
+<td align="left">最近 n 秒内所有的点之和触发阈值</td>
+</tr>
+<tr>
+<td align="left">平均值(avg)</td>
+<td align="left">最近 n 秒内所有的点的平均值触发阈值</td>
+</tr>
+<tr>
+<td align="left">最小值(min)</td>
+<td align="left">最近 n 秒内所有的点的最小值触发阈值</td>
+</tr>
+<tr>
+<td align="left">最大值(max)</td>
+<td align="left">最近 n 秒内所有的点的最大值触发阈值</td>
+</tr>
+<tr>
+<td align="left">突增突降率(pdiff) <strong>区分正负</strong></td>
+<td align="left">最近 n 秒的变化率, 有一个触发阈值则告警，举例：最近3个周期的值分别为 v1, v2, v3（v1为最新值）那么计算公式为 any( (v1-v2)/v2, (v1-v3)/v3 )</td>
+</tr>
+<tr>
+<td align="left">突增突降值(diff) <strong>区分正负</strong></td>
+<td align="left">最近 n 秒的变化量, 有一个触发阈值则告警，举例：最近3个周期的值分别为 v1, v2, v3（v1为最新值）那么计算公式为 any( (v1-v2), (v1-v3) )</td>
+</tr>
+<tr>
+<td align="left">同比变化值(c_avg) <strong>区分正负</strong></td>
+<td align="left">最近 n 秒的几个值取平均，相比1天或7天前同时段值的变化值，举例：最近n个值是 v1，v2，v3，过去同时段的值是 v1&rsquo;，v2&rsquo;，v3&rsquo;，那么计算公式为 avg(v1,v2,v3)-avg(v1&rsquo;,v2&rsquo;,v3&rsquo;)</td>
+</tr>
+<tr>
+<td align="left">同比变化值的绝对值(c_avg_abs)</td>
+<td align="left">最近 n 秒的几个值取平均，相比1天或7天前同时段值的变化值，举例：最近n个值是 v1，v2，v3，过去同时段的值是 v1&rsquo;，v2&rsquo;，v3&rsquo;，那么计算公式为 abs(avg(v1,v2,v3)-avg(v1&rsquo;,v2&rsquo;,v3&rsquo;))</td>
+</tr>
+<tr>
+<td align="left">同比变化率(c_avg_rate) <strong>区分正负</strong></td>
+<td align="left">最近 n 秒的几个值取平均，相比1天或7天前同时段值的变化率，举例：最近n个值是 v1，v2，v3，过去同时段的值是 v1&rsquo;，v2&rsquo;，v3&rsquo;，那么计算公式为 (avg(v1,v2,v3)-avg(v1&rsquo;,v2&rsquo;,v3&rsquo;))/avg(v1&rsquo;,v2&rsquo;,v3&rsquo;)*100</td>
+</tr>
+<tr>
+<td align="left">同比变化率的绝对值(c_avg_rate_abs)</td>
+<td align="left">最近 n 秒的几个值取平均，相比1天或7天前同时段值的变化率的绝对值，举例：最近n个值是 v1，v2，v3，过去同时段的值是 v1&rsquo;，v2&rsquo;，v3&rsquo;，那么计算公式为 abs((avg(v1,v2,v3)-avg(v1&rsquo;,v2&rsquo;,v3&rsquo;))/avg(v1&rsquo;,v2&rsquo;,v3&rsquo;))*100</td>
+</tr>
+<tr>
+<td align="left">3-sigma离群点检测</td>
+<td align="left">持续 n 秒内波动值过大，超过了 m 个标准差范围，默认 m 为 3</td>
+</tr>
+</tbody>
+</table>
 
 	
 	
-	<div class="text-muted mt-5 pt-3 border-top">最后修改 2021-06-22: <a  href="https://github.com/n9e/book/commit/276285a455d7c832bcf7362a639e4b875716ad73">code refactor (276285a)</a>
+	<div class="text-muted mt-5 pt-3 border-top">最后修改 2021-06-25: <a  href="https://github.com/n9e/book/commit/4cab2aa6f28284f81fcefc23cec6760e64c21d18">add api.md (4cab2aa)</a>
 </div>
 </div>
+
 
           </main>
         </div>
