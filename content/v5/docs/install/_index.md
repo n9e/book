@@ -53,9 +53,7 @@ systemctl restart prometheus
 systemctl status prometheus
 ```
 
-TODO：部署服务端、客户端
-
-<!-- ## 部署服务端
+## 部署服务端
 
 服务端依赖mysql数据库，请自行安装，v5版本的数据库表结构和之前的版本不兼容，所以没法复用之前版本的数据库，这点请注意。
 
@@ -64,8 +62,8 @@ TODO：部署服务端、客户端
 ```bash
 mkdir -p /opt/n9e
 cd /opt/n9e
-wget xxx
-tar zxf xxx
+wget 116.85.64.82/n9e-5.0.0-rc1.tar.gz
+tar zxvf n9e-5.0.0-rc1.tar.gz
 ```
 
 #### 2. 导入表结构
@@ -107,5 +105,3 @@ tar zcvf n9e-agentd.tar.gz n9e-agentd etc/agentd.yml service/n9e-agentd.service
 ```
 
 OK，把n9e-agentd.tar.gz分发到你要监控的机器上，解包之后修改agentd.yml中的服务端连接地址（搜索endpoint关键字），即可启动测试。
-
- -->
