@@ -38,6 +38,8 @@ curl -X POST -H "Content-Type: application/json" http://n9e-server-address/v1/n9
 
 ## 数据读取
 
+夜莺的后端存储可以支持使用M3、Prometheus、InfluxDB等等，这些存储本身就暴露了数据查询的接口，所以，大家可以直接使用存储自身提供的查询接口。也可以使用夜莺的，下面讲解一下夜莺的查询监控数据的方式：
+
 TODO:
 
 

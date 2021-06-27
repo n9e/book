@@ -162,15 +162,39 @@
         
         
         &lt;h2 id=&#34;数据上报&#34;&gt;数据上报&lt;/h2&gt;
-&lt;p&gt;TODO:&lt;/p&gt;
-&lt;p&gt;post方式，给个curl的例子&lt;/p&gt;
-&lt;h2 id=&#34;数据读取&#34;&gt;数据读取&lt;/h2&gt;
+&lt;p&gt;直接看使用curl命令上报数据的例子即可，如果是其他语言翻译一下就完了。监控指标组织为json list格式，放到http request body中，post给n9e-server即可。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -X POST -H &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; http://n9e-server-address/v1/n9e/push -d &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;[
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;ident&amp;#34;: &amp;#34;10.4.5.6&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;alias&amp;#34;: &amp;#34;c3-cloud-ceph01.bj&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;metric&amp;#34;: &amp;#34;system_fs_inodes_used&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;tags&amp;#34;: {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;device&amp;#34;: &amp;#34;/dev/vda1&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;time&amp;#34;: 1624062385,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;value: 351
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;ident&amp;#34;: &amp;#34;10.4.5.6&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;alias&amp;#34;: &amp;#34;c3-cloud-ceph01.bj&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;metric&amp;#34;: &amp;#34;system_fs_inodes_used&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;tags&amp;#34;: {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;device&amp;#34;: &amp;#34;/dev/vda2&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;time&amp;#34;: 1624062385,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;value: 35109
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    }
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;]&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;数据读取&#34;&gt;数据读取&lt;/h2&gt;
+&lt;p&gt;夜莺的后端存储可以支持使用M3、Prometheus、InfluxDB等等，这些存储本身就暴露了数据查询的接口，所以，大家可以直接使用存储自身提供的查询接口。也可以使用夜莺的，下面讲解一下夜莺的查询监控数据的方式：&lt;/p&gt;
 &lt;p&gt;TODO:&lt;/p&gt;
 &lt;h2 id=&#34;二次开发&#34;&gt;二次开发&lt;/h2&gt;
-&lt;p&gt;夜莺的http接口主要有两个前缀，&lt;code&gt;/api/n9e&lt;/code&gt;相关的是给前端JavaScript使用，用cookie做认证，写操作会有CSRF校验。&lt;code&gt;/v1/n9e&lt;/code&gt;前缀的接口是给第三方系统用的。&lt;code&gt;/v1/n9e&lt;/code&gt;相关的接口如何认证呢？使用token；token从哪里找呢？去页面上，个人中心密钥里；调用接口的时候如何传递token呢？使用Authorization这个Header。比如某个第三方系统要调用夜莺的接口，先由管理员去用户中心为这个系统创建个账号，然后用这个账号登录，生成token(密钥)即可。&lt;/p&gt;
+&lt;p&gt;夜莺的http接口主要有两个前缀，&lt;code&gt;/api/n9e&lt;/code&gt;相关的是给前端JavaScript使用，用cookie做认证，写操作会有CSRF校验。&lt;code&gt;/v1/n9e&lt;/code&gt;前缀的接口是给第三方系统用的。&lt;code&gt;/v1/n9e&lt;/code&gt;相关的接口如何认证呢？使用token(个别接口不用token，比如数据上报查询的接口)；token从哪里找呢？去页面上，个人中心密钥里；调用接口的时候如何传递token呢？使用Authorization这个Header。比如某个第三方系统要调用夜莺的接口，先由管理员去用户中心为这个系统创建个账号，然后用这个账号登录，生成token(密钥)即可。&lt;/p&gt;
 &lt;p&gt;举例，拉取用户列表的接口，使用curl来调用，样例如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -H &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Authorization: token-from-web-gen&amp;#34;&lt;/span&gt; http://&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;n9e&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-server&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;/v1/n9e/users
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;接口安全&#34;&gt;接口安全&lt;/h2&gt;
+&lt;p&gt;如果夜莺是部署在公网的，&lt;code&gt;/v1/n9e&lt;/code&gt;相关的接口有些又没有认证机制，可能会被恶意利用，建议的做法：n9e-server启动的时候监听在内网ip，在n9e-server前面部署一层nginx，nginx只需对外暴露&lt;code&gt;/api/n9e&lt;/code&gt;相关的接口，upstream是n9e-server的内网ip，所以别人也就访问不到了。&lt;/p&gt;
+
       </description>
     </item>
     
