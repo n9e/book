@@ -92,7 +92,7 @@ cd /opt/n9e
 
 上面的命令是启动了一个前台进程，如果起不来，程序崩溃，相关错误就会在命令行直接打出来，比较容易排错，如果命令行里的错误无法帮助定位问题，请查阅logs目录下的相关日志。如果前台进程启动发现一切正常，`Ctrl+C`停掉进程，重新通过nohup启动，扔到后台来运行：`nohup ./n9e-server &> server.log &` 当然，更好的方式是用systemd来托管，service文件可以在`etc/service`下找到。
 
-下面就可以用浏览器访问服务端的端口（在服务端的yml配置中可以看到http的监听端口）进入系统了，系统启动的时候会默认初始化一个`root`账号，密码是`root.2020` 登录之后什么数据都没有，毕竟我们还没有部署采集程序，下一小节开始部署客户端采集程序。
+下面就可以用浏览器访问服务端的端口（在服务端的yml配置中可以看到http的监听端口）进入系统了，系统启动的时候会默认初始化一个`root`账号，密码是`root.2020` 登录之后没啥数据，毕竟我们还没有部署采集程序，下一小节开始部署客户端采集程序。
 
 ## 部署客户端
 
@@ -101,7 +101,7 @@ cd /opt/n9e
 如上，就完成了整个单机版的部署，如果想多监控几台机器，只需要把客户端相关文件打个包，拷贝到目标机器上，修改agentd.yml中的服务端地址，即可启动验证。具体要把哪些文件打包呢？参考下面的命令：
 
 ```
-tar zcvf n9e-agentd.tar.gz n9e-agentd etc/agentd.yml service/n9e-agentd.service
+tar zcvf n9e-agentd.tar.gz n9e-agentd etc/agentd.yml etc/conf.d service/n9e-agentd.service
 ```
 
 OK，把n9e-agentd.tar.gz分发到你要监控的机器上，解包之后修改agentd.yml中的服务端连接地址（搜索endpoint关键字），即可启动测试。
