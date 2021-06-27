@@ -185,6 +185,16 @@
   <url>
     <loc>/v4/docs/usage/proc/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/docs/usage/proc/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/usage/proc/"
+                />
   </url>
   
   <url>
@@ -205,6 +215,16 @@
   <url>
     <loc>/v4/docs/usage/plugin/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/docs/usage/plugin/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/usage/plugin/"
+                />
   </url>
   
   <url>

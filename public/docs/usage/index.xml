@@ -72,5 +72,74 @@
       </description>
     </item>
     
+    <item>
+      <title>Docs: 进程监控</title>
+      <link>/docs/usage/proc/</link>
+      <pubDate>Wed, 26 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/usage/proc/</guid>
+      <description>
+        
+        
+        &lt;p&gt;进程监控的采集配置，大部分字段的含义和“端口监控”雷同，不再赘述。这里着重说明进程监控特殊的地方。&lt;/p&gt;
+&lt;p&gt;进程监控核心是在监控进程的数量，比如n9e-job进程，进程活着，名字是n9e-job的进程数肯定就是1，进程死了，名字是n9e-job的进程数就变成0了，此时就应该报警。但是，进程名字（查看进程名可以&lt;code&gt;cat /proc/&amp;lt;pid&amp;gt;/status&lt;/code&gt;，有个name字段）有时不具备唯一性，导致我们没法统计进程数量，比如python语言写的进程，进程名都是python，java语言写的进程，进程名都是java，那我们怎么来准确告诉agent我们要采集具体哪个进程呢？&lt;/p&gt;
+&lt;p&gt;我们需要找一个能方便区分标识进程的东西，这里我们有两个办法，一个是使用进程的名字，一个是使用进程的cmdline（参看&lt;code&gt;/proc/&amp;lt;pid&amp;gt;/cmdline&lt;/code&gt;）。页面配置有个字段叫“采集方式”就是为此设计，如果是C、C++、Go这种语言写的程序，一般就用进程名来监控即可，如果是PHP、Python、Java这种语言写的程序，就要选择采集方式为：命令行，那命令行这个字段怎么填？假设要监控某个Java进程，pid是5648，命令行就填为&lt;code&gt;/proc/5648/cmdline&lt;/code&gt;的一个子串即可，只要这个子串能与其他进程的cmdline区分开，就无需使用整个cmdline内容。举例：我们使用&lt;code&gt;java -c uic.properties&lt;/code&gt;启动了一个java进程，其cmdline为：&lt;code&gt;java-cuic.properties&lt;/code&gt;，我们要监控这个进程只需要把命令行设置为&lt;code&gt;uic&lt;/code&gt;即可，&lt;code&gt;uic&lt;/code&gt;是5648这个进程的cmdline的一个子串，而且可以和其他进程区分开。&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 插件监控</title>
+      <link>/docs/usage/plugin/</link>
+      <pubDate>Tue, 25 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/usage/plugin/</guid>
+      <description>
+        
+        
+        &lt;p&gt;插件是扩展agent采集能力的一种手段，通常是一个脚本，有时是二进制，我们在web上通过配置，告诉系统哪些机器上应该执行哪些插件，执行频率是多少，插件脚本的路径在哪里等等，这个配置会下发给agentd，agentd就知道去哪个位置找插件，并且按照某个频率周期性去执行，截获插件的stdout，解析出监控指标上报。&lt;/p&gt;
+&lt;p&gt;截获的stdout要求是个json array，举例：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;
+    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;metric&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;disk.io.util&amp;#34;&lt;/span&gt;,
+        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;tags&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;device&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;sda&amp;#34;&lt;/span&gt;
+        &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;,
+        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;: 15.4,
+        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1554455574&lt;/span&gt;
+    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;,
+    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;metric&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;api.latency&amp;#34;&lt;/span&gt;,
+        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;tags&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;api&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/v1/login&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;service&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;n9e&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;module&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;monapi&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;region&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;bj&amp;#34;&lt;/span&gt;
+        &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;,
+        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;: 5.4,
+        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1554455574&lt;/span&gt;
+    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个数据结构可以对照《&lt;a href=&#34;/docs/appendix/datamodel/&#34;&gt;DataModel&lt;/a&gt;》一章的内容来看，上面的插件输出样例其实没有ident和alias字段，因为插件是agentd驱动的，所以agentd会自动补上这俩字段，无需插件输出这俩字段。&lt;/p&gt;
+&lt;p&gt;agentd执行插件，每次都是fork一个进程去跑的，就类似我们在shell环境下跑一个脚本，Linux下跑一个脚本可以给脚本传参数，可以设置环境变量，可以给脚本传入stdin，所以页面上也支持配置这些内容。&lt;/p&gt;
+&lt;p&gt;欢迎大家写文章介绍自己的插件，大家共建生态！&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 日志监控</title>
+      <link>/docs/usage/logmon/</link>
+      <pubDate>Mon, 24 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/usage/logmon/</guid>
+      <description>
+        
+        
+        &lt;p&gt;TODO: 新版本的日志监控对日志文件的匹配是否支持glob方式？有哪些变化？&lt;/p&gt;
+
+      </description>
+    </item>
+    
   </channel>
 </rss>

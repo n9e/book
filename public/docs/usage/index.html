@@ -231,6 +231,24 @@
       <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusageport" href="/docs/usage/port/">端口监控</a>
       
       
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusageproc" href="/docs/usage/proc/">进程监控</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusageplugin" href="/docs/usage/plugin/">插件监控</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagelogmon" href="/docs/usage/logmon/">日志监控</a>
+      
+      
     </li>
   </ul>
 </ul>
@@ -408,6 +426,33 @@
                 </div>
             
         
+            
+                <div class="entry">
+                    <h5>
+                        <a href="/docs/usage/proc/">进程监控</a>
+                    </h5>
+                    <p>进程监控是一种典型的黑盒监控的手段，如果某个进程没有监听端口，没法用端口是否存活来判断进程存活性，那就只能统计进程数量了，另外进程监控也可以统计到进程的一些运行指标</p>
+                </div>
+            
+        
+            
+                <div class="entry">
+                    <h5>
+                        <a href="/docs/usage/plugin/">插件监控</a>
+                    </h5>
+                    <p>夜莺插件机制，可以看做是agentd能力的一种扩展机制，插件通常来说，就是一个采集脚本(也可以是个二进制，只要具备可执行权限即可)，可以在页面上控制哪些机器要执行插件，非常灵活方便</p>
+                </div>
+            
+        
+            
+                <div class="entry">
+                    <h5>
+                        <a href="/docs/usage/logmon/">日志监控</a>
+                    </h5>
+                    <p>夜莺内置的日志监控，并非是把日志收集到中心在中心处理，而是使用了一种更轻量的方式，在服务端配置正则表达式，下发到agentd，agentd会流式读取日志，然后从日志中根据正则提取metrics数据，所以本质上，这仍然是metrics监控的一种扩展机制。如果大家需要中心化的日志处理解决方案，可以参考我们的logi产品。</p>
+                </div>
+            
+        
     
 </div>
 
@@ -418,7 +463,7 @@
 <h5>诚挚邀请各位小伙伴：</h5>
 
 <p>
-一起参与夜莺社区建设，多写一些夜莺的文章，咱们一起把夜莺做成最好用的国产智能监控系统，造福一方。对于不具备开发资源的甲方爸爸们，也可联系我们（18612185520，微信同号）寻求技术支持护航服务，贵司业务发展这么快，我们帮你做好监控！
+一起参与夜莺社区建设，多写一些夜莺的文章，咱们一起把夜莺做成最好用的国产智能监控系统，造福一方。对于不具备开发资源的甲方上帝们，也可联系我们（18612185520，微信同号）寻求技术支持护航服务，贵司业务发展这么快，我们帮你做好监控！
 </p>
 </div>
 </div>
