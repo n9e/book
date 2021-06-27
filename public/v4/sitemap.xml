@@ -170,6 +170,16 @@
   <url>
     <loc>/v4/docs/usage/port/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/docs/usage/port/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/usage/port/"
+                />
   </url>
   
   <url>

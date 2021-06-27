@@ -262,5 +262,28 @@
       </description>
     </item>
     
+    <item>
+      <title>Docs: 端口监控</title>
+      <link>/docs/usage/port/</link>
+      <pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/usage/port/</guid>
+      <description>
+        
+        
+        &lt;p&gt;端口分两类，一个是TCP一个是UDP，TCP的端口如何探测是否在监听？只需要由agentd发起连接尝试即可，如果连接失败了，就认为没在监听；对于UDP的端口，没法像TCP那样探测，agentd会去尝试listen一个相同的端口，如果listen失败，就认为这个端口已经在监听了，否则就认为这个端口没在监听。&lt;/p&gt;
+&lt;p&gt;配置端口采集时，需要填写多个字段的内容，各个字段的含义简要介绍如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;采集名称&lt;/strong&gt;：给这条采集策略取个名字，可以是中文，比如“n9e-mysql端口监控”&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;端口协议&lt;/strong&gt;：根据你的端口监听的协议自行选择即可，大部分都是TCP的&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;端口号&lt;/strong&gt;：要监控的端口号，比如3306&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;连接超时&lt;/strong&gt;：TCP类型的端口agentd会去尝试连接，如果连接失败就认为端口没有在监听，既然是连接就要设置超时时间&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;采集周期&lt;/strong&gt;：端口监控的探测周期&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;附加标签&lt;/strong&gt;：这个字段非常重要，通常用于附加一些维度信息。比如n9e服务用的mysql端口是3306，如果告警的时候只是报出3306端口挂了，我们很难知道是哪个数据库，这种情况我们就可以附加一些标签，用于做维度标识，比如附上：&lt;code&gt;service=mysql,business=n9e&lt;/code&gt;就一下子清楚的知道这是给n9e这个业务用的mysql服务啦&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
   </channel>
 </rss>

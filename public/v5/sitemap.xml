@@ -89,17 +89,32 @@
   
   <url>
     <loc>/docs/appendix/api/</loc>
-    <lastmod>2021-06-27T12:29:03+08:00</lastmod>
+    <lastmod>2021-06-27T12:45:07+08:00</lastmod>
   </url>
   
   <url>
     <loc>/docs/appendix/nginx/</loc>
-    <lastmod>2021-06-19T00:00:00+00:00</lastmod>
+    <lastmod>2021-06-27T12:45:07+08:00</lastmod>
   </url>
   
   <url>
     <loc>/docs/usage/menus/</loc>
     <lastmod>2021-06-24T20:35:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/usage/port/</loc>
+    <lastmod>2021-05-27T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/usage/port/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/docs/usage/port/"
+                />
   </url>
   
   <url>

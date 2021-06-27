@@ -20,25 +20,25 @@
 <link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-<title>DataModel | Nightingale</title><meta property="og:title" content="DataModel" />
-<meta property="og:description" content="介绍夜莺监控数据的格式，对于理解何为一条监控指标非常重要，对于未来自行采集监控数据上报给夜莺非常重要，对于理解告警策略的过滤规则非常重要！
+<title>端口监控 | Nightingale</title><meta property="og:title" content="端口监控" />
+<meta property="og:description" content="端口监控是一种典型的黑盒监控的手段，如果端口都没在监听显然这个进程是出问题了，夜莺内置了端口监控的能力，我们建议所有的物理机、虚拟机上面部署的关键进程，都要配上端口监控
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/appendix/datamodel/" />
-<meta property="article:published_time" content="2021-06-25T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-06-26T07:22:48+08:00" /><meta property="og:site_name" content="Nightingale" />
-<meta itemprop="name" content="DataModel">
-<meta itemprop="description" content="介绍夜莺监控数据的格式，对于理解何为一条监控指标非常重要，对于未来自行采集监控数据上报给夜莺非常重要，对于理解告警策略的过滤规则非常重要！
+<meta property="og:url" content="/docs/usage/port/" />
+<meta property="article:published_time" content="2021-05-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-05-27T00:00:00+00:00" /><meta property="og:site_name" content="Nightingale" />
+<meta itemprop="name" content="端口监控">
+<meta itemprop="description" content="端口监控是一种典型的黑盒监控的手段，如果端口都没在监听显然这个进程是出问题了，夜莺内置了端口监控的能力，我们建议所有的物理机、虚拟机上面部署的关键进程，都要配上端口监控
 ">
-<meta itemprop="datePublished" content="2021-06-25T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-06-26T07:22:48&#43;08:00" />
-<meta itemprop="wordCount" content="77">
+<meta itemprop="datePublished" content="2021-05-27T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-05-27T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="8">
 
 
 
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="DataModel"/>
-<meta name="twitter:description" content="介绍夜莺监控数据的格式，对于理解何为一条监控指标非常重要，对于未来自行采集监控数据上报给夜莺非常重要，对于理解告警策略的过滤规则非常重要！
+<meta name="twitter:title" content="端口监控"/>
+<meta name="twitter:description" content="端口监控是一种典型的黑盒监控的手段，如果端口都没在监听显然这个进程是出问题了，夜莺内置了端口监控的能力，我们建议所有的物理机、虚拟机上面部署的关键进程，都要配上端口监控
 "/>
 
 
@@ -56,7 +56,7 @@
 
 
 
-    <title>DataModel | Nightingale</title>
+    <title>端口监控 | Nightingale</title>
   </head>
   <body class="td-page">
     <header>
@@ -102,7 +102,7 @@
 </a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 	
-	<a class="dropdown-item" href="/v4/">v4版本</a>
+	<a class="dropdown-item" href="/v4/docs/usage/port/">v4版本</a>
 	
 </div>
 			</li>
@@ -142,7 +142,7 @@
 </a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 	
-	<a class="dropdown-item" href="/v4/">v4版本</a>
+	<a class="dropdown-item" href="/v4/docs/usage/port/">v4版本</a>
 	
 </div>
     </div>
@@ -219,10 +219,10 @@
 
 <ul class="td-sidebar-nav__section pr-md-3">
   <li class="td-sidebar-nav__section-title">
-    <a  href="/docs/usage/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">使用说明</a>
+    <a  href="/docs/usage/" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">使用说明</a>
   </li>
   <ul>
-    <li class="collapse " id="docsusage">
+    <li class="collapse show" id="docsusage">
       
       
       
@@ -235,7 +235,7 @@
       
       
       
-      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusageport" href="/docs/usage/port/">端口监控</a>
+      <a class="td-sidebar-link td-sidebar-link__page  active" id="m-docsusageport" href="/docs/usage/port/">端口监控</a>
       
       
     </li>
@@ -254,17 +254,17 @@
 
 <ul class="td-sidebar-nav__section pr-md-3">
   <li class="td-sidebar-nav__section-title">
-    <a  href="/docs/appendix/" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">附录</a>
+    <a  href="/docs/appendix/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">附录</a>
   </li>
   <ul>
-    <li class="collapse show" id="docsappendix">
+    <li class="collapse " id="docsappendix">
       
       
       
       
       
       
-      <a class="td-sidebar-link td-sidebar-link__page  active" id="m-docsappendixdatamodel" href="/docs/appendix/datamodel/">DataModel</a>
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsappendixdatamodel" href="/docs/appendix/datamodel/">DataModel</a>
       
       
       
@@ -316,8 +316,8 @@
 
 
 
-<a href="https://github.com/n9e/book/edit/master/content/v5/docs/appendix/datamodel.md" target="_blank"><i class="fa fa-edit fa-fw"></i> 编辑此页</a>
-<a href="https://github.com/n9e/book/issues/new?title=DataModel" target="_blank"><i class="fab fa-github fa-fw"></i> 提交文档问题</a>
+<a href="https://github.com/n9e/book/edit/master/content/v5/docs/usage/port.md" target="_blank"><i class="fa fa-edit fa-fw"></i> 编辑此页</a>
+<a href="https://github.com/n9e/book/issues/new?title=%e7%ab%af%e5%8f%a3%e7%9b%91%e6%8e%a7" target="_blank"><i class="fab fa-github fa-fw"></i> 提交文档问题</a>
 
 
 <a href="https://github.com/didi/nightingale/issues/new" target="_blank"><i class="fas fa-tasks fa-fw"></i> 提交项目问题</a>
@@ -364,14 +364,14 @@
 
 
 <li class="breadcrumb-item" >
-	<a href="/docs/appendix/">附录</a>
+	<a href="/docs/usage/">使用说明</a>
 </li>
 
 
 
 
 <li class="breadcrumb-item active" aria-current="page">
-	<a href="/docs/appendix/datamodel/">DataModel</a>
+	<a href="/docs/usage/port/">端口监控</a>
 </li>
 
 	</ol>
@@ -379,58 +379,17 @@
 
             
 <div class="td-content">
-	<h1>DataModel</h1>
-	<div class="lead">介绍夜莺监控数据的格式，对于理解何为一条监控指标非常重要，对于未来自行采集监控数据上报给夜莺非常重要，对于理解告警策略的过滤规则非常重要！</div>
-	<p>首先举个例子：</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#204a87;font-weight:bold">&#34;ident&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;10.4.5.6&#34;</span><span style="color:#000;font-weight:bold">,</span>
-    <span style="color:#204a87;font-weight:bold">&#34;alias&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;c3-cloud-ceph01.bj&#34;</span><span style="color:#000;font-weight:bold">,</span>
-    <span style="color:#204a87;font-weight:bold">&#34;metric&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;system_fs_inodes_used&#34;</span><span style="color:#000;font-weight:bold">,</span>
-    <span style="color:#204a87;font-weight:bold">&#34;tags&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#204a87;font-weight:bold">&#34;device&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;/dev/vda1&#34;</span>
-    <span style="color:#000;font-weight:bold">},</span>
-    <span style="color:#204a87;font-weight:bold">&#34;time&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">1624062385</span><span style="color:#000;font-weight:bold">,</span>
-    <span style="color:#204a87;font-weight:bold">&#34;value&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">351</span>
-<span style="color:#000;font-weight:bold">}</span>
-</code></pre></div><blockquote>
-<p>“资源”一词的解释：资源即某个监控实体，比如某个机器、交换机、防火墙、调制解调器等等。夜莺提供了资源分组的能力，用于应对传统的物理机、虚拟机的服务混部监控场景，ident和alias字段就是用于标识资源</p>
-</blockquote>
+	<h1>端口监控</h1>
+	<div class="lead">端口监控是一种典型的黑盒监控的手段，如果端口都没在监听显然这个进程是出问题了，夜莺内置了端口监控的能力，我们建议所有的物理机、虚拟机上面部署的关键进程，都要配上端口监控</div>
+	<p>端口分两类，一个是TCP一个是UDP，TCP的端口如何探测是否在监听？只需要由agentd发起连接尝试即可，如果连接失败了，就认为没在监听；对于UDP的端口，没法像TCP那样探测，agentd会去尝试listen一个相同的端口，如果listen失败，就认为这个端口已经在监听了，否则就认为这个端口没在监听。</p>
+<p>配置端口采集时，需要填写多个字段的内容，各个字段的含义简要介绍如下：</p>
 <ul>
-<li>ident：资源唯一标识，如果是机器的监控指标，这个字段大都填充为机器ip，如果是跟设备无关的指标，这个字段可以为空</li>
-<li>alias：资源名称，如果是机器，这个字段很可能是填充为hostname，当然，如果是设备无关的指标，这个字段也是空，即使是设备的指标，这个字段也允许为空</li>
-<li>metric：监控指标的名字</li>
-<li>tags：监控数据的维度信息，上例中从监控指标的名字可以得知代表inode的使用量，但是一个机器有多个盘，具体是哪个盘还需要表达出来，这种就用tags来描述</li>
-<li>time：UNIX时间戳，单位是秒</li>
-<li>value：监控数据此刻的值，只能是数值，服务端最终都转换为浮点数处理</li>
-</ul>
-<p>夜莺的服务端和客户端都提供了监控数据上报的接口，如果是要把监控数据上报给服务端，就用上例中的数据结构组装为list上报即可，比如：</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST -H <span style="color:#4e9a06">&#34;Content-Type: application/json&#34;</span> http://n9e-server-address/v1/n9e/push -d <span style="color:#4e9a06">&#39;[
-</span><span style="color:#4e9a06">    {
-</span><span style="color:#4e9a06">        &#34;ident&#34;: &#34;10.4.5.6&#34;,
-</span><span style="color:#4e9a06">        &#34;alias&#34;: &#34;c3-cloud-ceph01.bj&#34;,
-</span><span style="color:#4e9a06">        &#34;metric&#34;: &#34;system_fs_inodes_used&#34;,
-</span><span style="color:#4e9a06">        &#34;tags&#34;: {
-</span><span style="color:#4e9a06">            &#34;device&#34;: &#34;/dev/vda1&#34;
-</span><span style="color:#4e9a06">        },
-</span><span style="color:#4e9a06">        &#34;time&#34;: 1624062385,
-</span><span style="color:#4e9a06">        &#34;value: 351
-</span><span style="color:#4e9a06">    },
-</span><span style="color:#4e9a06">    {
-</span><span style="color:#4e9a06">        &#34;ident&#34;: &#34;10.4.5.6&#34;,
-</span><span style="color:#4e9a06">        &#34;alias&#34;: &#34;c3-cloud-ceph01.bj&#34;,
-</span><span style="color:#4e9a06">        &#34;metric&#34;: &#34;system_fs_inodes_used&#34;,
-</span><span style="color:#4e9a06">        &#34;tags&#34;: {
-</span><span style="color:#4e9a06">            &#34;device&#34;: &#34;/dev/vda2&#34;
-</span><span style="color:#4e9a06">        },
-</span><span style="color:#4e9a06">        &#34;time&#34;: 1624062385,
-</span><span style="color:#4e9a06">        &#34;value: 35109
-</span><span style="color:#4e9a06">    }
-</span><span style="color:#4e9a06">]&#39;</span>
-</code></pre></div><p>如果监控数据不是直接推送给服务端，而是推给了客户端，比如插件的方式或者直接调用客户端的推送接口，此时数据结构略有变化，增加了一个type字段来标识监控数据的类型，不同类型的监控数据，客户端会做预处理，然后将处理之后的数据推给服务端，推给服务端的时候会拿掉type信息。即type字段只在客户端处理，服务端会忽略这个字段。客户端支持的type类型以及相关解释如下：</p>
-<p>TODO: 下面内容待补充</p>
-<ul>
-<li>count: xx</li>
-<li>summary: yy</li>
+<li><strong>采集名称</strong>：给这条采集策略取个名字，可以是中文，比如“n9e-mysql端口监控”</li>
+<li><strong>端口协议</strong>：根据你的端口监听的协议自行选择即可，大部分都是TCP的</li>
+<li><strong>端口号</strong>：要监控的端口号，比如3306</li>
+<li><strong>连接超时</strong>：TCP类型的端口agentd会去尝试连接，如果连接失败就认为端口没有在监听，既然是连接就要设置超时时间</li>
+<li><strong>采集周期</strong>：端口监控的探测周期</li>
+<li><strong>附加标签</strong>：这个字段非常重要，通常用于附加一些维度信息。比如n9e服务用的mysql端口是3306，如果告警的时候只是报出3306端口挂了，我们很难知道是哪个数据库，这种情况我们就可以附加一些标签，用于做维度标识，比如附上：<code>service=mysql,business=n9e</code>就一下子清楚的知道这是给n9e这个业务用的mysql服务啦</li>
 </ul>
 
 	
