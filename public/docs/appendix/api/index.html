@@ -26,12 +26,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/appendix/api/" />
 <meta property="article:published_time" content="2021-06-21T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-06-27T12:17:52+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta property="article:modified_time" content="2021-06-27T12:29:03+08:00" /><meta property="og:site_name" content="Nightingale" />
 <meta itemprop="name" content="API调用">
 <meta itemprop="description" content="介绍夜莺对外暴露的API，用于自行采集监控数据上报、读取监控数据分析、对夜莺页面做二次开发等场景。重点讲解监控数据上报、读取的接口，二次开发相关的接口，在http下的router.go里可以找到所有接口，会简略介绍，需要大家自行翻阅代码。
 ">
 <meta itemprop="datePublished" content="2021-06-21T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-06-27T12:17:52&#43;08:00" />
+<meta itemprop="dateModified" content="2021-06-27T12:29:03&#43;08:00" />
 <meta itemprop="wordCount" content="62">
 
 
@@ -273,6 +273,12 @@
       <a class="td-sidebar-link td-sidebar-link__page  active" id="m-docsappendixapi" href="/docs/appendix/api/">API调用</a>
       
       
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsappendixnginx" href="/docs/appendix/nginx/">配置nginx</a>
+      
+      
     </li>
   </ul>
 </ul>
@@ -410,11 +416,11 @@
 <p>举例，拉取用户列表的接口，使用curl来调用，样例如下：</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -H <span style="color:#4e9a06">&#34;Authorization: token-from-web-gen&#34;</span> http://<span style="color:#4e9a06">${</span><span style="color:#000">n9e</span><span style="color:#000;font-weight:bold">-server</span><span style="color:#4e9a06">}</span>/v1/n9e/users
 </code></pre></div><h2 id="接口安全">接口安全</h2>
-<p>如果夜莺是部署在公网的，<code>/v1/n9e</code>相关的接口有些又没有认证机制，可能会被恶意利用，建议的做法：n9e-server启动的时候监听在内网ip，在n9e-server前面部署一层nginx，nginx只需对外暴露<code>/api/n9e</code>相关的接口，upstream是n9e-server的内网ip，所以别人也就访问不到了。</p>
+<p>如果夜莺是部署在公网的，<code>/v1/n9e</code>相关的接口有些又没有认证机制，可能会被恶意利用，建议的做法：n9e-server启动的时候监听在内网ip，在n9e-server前面部署一层nginx，nginx只需对外暴露<code>/api/n9e</code>相关的接口，upstream是n9e-server的内网ip，所以别人也就访问不到了。nginx的配置可以参考《<a href="/docs/appendix/nginx/">配置nginx</a>》</p>
 
 	
 	
-	<div class="text-muted mt-5 pt-3 border-top">最后修改 2021-06-27: <a  href="https://github.com/n9e/book/commit/7dece6e5a1c944cfb84aa5c2439a9f45fa5b04c7">api.md (7dece6e)</a>
+	<div class="text-muted mt-5 pt-3 border-top">最后修改 2021-06-27: <a  href="https://github.com/n9e/book/commit/67be34ba938ae4d2867ebda3c489e134a7b93259">add doc for api.md (67be34b)</a>
 </div>
 </div>
 

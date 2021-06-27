@@ -55,4 +55,6 @@ curl -H "Authorization: token-from-web-gen" http://${n9e-server}/v1/n9e/users
 
 ## 接口安全
 
-如果夜莺是部署在公网的，`/v1/n9e`相关的接口有些又没有认证机制，可能会被恶意利用，建议的做法：n9e-server启动的时候监听在内网ip，在n9e-server前面部署一层nginx，nginx只需对外暴露`/api/n9e`相关的接口，upstream是n9e-server的内网ip，所以别人也就访问不到了。
+如果夜莺是部署在公网的，`/v1/n9e`相关的接口有些又没有认证机制，可能会被恶意利用，建议的做法：n9e-server启动的时候监听在内网ip，在n9e-server前面部署一层nginx，nginx只需对外暴露`/api/n9e`相关的接口，upstream是n9e-server的内网ip，所以别人也就访问不到了。nginx的配置可以参考《[配置nginx](/docs/appendix/nginx/)》
+
+

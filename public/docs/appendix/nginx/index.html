@@ -20,25 +20,25 @@
 <link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-<title>DataModel | Nightingale</title><meta property="og:title" content="DataModel" />
-<meta property="og:description" content="介绍夜莺监控数据的格式，对于理解何为一条监控指标非常重要，对于未来自行采集监控数据上报给夜莺非常重要，对于理解告警策略的过滤规则非常重要！
+<title>配置nginx | Nightingale</title><meta property="og:title" content="配置nginx" />
+<meta property="og:description" content="在夜莺v5里，前端代码可以直接使用n9e-server来serve，不需要nginx，不过有的场景是不希望把n9e-server的端口暴露出来的，比如 《[API调用](/docs/appendix/api/)》章节提到的接口安全问题，此时就需要nginx了
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/appendix/datamodel/" />
-<meta property="article:published_time" content="2021-06-25T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-06-26T07:22:48+08:00" /><meta property="og:site_name" content="Nightingale" />
-<meta itemprop="name" content="DataModel">
-<meta itemprop="description" content="介绍夜莺监控数据的格式，对于理解何为一条监控指标非常重要，对于未来自行采集监控数据上报给夜莺非常重要，对于理解告警策略的过滤规则非常重要！
+<meta property="og:url" content="/docs/appendix/nginx/" />
+<meta property="article:published_time" content="2021-06-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-06-19T00:00:00+00:00" /><meta property="og:site_name" content="Nightingale" />
+<meta itemprop="name" content="配置nginx">
+<meta itemprop="description" content="在夜莺v5里，前端代码可以直接使用n9e-server来serve，不需要nginx，不过有的场景是不希望把n9e-server的端口暴露出来的，比如 《[API调用](/docs/appendix/api/)》章节提到的接口安全问题，此时就需要nginx了
 ">
-<meta itemprop="datePublished" content="2021-06-25T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-06-26T07:22:48&#43;08:00" />
-<meta itemprop="wordCount" content="77">
+<meta itemprop="datePublished" content="2021-06-19T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-19T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="25">
 
 
 
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="DataModel"/>
-<meta name="twitter:description" content="介绍夜莺监控数据的格式，对于理解何为一条监控指标非常重要，对于未来自行采集监控数据上报给夜莺非常重要，对于理解告警策略的过滤规则非常重要！
+<meta name="twitter:title" content="配置nginx"/>
+<meta name="twitter:description" content="在夜莺v5里，前端代码可以直接使用n9e-server来serve，不需要nginx，不过有的场景是不希望把n9e-server的端口暴露出来的，比如 《[API调用](/docs/appendix/api/)》章节提到的接口安全问题，此时就需要nginx了
 "/>
 
 
@@ -56,7 +56,7 @@
 
 
 
-    <title>DataModel | Nightingale</title>
+    <title>配置nginx | Nightingale</title>
   </head>
   <body class="td-page">
     <header>
@@ -258,7 +258,7 @@
       
       
       
-      <a class="td-sidebar-link td-sidebar-link__page  active" id="m-docsappendixdatamodel" href="/docs/appendix/datamodel/">DataModel</a>
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsappendixdatamodel" href="/docs/appendix/datamodel/">DataModel</a>
       
       
       
@@ -276,7 +276,7 @@
       
       
       
-      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsappendixnginx" href="/docs/appendix/nginx/">配置nginx</a>
+      <a class="td-sidebar-link td-sidebar-link__page  active" id="m-docsappendixnginx" href="/docs/appendix/nginx/">配置nginx</a>
       
       
     </li>
@@ -310,8 +310,8 @@
 
 
 
-<a href="https://github.com/n9e/book/edit/master/content/v5/docs/appendix/datamodel.md" target="_blank"><i class="fa fa-edit fa-fw"></i> 编辑此页</a>
-<a href="https://github.com/n9e/book/issues/new?title=DataModel" target="_blank"><i class="fab fa-github fa-fw"></i> 提交文档问题</a>
+<a href="https://github.com/n9e/book/edit/master/content/v5/docs/appendix/nginx.md" target="_blank"><i class="fa fa-edit fa-fw"></i> 编辑此页</a>
+<a href="https://github.com/n9e/book/issues/new?title=%e9%85%8d%e7%bd%aenginx" target="_blank"><i class="fab fa-github fa-fw"></i> 提交文档问题</a>
 
 
 <a href="https://github.com/didi/nightingale/issues/new" target="_blank"><i class="fas fa-tasks fa-fw"></i> 提交项目问题</a>
@@ -365,7 +365,7 @@
 
 
 <li class="breadcrumb-item active" aria-current="page">
-	<a href="/docs/appendix/datamodel/">DataModel</a>
+	<a href="/docs/appendix/nginx/">配置nginx</a>
 </li>
 
 	</ol>
@@ -373,63 +373,28 @@
 
             
 <div class="td-content">
-	<h1>DataModel</h1>
-	<div class="lead">介绍夜莺监控数据的格式，对于理解何为一条监控指标非常重要，对于未来自行采集监控数据上报给夜莺非常重要，对于理解告警策略的过滤规则非常重要！</div>
-	<p>首先举个例子：</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#204a87;font-weight:bold">&#34;ident&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;10.4.5.6&#34;</span><span style="color:#000;font-weight:bold">,</span>
-    <span style="color:#204a87;font-weight:bold">&#34;alias&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;c3-cloud-ceph01.bj&#34;</span><span style="color:#000;font-weight:bold">,</span>
-    <span style="color:#204a87;font-weight:bold">&#34;metric&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;system_fs_inodes_used&#34;</span><span style="color:#000;font-weight:bold">,</span>
-    <span style="color:#204a87;font-weight:bold">&#34;tags&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#204a87;font-weight:bold">&#34;device&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;/dev/vda1&#34;</span>
-    <span style="color:#000;font-weight:bold">},</span>
-    <span style="color:#204a87;font-weight:bold">&#34;time&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">1624062385</span><span style="color:#000;font-weight:bold">,</span>
-    <span style="color:#204a87;font-weight:bold">&#34;value&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">351</span>
-<span style="color:#000;font-weight:bold">}</span>
-</code></pre></div><blockquote>
-<p>“资源”一词的解释：资源即某个监控实体，比如某个机器、交换机、防火墙、调制解调器等等。夜莺提供了资源分组的能力，用于应对传统的物理机、虚拟机的服务混部监控场景，ident和alias字段就是用于标识资源</p>
-</blockquote>
-<ul>
-<li>ident：资源唯一标识，如果是机器的监控指标，这个字段大都填充为机器ip，如果是跟设备无关的指标，这个字段可以为空</li>
-<li>alias：资源名称，如果是机器，这个字段很可能是填充为hostname，当然，如果是设备无关的指标，这个字段也是空，即使是设备的指标，这个字段也允许为空</li>
-<li>metric：监控指标的名字</li>
-<li>tags：监控数据的维度信息，上例中从监控指标的名字可以得知代表inode的使用量，但是一个机器有多个盘，具体是哪个盘还需要表达出来，这种就用tags来描述</li>
-<li>time：UNIX时间戳，单位是秒</li>
-<li>value：监控数据此刻的值，只能是数值，服务端最终都转换为浮点数处理</li>
-</ul>
-<p>夜莺的服务端和客户端都提供了监控数据上报的接口，如果是要把监控数据上报给服务端，就用上例中的数据结构组装为list上报即可，比如：</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST -H <span style="color:#4e9a06">&#34;Content-Type: application/json&#34;</span> http://n9e-server-address/v1/n9e/push -d <span style="color:#4e9a06">&#39;[
-</span><span style="color:#4e9a06">    {
-</span><span style="color:#4e9a06">        &#34;ident&#34;: &#34;10.4.5.6&#34;,
-</span><span style="color:#4e9a06">        &#34;alias&#34;: &#34;c3-cloud-ceph01.bj&#34;,
-</span><span style="color:#4e9a06">        &#34;metric&#34;: &#34;system_fs_inodes_used&#34;,
-</span><span style="color:#4e9a06">        &#34;tags&#34;: {
-</span><span style="color:#4e9a06">            &#34;device&#34;: &#34;/dev/vda1&#34;
-</span><span style="color:#4e9a06">        },
-</span><span style="color:#4e9a06">        &#34;time&#34;: 1624062385,
-</span><span style="color:#4e9a06">        &#34;value: 351
-</span><span style="color:#4e9a06">    },
-</span><span style="color:#4e9a06">    {
-</span><span style="color:#4e9a06">        &#34;ident&#34;: &#34;10.4.5.6&#34;,
-</span><span style="color:#4e9a06">        &#34;alias&#34;: &#34;c3-cloud-ceph01.bj&#34;,
-</span><span style="color:#4e9a06">        &#34;metric&#34;: &#34;system_fs_inodes_used&#34;,
-</span><span style="color:#4e9a06">        &#34;tags&#34;: {
-</span><span style="color:#4e9a06">            &#34;device&#34;: &#34;/dev/vda2&#34;
-</span><span style="color:#4e9a06">        },
-</span><span style="color:#4e9a06">        &#34;time&#34;: 1624062385,
-</span><span style="color:#4e9a06">        &#34;value: 35109
-</span><span style="color:#4e9a06">    }
-</span><span style="color:#4e9a06">]&#39;</span>
-</code></pre></div><p>如果监控数据不是直接推送给服务端，而是推给了客户端，比如插件的方式或者直接调用客户端的推送接口，此时数据结构略有变化，增加了一个type字段来标识监控数据的类型，不同类型的监控数据，客户端会做预处理，然后将处理之后的数据推给服务端，推给服务端的时候会拿掉type信息。即type字段只在客户端处理，服务端会忽略这个字段。客户端支持的type类型以及相关解释如下：</p>
-<p>TODO: 下面内容待补充</p>
-<ul>
-<li>count: xx</li>
-<li>summary: yy</li>
-</ul>
+	<h1>配置nginx</h1>
+	<div class="lead">在夜莺v5里，前端代码可以直接使用n9e-server来serve，不需要nginx，不过有的场景是不希望把n9e-server的端口暴露出来的，比如 《<a href="/docs/appendix/api/">API调用</a>》章节提到的接口安全问题，此时就需要nginx了</div>
+	<p>下面给出nginx的典型配置，大家也可以加一下gzip压缩之类的提升性能，这个就由各位自由发挥了。</p>
+<pre><code>server {
+    listen       80;
+    server_name  _;
 
+    root   /opt/n9e/pub;
+
+    location / {
+        root /opt/n9e/pub;
+        try_files $uri /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:8000;
+    }
+}
+</code></pre>
 	
 	
-	<div class="text-muted mt-5 pt-3 border-top">最后修改 2021-06-26: <a  href="https://github.com/n9e/book/commit/3c4146d5509bb1b717589c8efa1848d70d258552">code refactor (3c4146d)</a>
+	<div class="text-muted mt-5 pt-3 border-top">最后修改 2021-06-19
 </div>
 </div>
 

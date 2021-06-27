@@ -193,8 +193,37 @@
 &lt;p&gt;举例，拉取用户列表的接口，使用curl来调用，样例如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -H &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Authorization: token-from-web-gen&amp;#34;&lt;/span&gt; http://&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;n9e&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-server&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;/v1/n9e/users
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;接口安全&#34;&gt;接口安全&lt;/h2&gt;
-&lt;p&gt;如果夜莺是部署在公网的，&lt;code&gt;/v1/n9e&lt;/code&gt;相关的接口有些又没有认证机制，可能会被恶意利用，建议的做法：n9e-server启动的时候监听在内网ip，在n9e-server前面部署一层nginx，nginx只需对外暴露&lt;code&gt;/api/n9e&lt;/code&gt;相关的接口，upstream是n9e-server的内网ip，所以别人也就访问不到了。&lt;/p&gt;
+&lt;p&gt;如果夜莺是部署在公网的，&lt;code&gt;/v1/n9e&lt;/code&gt;相关的接口有些又没有认证机制，可能会被恶意利用，建议的做法：n9e-server启动的时候监听在内网ip，在n9e-server前面部署一层nginx，nginx只需对外暴露&lt;code&gt;/api/n9e&lt;/code&gt;相关的接口，upstream是n9e-server的内网ip，所以别人也就访问不到了。nginx的配置可以参考《&lt;a href=&#34;/docs/appendix/nginx/&#34;&gt;配置nginx&lt;/a&gt;》&lt;/p&gt;
 
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 配置nginx</title>
+      <link>/docs/appendix/nginx/</link>
+      <pubDate>Sat, 19 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/appendix/nginx/</guid>
+      <description>
+        
+        
+        &lt;p&gt;下面给出nginx的典型配置，大家也可以加一下gzip压缩之类的提升性能，这个就由各位自由发挥了。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;server {
+    listen       80;
+    server_name  _;
+
+    root   /opt/n9e/pub;
+
+    location / {
+        root /opt/n9e/pub;
+        try_files $uri /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:8000;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
       </description>
     </item>
     
