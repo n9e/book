@@ -101,7 +101,7 @@ cd /opt/n9e
 如上，就完成了整个单机版的部署，如果想多监控几台机器，只需要把客户端相关文件打个包，拷贝到目标机器上，修改agentd.yml中的服务端地址，即可启动验证。具体要把哪些文件打包呢？参考下面的命令：
 
 ```
-tar zcvf n9e-agentd.tar.gz n9e-agentd etc/agentd.yml etc/conf.d service/n9e-agentd.service
+tar zcvf n9e-agentd.tar.gz n9e-agentd etc/agentd.yml etc/conf.d etc/service/n9e-agentd.service
 ```
 
 OK，把n9e-agentd.tar.gz分发到你要监控的机器上，解包之后修改agentd.yml中的服务端连接地址（搜索endpoint关键字），即可启动测试。

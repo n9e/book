@@ -449,7 +449,7 @@ cp server.yml server.local.yml
 <h2 id="部署客户端">部署客户端</h2>
 <p>压缩包里其实默认打了客户端的二进制和相关配置，直接<code>./n9e-agentd -c etc/agentd.yml</code>即可在前台启动客户端做验证，如果一切正常，应该可以在WEB上看到本机上报的监控数据，资源管理页面里也可以看到这个资源信息。验证没问题就可以<code>Ctrl+C</code>停掉进程，然后用nohup正经启动了：<code>nohup ./n9e-agentd -c etc/agentd.yml &amp;&gt; agentd.log &amp;</code> 当然，更好的方式还是用systemd来托管，service文件可以在<code>etc/service</code>下找到。</p>
 <p>如上，就完成了整个单机版的部署，如果想多监控几台机器，只需要把客户端相关文件打个包，拷贝到目标机器上，修改agentd.yml中的服务端地址，即可启动验证。具体要把哪些文件打包呢？参考下面的命令：</p>
-<pre><code>tar zcvf n9e-agentd.tar.gz n9e-agentd etc/agentd.yml etc/conf.d service/n9e-agentd.service
+<pre><code>tar zcvf n9e-agentd.tar.gz n9e-agentd etc/agentd.yml etc/conf.d etc/service/n9e-agentd.service
 </code></pre><p>OK，把n9e-agentd.tar.gz分发到你要监控的机器上，解包之后修改agentd.yml中的服务端连接地址（搜索endpoint关键字），即可启动测试。</p>
 
         <div class="section-index">
