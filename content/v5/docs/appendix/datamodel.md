@@ -1,7 +1,7 @@
 ---
 title: "DataModel"
 linkTitle: "DataModel"
-date: 2021-06-01
+date: 2021-06-25
 description: >
   介绍夜莺监控数据的格式，对于理解何为一条监控指标非常重要，对于未来自行采集监控数据上报给夜莺非常重要，对于理解告警策略的过滤规则非常重要！
 ---
@@ -17,7 +17,7 @@ description: >
         "device": "/dev/vda1"
     },
     "time": 1624062385,
-    "value: 351
+    "value": 351
 }
 ```
 
@@ -33,7 +33,7 @@ description: >
 夜莺的服务端和客户端都提供了监控数据上报的接口，如果是要把监控数据上报给服务端，就用上例中的数据结构组装为list上报即可，比如：
 
 ```bash
-curl -X POST -H "Content-Type: application/json" http://n9e-server-address/api/n9e/push -d '[
+curl -X POST -H "Content-Type: application/json" http://n9e-server-address/v1/n9e/push -d '[
     {
         "ident": "10.4.5.6",
         "alias": "c3-cloud-ceph01.bj",
@@ -58,6 +58,8 @@ curl -X POST -H "Content-Type: application/json" http://n9e-server-address/api/n
 ```
 
 如果监控数据不是直接推送给服务端，而是推给了客户端，比如插件的方式或者直接调用客户端的推送接口，此时数据结构略有变化，增加了一个type字段来标识监控数据的类型，不同类型的监控数据，客户端会做预处理，然后将处理之后的数据推给服务端，推给服务端的时候会拿掉type信息。即type字段只在客户端处理，服务端会忽略这个字段。客户端支持的type类型以及相关解释如下：
+
+TODO: 下面内容待补充
 
 - count: xx
 - summary: yy

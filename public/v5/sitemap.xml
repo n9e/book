@@ -19,7 +19,7 @@
   
   <url>
     <loc>/docs/install/</loc>
-    <lastmod>2021-06-23T22:02:52+08:00</lastmod>
+    <lastmod>2021-06-27T12:17:52+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="v4"
@@ -34,7 +34,7 @@
   
   <url>
     <loc>/docs/usage/</loc>
-    <lastmod>2021-06-24T00:00:00+00:00</lastmod>
+    <lastmod>2021-06-24T20:35:17+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="v4"
@@ -44,6 +44,21 @@
                 rel="alternate"
                 hreflang="v5"
                 href="/docs/usage/"
+                />
+  </url>
+  
+  <url>
+    <loc>/docs/appendix/</loc>
+    <lastmod>2021-06-25T21:22:13+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/appendix/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/docs/appendix/"
                 />
   </url>
   
@@ -63,28 +78,78 @@
   </url>
   
   <url>
-    <loc>/docs/appendix/</loc>
-    <lastmod>2021-06-24T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="v4"
-                href="/v4/docs/appendix/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="v5"
-                href="/docs/appendix/"
-                />
+    <loc>/docs/appendix/datamodel/</loc>
+    <lastmod>2021-06-26T07:22:48+08:00</lastmod>
   </url>
   
   <url>
-    <loc>/docs/appendix/datamodel/</loc>
-    <lastmod>2021-06-01T00:00:00+00:00</lastmod>
+    <loc>/docs/appendix/funcs/</loc>
+    <lastmod>2021-06-25T21:32:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/appendix/api/</loc>
+    <lastmod>2021-06-27T12:45:07+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/appendix/nginx/</loc>
+    <lastmod>2021-06-27T12:45:07+08:00</lastmod>
   </url>
   
   <url>
     <loc>/docs/usage/menus/</loc>
-    <lastmod>2021-06-01T00:00:00+00:00</lastmod>
+    <lastmod>2021-06-24T20:35:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/usage/port/</loc>
+    <lastmod>2021-06-27T14:12:29+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/usage/port/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/docs/usage/port/"
+                />
+  </url>
+  
+  <url>
+    <loc>/docs/usage/proc/</loc>
+    <lastmod>2021-06-27T15:03:11+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/usage/proc/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/docs/usage/proc/"
+                />
+  </url>
+  
+  <url>
+    <loc>/docs/usage/plugin/</loc>
+    <lastmod>2021-06-27T15:03:11+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/usage/plugin/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
+                href="/docs/usage/plugin/"
+                />
+  </url>
+  
+  <url>
+    <loc>/docs/usage/logmon/</loc>
+    <lastmod>2021-06-27T15:03:11+08:00</lastmod>
   </url>
   
   <url>
@@ -104,7 +169,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2021-06-22T20:18:31+08:00</lastmod>
+    <lastmod>2021-06-27T15:09:58+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="v4"
