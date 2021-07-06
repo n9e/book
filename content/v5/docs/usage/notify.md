@@ -6,10 +6,10 @@ description: >
   告警消息发送，为了适配各种媒介，我们直接使用python脚本 etc/script/notify.py 来对接，本文将对告警信息发送的配置方式及notify.py原理进行介绍
 ---
 在《[夜莺介绍](https://n9e.didiyun.com/docs/intro/)》一文中，我们介绍了夜莺的告警信息通知 notify.py 脚本来实现的，本文详细讲解下 notify.py 的实现原理，以及如何在页面上配置用户的联系方式，来支持多种通知渠道
-​
+
 
 ### notify.py原理
-当夜莺生成告警事件之后，会调用notify.py脚本将告警信息发送出去，告警内容是怎么样传给notify.py的呢？是通过stdin的方式，代码详见 [alert/consume.go](https://github.com/didi/nightingale/blob/1f16bc9a7b788fed7d5a93f331f7ec0a99fba17b/alert/consume.go#L183) ，notify.py收到告警信息之后，会将告警格式化为一个有缩进的json写入一个临时文件，为了后续排查问题使用，临时文件的命名规则是 rule_id_event_id_trigger_time
+当夜莺生成告警事件之后，会调用notify.py脚本将告警信息发送出去，告警内容是怎么样传给notify.py的呢？是通过stdin的方式，代码详见 [alert/consume.go](https://github.com/didi/nightingale/blob/1f16bc9a7b788fed7d5a93f331f7ec0a99fba17b/alert/consume.go#L183) ，notify.py收到告警信息之后，会将告警格式化为一个有缩进的json写入一个临时文件，为了后续排查问题使用，临时文件的命名规则是 rule_id_event_id_trigger_time。那 notify.py 如何支持多种通知媒介呢？其实要想把消息发出去，只有知道发生对象联系方式和发送通道就可以了，发送对象可以从event.users.contacts中获取，发送通道可以从 event.notify_channels 中获取，具体如何配置，下面会详细介绍
 
 
 ### 邮件发送配置
