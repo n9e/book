@@ -87,10 +87,14 @@ cp server.yml server.local.yml
 
 ```
 cd /opt/n9e
-./n9e-server
+nohup ./n9e-server &> server.log &
+
+# 进程如果启动了，理论上会监听2个端口，一个http端口一个rpc端口
+# 通过下面命令可以查看端口是否在监听，如果端口都在监听，就说明启动成功
+ss -tlnp|grep n9e-server
 ```
 
-上面的命令是启动了一个前台进程，如果起不来，程序崩溃，相关错误就会在命令行直接打出来，比较容易排错，如果命令行里的错误无法帮助定位问题，请查阅logs目录下的相关日志。如果前台进程启动发现一切正常，`Ctrl+C`停掉进程，重新通过nohup启动，扔到后台来运行：`nohup ./n9e-server &> server.log &` 当然，更好的方式是用systemd来托管，service文件可以在`etc/service`下找到。
+如果启动不起来，或者进程启动了，但是端口没有在监听，都有问题，需要查阅日志，日志在server.log里以及logs目录里。上面是用nohup启动，更好的方式是用systemd来托管，service文件在`etc/service`下，至于如何使用systemd来管理，比较简单，这里就不赘述了，新手可以百度一下。
 
 下面就可以用浏览器访问服务端的端口（在服务端的yml配置中可以看到http的监听端口）进入系统了，系统启动的时候会默认初始化一个`root`账号，密码是`root.2020` 登录之后没啥数据，毕竟我们还没有部署采集程序，下一小节开始部署客户端采集程序。
 
@@ -98,7 +102,7 @@ cd /opt/n9e
 
 > 客户端的代码在这里：[https://github.com/n9e/n9e-agentd](https://github.com/n9e/n9e-agentd)
 
-压缩包里其实默认打了客户端的二进制和相关配置，直接`./n9e-agentd -c etc/agentd.yml`即可在前台启动客户端做验证，如果一切正常，应该可以在WEB上看到本机上报的监控数据，资源管理页面里也可以看到这个资源信息。验证没问题就可以`Ctrl+C`停掉进程，然后用nohup正经启动了：`nohup ./n9e-agentd -c etc/agentd.yml &> agentd.log &` 当然，更好的方式还是用systemd来托管，service文件可以在`etc/service`下找到。
+压缩包里其实默认打了客户端的二进制和相关配置，直接`nohup ./n9e-agentd -c etc/agentd.yml &> agentd.log &`就可以启动，如果启动失败，就查看日志，日志在agentd.log和logs目录下。
 
 如上，就完成了整个单机版的部署，如果想多监控几台机器，只需要把客户端相关文件打个包，拷贝到目标机器上，修改agentd.yml中的服务端地址，即可启动验证。具体要把哪些文件打包呢？参考下面的命令：
 
