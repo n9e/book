@@ -17,6 +17,7 @@ description: >
 存储是可插拔的方式，简单起见，我们选择单机版Prometheus来快速开始，部署Prometheus的方式如下：
 
 ```bash
+
 mkdir -p /opt/prometheus
 
 wget https://s3-gz01.didistatic.com/n9e-pub/prome/prometheus-2.28.0.linux-amd64.tar.gz -O prometheus-2.28.0.linux-amd64.tar.gz
@@ -32,6 +33,7 @@ After=network.target
 
 [Service]
 Type=simple
+
 ExecStart=/opt/prometheus/prometheus  --config.file=/opt/prometheus/prometheus.yml --storage.tsdb.path=/opt/prometheus/data --web.enable-lifecycle --enable-feature=remote-write-receiver --query.lookback-delta=2m 
 
 Restart=on-failure
@@ -51,6 +53,7 @@ systemctl daemon-reload
 systemctl enable prometheus
 systemctl restart prometheus
 systemctl status prometheus
+
 ```
 
 ## 部署服务端
