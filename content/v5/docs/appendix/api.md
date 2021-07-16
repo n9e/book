@@ -45,8 +45,46 @@ curl -X POST -H "Content-Type: application/json" http://n9e-server-address/v1/n9
     - 使用内置的prometheus remote read查询配置中的多个后端数据源(如prometheus、m3db、influxdb)
     - 将查询到数据进行merge(去掉重复的，填充缺失的)
     - 将数据转化为夜莺前端需要的格式返回
+- 查询数据接口python代码如下
+```python
+def query_data():
+    now = int(time.time())
+    data = {
+        # 开始时间
+        "start": now - 60 ,
+        # 结束时间
+        "end": now,
+        # 参数
+        "params": [{
+            # 如果有prome_ql代表 直接使用promql查询，否则使用下面参数
+            "prome_ql": '''avg(rate(node_cpu_seconds_total{mode="iowait"}[2m])) by (instance) *100''',
+            # 如果使用下面参数会拼接成promql  {__name__="system_cpu_guest",ident=~"1.1.1.1|2.2.2.2",job=~".*node.*",group=~".*inf.*"}
+            "metric": "system_cpu_guest",
+            #  ident 列表
+            "idents": ["1.1.1.1", "2.2.2.2"],
+            # 标签组
+            "tags": [
+                {
+                    "key": "job",
+                    "value": "node",
+                },
+                {
+                    "key": "group",
+                    "value": "inf",
+                },
+            ],
+
+        },
+        ],
+        #  返回series数量限制
+        "limit": 10,
+    }
+    uri = 'http://localhost:8000/v1/n9e/query'
+    res = requests.post(uri, json=data)
+    print(res.json())
 
 
+```
 ## 二次开发
 
 夜莺的http接口主要有两个前缀，`/api/n9e`相关的是给前端JavaScript使用，用cookie做认证，写操作会有CSRF校验。`/v1/n9e`前缀的接口是给第三方系统用的。`/v1/n9e`相关的接口如何认证呢？使用token(个别接口不用token，比如数据上报查询的接口)；token从哪里找呢？去页面上，个人中心密钥里；调用接口的时候如何传递token呢？使用Authorization这个Header。比如某个第三方系统要调用夜莺的接口，先由管理员去用户中心为这个系统创建个账号，然后用这个账号登录，生成token(密钥)即可。
