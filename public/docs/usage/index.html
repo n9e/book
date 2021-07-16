@@ -241,6 +241,12 @@
       <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagelogmon" href="/docs/usage/logmon/">日志监控</a>
       
       
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagenotify" href="/docs/usage/notify/">告警通知</a>
+      
+      
     </li>
   </ul>
 </ul>
@@ -442,6 +448,15 @@
                         <a href="/docs/usage/logmon/">日志监控</a>
                     </h5>
                     <p>夜莺内置的日志监控，并非是把日志收集到中心在中心处理，而是使用了一种更轻量的方式，在服务端配置正则表达式，下发到agentd，agentd会流式读取日志，然后从日志中根据正则提取metrics数据，所以本质上，这仍然是metrics监控的一种扩展机制。如果大家需要中心化的日志处理解决方案，可以参考我们的logi产品。</p>
+                </div>
+            
+        
+            
+                <div class="entry">
+                    <h5>
+                        <a href="/docs/usage/notify/">告警通知</a>
+                    </h5>
+                    <p>告警消息发送，为了适配各种媒介，我们直接使用python脚本 etc/script/notify.py 来对接，本文将对告警信息发送的配置方式及notify.py原理进行介绍</p>
                 </div>
             
         
