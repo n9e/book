@@ -65,14 +65,15 @@ systemctl status prometheus
 ```bash
 mkdir -p /opt/n9e
 cd /opt/n9e
-wget 116.85.64.82/n9e-5.0.0-rc1.tar.gz
-tar zxvf n9e-5.0.0-rc1.tar.gz
+wget 116.85.64.82/n9e-5.0.0-rc2.tar.gz
+tar zxvf n9e-5.0.0-rc2.tar.gz
+tar zxvf n9e-server.tar.gz
 ```
 
 #### 2. 导入表结构
 
 ```
-mysql -uroot -p < /opt/n9e/sql/n9e.sql
+mysql -uroot -p < /opt/n9e/server/sql/n9e.sql
 ```
 
 #### 3. 修改配置
@@ -80,7 +81,7 @@ mysql -uroot -p < /opt/n9e/sql/n9e.sql
 服务端启动的时候会看etc目录下是否有server.local.yml，如果有就用，如果没有，再去找server.yml，即server.local.yml的优先级高于server.yml
 
 ```
-cd /opt/n9e/etc
+cd /opt/n9e/server/etc
 cp server.yml server.local.yml
 # 修改server.local.yml中的数据库连接配置
 # 默认配置的后端存储就是Prometheus，所以不用改动
@@ -89,7 +90,7 @@ cp server.yml server.local.yml
 #### 4. 启动进程
 
 ```
-cd /opt/n9e
+cd /opt/n9e/server
 nohup ./n9e-server &> server.log &
 
 # 进程如果启动了，理论上会监听2个端口，一个http端口一个rpc端口
@@ -105,12 +106,20 @@ ss -tlnp|grep n9e-server
 
 > 客户端的代码在这里：[https://github.com/n9e/n9e-agentd](https://github.com/n9e/n9e-agentd)
 
-压缩包里其实默认打了客户端的二进制和相关配置，直接`nohup ./n9e-agentd -c etc/agentd.yml &> agentd.log &`就可以启动，如果启动失败，就查看日志，日志在agentd.log和logs目录下。
+```
+mkdir -p /opt/n9e
+cd /opt/n9e
+tar zxvf n9e-agentd.tar.gz
+cd /opt/n9e/agentd
+nohup ./bin/n9e-agentd -c etc/agentd.yaml &> agentd.log &
 
-如上，就完成了整个单机版的部署，如果想多监控几台机器，只需要把客户端相关文件打个包，拷贝到目标机器上，修改agentd.yml中的服务端地址，即可启动验证。具体要把哪些文件打包呢？参考下面的命令：
+# 通过下面命令可以n9e-agentd的进程，如果进程存在，说明启动成功了，如果启动失败，就查看日志，日志在agentd.log下
+ps -ef|grep n9e-agentd|grep -v grep
+```
+
+如上，就完成了整个单机版的部署，如果想多监控几台机器，只需要修改etc/agentd.yaml中的服务端连接地址（搜索endpoint关键字），然后重启打下包，把压缩包拷贝到目标机器上，即可启动验证。如果想要systemd托管的话，n9e-agentd的service文件在解压后的systemd文件下
 
 ```
-tar zcvf n9e-agentd.tar.gz n9e-agentd etc/agentd.yml etc/conf.d etc/service/n9e-agentd.service
+#重新打包
+tar czvf n9e-agentd.tar.gz agentd
 ```
-
-OK，把n9e-agentd.tar.gz分发到你要监控的机器上，解包之后修改agentd.yml中的服务端连接地址（搜索endpoint关键字），即可启动测试。
