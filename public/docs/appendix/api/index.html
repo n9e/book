@@ -17,13 +17,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/appendix/api/" />
 <meta property="article:published_time" content="2021-06-21T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-06-27T12:45:07+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta property="article:modified_time" content="2021-07-16T17:18:35+08:00" /><meta property="og:site_name" content="Nightingale" />
 <meta itemprop="name" content="API调用">
 <meta itemprop="description" content="介绍夜莺对外暴露的API，用于自行采集监控数据上报、读取监控数据分析、对夜莺页面做二次开发等场景。重点讲解监控数据上报、读取的接口，二次开发相关的接口，在http下的router.go里可以找到所有接口，会简略介绍，需要大家自行翻阅代码。
 ">
 <meta itemprop="datePublished" content="2021-06-21T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-06-27T12:45:07&#43;08:00" />
-<meta itemprop="wordCount" content="62">
+<meta itemprop="dateModified" content="2021-07-16T17:18:35&#43;08:00" />
+<meta itemprop="wordCount" content="148">
 
 
 
@@ -430,10 +430,59 @@
 </span><span style="color:#4e9a06">        &#34;value: 35109
 </span><span style="color:#4e9a06">    }
 </span><span style="color:#4e9a06">]&#39;</span>
-</code></pre></div><h2 id="数据读取">数据读取</h2>
+</code></pre></div><p>其中各个字段的含义参考《<a href="/docs/appendix/datamodel/">DataModel</a>》一章，其中ident、alias字段也是可选的，很多情形的监控数据是没法和设备关联在一起的，比如某个域名的证书过期时间。</p>
+<h2 id="数据读取">数据读取</h2>
 <p>夜莺的后端存储可以支持使用M3、Prometheus、InfluxDB等等，这些存储本身就暴露了数据查询的接口，所以，大家可以直接使用存储自身提供的查询接口。也可以使用夜莺的，下面讲解一下夜莺的查询监控数据的方式：</p>
-<p>TODO:</p>
-<h2 id="二次开发">二次开发</h2>
+<ul>
+<li>夜莺V5内置了prometheus的remote read能力和promql查询引擎，具体查询过程如下
+<ul>
+<li>前端传入查询参数(n9e模式 or promql模式)</li>
+<li>后端解析参数后拼接成promql(n9e模式)</li>
+<li>使用内置的prometheus remote read查询配置中的多个后端数据源(如prometheus、m3db、influxdb)</li>
+<li>将查询到数据进行merge(去掉重复的，填充缺失的)</li>
+<li>将数据转化为夜莺前端需要的格式返回</li>
+</ul>
+</li>
+<li>查询数据接口python代码如下</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">query_data</span><span style="color:#000;font-weight:bold">():</span>
+    <span style="color:#000">now</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">time</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">time</span><span style="color:#000;font-weight:bold">())</span>
+    <span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#8f5902;font-style:italic"># 开始时间</span>
+        <span style="color:#4e9a06">&#34;start&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">now</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#0000cf;font-weight:bold">60</span> <span style="color:#000;font-weight:bold">,</span>
+        <span style="color:#8f5902;font-style:italic"># 结束时间</span>
+        <span style="color:#4e9a06">&#34;end&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">now</span><span style="color:#000;font-weight:bold">,</span>
+        <span style="color:#8f5902;font-style:italic"># 参数</span>
+        <span style="color:#4e9a06">&#34;params&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[{</span>
+            <span style="color:#8f5902;font-style:italic"># 如果有prome_ql代表 直接使用promql查询，否则使用下面参数</span>
+            <span style="color:#4e9a06">&#34;prome_ql&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#39;&#39;&#39;avg(rate(node_cpu_seconds_total{mode=&#34;iowait&#34;}[2m])) by (instance) *100&#39;&#39;&#39;</span><span style="color:#000;font-weight:bold">,</span>
+            <span style="color:#8f5902;font-style:italic"># 如果使用下面参数会拼接成promql  {__name__=&#34;system_cpu_guest&#34;,ident=~&#34;1.1.1.1|2.2.2.2&#34;,job=~&#34;.*node.*&#34;,group=~&#34;.*inf.*&#34;}</span>
+            <span style="color:#4e9a06">&#34;metric&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;system_cpu_guest&#34;</span><span style="color:#000;font-weight:bold">,</span>
+            <span style="color:#8f5902;font-style:italic">#  ident 列表</span>
+            <span style="color:#4e9a06">&#34;idents&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;1.1.1.1&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;2.2.2.2&#34;</span><span style="color:#000;font-weight:bold">],</span>
+            <span style="color:#8f5902;font-style:italic"># 标签组</span>
+            <span style="color:#4e9a06">&#34;tags&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[</span>
+                <span style="color:#000;font-weight:bold">{</span>
+                    <span style="color:#4e9a06">&#34;key&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;job&#34;</span><span style="color:#000;font-weight:bold">,</span>
+                    <span style="color:#4e9a06">&#34;value&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;node&#34;</span><span style="color:#000;font-weight:bold">,</span>
+                <span style="color:#000;font-weight:bold">},</span>
+                <span style="color:#000;font-weight:bold">{</span>
+                    <span style="color:#4e9a06">&#34;key&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;group&#34;</span><span style="color:#000;font-weight:bold">,</span>
+                    <span style="color:#4e9a06">&#34;value&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;inf&#34;</span><span style="color:#000;font-weight:bold">,</span>
+                <span style="color:#000;font-weight:bold">},</span>
+            <span style="color:#000;font-weight:bold">],</span>
+
+        <span style="color:#000;font-weight:bold">},</span>
+        <span style="color:#000;font-weight:bold">],</span>
+        <span style="color:#8f5902;font-style:italic">#  返回series数量限制</span>
+        <span style="color:#4e9a06">&#34;limit&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000;font-weight:bold">}</span>
+    <span style="color:#000">uri</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#39;http://localhost:8000/v1/n9e/query&#39;</span>
+    <span style="color:#000">res</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">requests</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">post</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">uri</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">json</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">data</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#204a87;font-weight:bold">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">json</span><span style="color:#000;font-weight:bold">())</span>
+
+
+</code></pre></div><h2 id="二次开发">二次开发</h2>
 <p>夜莺的http接口主要有两个前缀，<code>/api/n9e</code>相关的是给前端JavaScript使用，用cookie做认证，写操作会有CSRF校验。<code>/v1/n9e</code>前缀的接口是给第三方系统用的。<code>/v1/n9e</code>相关的接口如何认证呢？使用token(个别接口不用token，比如数据上报查询的接口)；token从哪里找呢？去页面上，个人中心密钥里；调用接口的时候如何传递token呢？使用Authorization这个Header。比如某个第三方系统要调用夜莺的接口，先由管理员去用户中心为这个系统创建个账号，然后用这个账号登录，生成token(密钥)即可。</p>
 <p>举例，拉取用户列表的接口，使用curl来调用，样例如下：</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -H <span style="color:#4e9a06">&#34;Authorization: token-from-web-gen&#34;</span> http://<span style="color:#4e9a06">${</span><span style="color:#000">n9e</span><span style="color:#000;font-weight:bold">-server</span><span style="color:#4e9a06">}</span>/v1/n9e/users

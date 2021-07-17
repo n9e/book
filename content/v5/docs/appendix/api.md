@@ -35,6 +35,8 @@ curl -X POST -H "Content-Type: application/json" http://n9e-server-address/v1/n9
 ]'
 ```
 
+其中各个字段的含义参考《[DataModel](/docs/appendix/datamodel/)》一章，其中ident、alias字段也是可选的，很多情形的监控数据是没法和设备关联在一起的，比如某个域名的证书过期时间。
+
 
 ## 数据读取
 

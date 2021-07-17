@@ -398,7 +398,8 @@
 <p>回顾《<a href="/docs/intro/">夜莺介绍</a>》中的架构讲解，整个数据流是<code>agentd-&gt;server&lt;-&gt;storage</code>，即agentd采集监控数据，推送给server，server会做各种处理，然后交由存储来持久化数据，后续server要读取数据的时候就从存储来读。所以，我们的部署顺序就是从被依赖方开始部署：1.部署存储 2.部署服务端 3.部署客户端</p>
 <h2 id="部署存储">部署存储</h2>
 <p>存储是可插拔的方式，简单起见，我们选择单机版Prometheus来快速开始，部署Prometheus的方式如下：</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p /opt/prometheus
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+mkdir -p /opt/prometheus
 
 wget https://s3-gz01.didistatic.com/n9e-pub/prome/prometheus-2.28.0.linux-amd64.tar.gz -O prometheus-2.28.0.linux-amd64.tar.gz
 tar xf prometheus-2.28.0.linux-amd64.tar.gz
@@ -413,6 +414,7 @@ cat <span style="color:#4e9a06">&lt;&lt;EOF &gt;/etc/systemd/system/prometheus.s
 </span><span style="color:#4e9a06">
 </span><span style="color:#4e9a06">[Service]
 </span><span style="color:#4e9a06">Type=simple
+</span><span style="color:#4e9a06">
 </span><span style="color:#4e9a06">ExecStart=/opt/prometheus/prometheus  --config.file=/opt/prometheus/prometheus.yml --storage.tsdb.path=/opt/prometheus/data --web.enable-lifecycle --enable-feature=remote-write-receiver --query.lookback-delta=2m 
 </span><span style="color:#4e9a06">
 </span><span style="color:#4e9a06">Restart=on-failure
@@ -432,6 +434,7 @@ systemctl daemon-reload
 systemctl <span style="color:#204a87">enable</span> prometheus
 systemctl restart prometheus
 systemctl status prometheus
+
 </code></pre></div><h2 id="部署服务端">部署服务端</h2>
 <p>服务端依赖mysql数据库，请自行安装，v5版本的数据库表结构和之前的版本不兼容，所以没法复用之前版本的数据库，这点请注意。</p>
 <h4 id="1-下载安装包">1. 下载安装包</h4>
