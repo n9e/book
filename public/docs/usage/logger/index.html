@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.65.3" />
+
+<META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>日志监控 | Nightingale</title><meta property="og:title" content="日志监控" />
+<meta property="og:description" content="夜莺相比Open-Falcon，直接内置了日志监控，可以在目标机器放置日志采集策略文件，也可以在页面上配置日志采集策略
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/docs/usage/logger/" />
+<meta property="article:published_time" content="2020-02-21T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-04-08T10:33:57+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta itemprop="name" content="日志监控">
+<meta itemprop="description" content="夜莺相比Open-Falcon，直接内置了日志监控，可以在目标机器放置日志采集策略文件，也可以在页面上配置日志采集策略
+">
+<meta itemprop="datePublished" content="2020-02-21T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-04-08T10:33:57&#43;08:00" />
+<meta itemprop="wordCount" content="261">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="日志监控"/>
+<meta name="twitter:description" content="夜莺相比Open-Falcon，直接内置了日志监控，可以在目标机器放置日志采集策略文件，也可以在页面上配置日志采集策略
+"/>
+
+
+
+
+
+
+
+<link rel="preload" href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" as="style">
+<link href="/scss/main.min.2578e97f9d8843a49edf8fa01aaed62984681a97b7c0443d1569efd5033a2a1a.css" rel="stylesheet" integrity="">
+
+
+<script
+  src="https://s3-gz01.didistatic.com/n9e-pub/js/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+
+    <title>日志监控 | Nightingale</title>
+  </head>
+  <body class="td-page">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+        <a class="navbar-brand" href="/">
+		<span class="navbar-logo"><svg id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 245 300" style="enable-background:new 0 0 245 300"><style>.st0{fill:url(#path-2_3_)}.st1{filter:url(#Adobe_OpacityMaskFilter)}.st2{fill:#fff}.st3{mask:url(#mask-3_1_)}.st4{opacity:.265;fill:url(#路径-3_2_);fill-opacity:.89;enable-background:new}.st5{fill:url(#路径-3_5_);fill-opacity:.87}.st6{fill:url(#路径-4_1_)}.st7{fill:url(#路径-5_1_)}.st8{fill:url(#路径-6_1_)}.st9{fill:url(#路径-7_1_)}</style><title>logo</title><desc>Created with Sketch.</desc><g id="Page-2"><g id="nightingale-logo" transform="translate(-150.000000, -145.000000)"><g id="logo" transform="translate(150.000000, 145.000000)"><g id="Mask"><linearGradient id="path-2_3_" gradientUnits="userSpaceOnUse" x1="-174.4277" y1="568.8312" x2="-173.2979" y2="569.9843" gradientTransform="matrix(245 0 0 -300 42700 170995.9219)"><stop offset="0" style="stop-color:#b7f6ff"/><stop offset="1" style="stop-color:#205cff"/></linearGradient><path id="path-2_1_" class="st0" d="M1e2.0h145v2e2c0 55.2-44.8 1e2-1e2 1e2H0V1e2C0 44.8 44.8.0 1e2.0z"/></g><defs><filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="-18" y="44.1" width="291.2" height="262.7"><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"/></filter></defs><mask maskUnits="userSpaceOnUse" x="-18" y="44.1" width="291.2" height="262.7" id="mask-3_1_"><g class="st1"><path id="path-2_2_" class="st2" d="M1e2.0h145v2e2c0 55.2-44.8 1e2-1e2 1e2H0V1e2C0 44.8 44.8.0 1e2.0z"/></g></mask><g id="分组" class="st3"><g transform="translate(-18.326772, 44.000000)"><linearGradient id="路径-3_2_" gradientUnits="userSpaceOnUse" x1="-155.1525" y1="524.3486" x2="-155.4377" y2="525.0004" gradientTransform="matrix(202.3432 0 0 -155.5375 31615.8574 81784.625)"><stop offset="0" style="stop-color:#b7f6ff"/><stop offset="1" style="stop-color:#3774ff"/></linearGradient><path id="路径-3" class="st4" d="M212.8 188c-18.4 5-72.3-4.2-76.7-32.3-4.4-28.1 15.3-38.8 22.8-40.9 8.2-2.3 21.4-1.3 26.5 1.5s10.3 7.3 11.7 11.8c.8 2.8 1.3 9.1 1.4 18.9 1.8-10 2.4-16.7 1.7-20.3-1.2-7.3-5.3-9.8-9.5-13.4-8.4-7.3-25.1-7.4-34.4-8.4-21.4-2.4-55.1 16.5-61 48.9s4.9 54.6 18.9 71.8c-10.8.0-26-16.2-25.3-14C90.7 216.2 110 260 161 260s78.8-3.8 105-41.5c17.5-25.2 25.9-53.4 25.4-84.6L277 121.2C272.2 155.5 259.5 175.2 212.8 188z"
+						/><radialGradient id="路径-3_5_" cx="-158.0627" cy="527.1606" r=".8258" gradientTransform="matrix(-128.2604 -87.9839 -91.4871 133.3674 28143.4668 -84037.5859)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#a0f3ff"/><stop offset=".3515" style="stop-color:#9bedff"/><stop offset="1" style="stop-color:#75acff"/><stop offset="1" style="stop-color:#59d3ff"/></radialGradient><path id="路径-3_1_" class="st5" d="M193 193.6c-41.8 7.1-71.2-20.5-66.7-51.3 4.5-30.8 27.7-35.8 41.1-35.8 5.5.0 9.6.8 14.3 2.6 3.8 1.4 7.8 3.5 11.9 6.5-2.4-2-4.2-3.5-5.7-4.5s-3-1.9-4.6-2.7c-13.8-6.2-25-9.8-33.8-10.8-21.4-2.4-55.1 16.5-61 48.9-5.9 32.4 4.9 54.6 18.9 71.8-10.8.0-26-16.2-25.3-14 1.5 4.8 20.9 48.7 71.9 48.7s78.8-3.8 105-41.5c17.5-25.2 25.9-53.4 25.4-84.6l-14.4-12.7C265.4 148.5 234.9 186.5 193 193.6z"/><linearGradient id="路径-4_1_" gradientUnits="userSpaceOnUse" x1="-155.5565" y1="524.8783" x2="-156.3012" y2="525.455" gradientTransform="matrix(261.9767 0 0 -169.855 40894.957 89316.8516)"><stop offset="0" style="stop-color:#97f2ff"/><stop offset=".7589" style="stop-color:#5996ff"/><stop offset="1" style="stop-color:#205cff"/></linearGradient><path id="路径-4" class="st6" d="M194.7 116.5c-3.6-3.9-6.2-6.4-7.7-7.5-8.5-6.1-19-10.7-25.9-12.1-13.2-2.5-21.3-3.9-34.6-3.9-39.9.0-73.9 30-73.9 35.4s-1-5.7 4.4-17.7c3.6-8 5.4-11.8 5.6-11.3-8 4.2-14.6 9.7-19.9 16.7-8 10.4-20.5 26.8-16.7 61.7s19.4 49.7 38.8 64.9 41.1 20 76.1 20c20.3.0 70.1 2.3 1e2-17.1 19.9-12.9 33.8-30 41.6-51.3 4.1-55.4 5.6-81.5 4.4-78.3-5.5 15.1-3.4 5.9-11.9 24.6-5 11-11.9 29.4-24.5 49.8-6.5 10.6-15.5 22.2-28.2 33.5-19.9 17.8-61.1 32.1-91.8 21.6-19.8-6.8-35.9-20.5-48.2-41.3 6.2 4.5 10.1 7.3 11.7 8.4 8.8 6 15.5 6.8 14.8 6.8 1.4.0-21.1-22-21.1-56.7s21.2-55 42.8-61.5c5-1.5 10.5-2.2 18.1-2.2 6.4.0 12.7 1.5 17.2 2.8 3.5 1 9.1 2.7 15.8 5.9 1.3.6 4.1 1.9 7.3 4C189.8 112.4 191.8 114 194.7 116.5z"/><linearGradient id="路径-5_1_" gradientUnits="userSpaceOnUse" x1="-155.2497" y1="525.0245" x2="-155.1669" y2="525.5534" gradientTransform="matrix(191.0648 0 0 -182.8051 29768.3711 96104.3516)"><stop offset="0" style="stop-color:#b7f6ff"/><stop offset="1" style="stop-color:#20a0ff"/></linearGradient><path id="路径-5" class="st7" d="M12.6 122.8c2.9-13.9 11.4-27.5 25.5-40.6 21.1-19.7 46.7-25 57.1-25 6.9.0 12.3.0 16.3.0-4.5 1.4-8.3 3.2-11.4 5.3s-5.6 4.5-7.5 7.2c25.2-1.9 48.7 2.8 70.5 14.3 17.3 9.1 29.3 20.9 34.6 33.3.9 2.1 1.6 5.2 2.1 9-.7-2.6-1.4-4.6-2.1-5.9-1-1.9-2.9-4-4.2-5.4-2.4-2.6-5.5-4.7-8.8-7-8.4-5.9-32.8-18.2-67-13.9-22.8 2.9-44.4 13.6-64.7 32.1.2-3.9 1.4-8.4 3.4-13.4s3.9-9.6 5.8-13.9c-18.3 13.3-29.5 27.7-33.5 43.2-6.1 23.3-4.1 45.3 5.5 64.5 6.4 12.8 15.4 23.8 27.1 33.2-27-15.2-43.2-32.2-48.5-51S7.3 148.2 12.6 122.8z"/><linearGradient id="路径-6_1_" gradientUnits="userSpaceOnUse" x1="-155.0306" y1="524.5981" x2="-156.1851" y2="524.6747" gradientTransform="matrix(208.2029 0 0 -151.4559 32445.0938 79529.7031)"><stop offset="0" style="stop-color:#b7f6ff"/><stop offset="1" style="stop-color:#20a0ff"/></linearGradient><path id="路径-6" class="st8" d="M45 33.5C65.8 13.9 86.1 2.4 115.6.4s67.9 9.6 89.2 53.2c2.2 4.4 5.7 15.4 2.3 23.3-2.1 5-8.2 11.3-7.3 15.3 1.3 5.7 7.3 14.5 7.3 28.2.0 16.1-12.5 33.8-11 30.9 3.7-7.3 3.7-12.5 3.7-20.8.0-12.4-5.5-21.4-16.3-31.8-9-8.6-27.9-18.9-43.4-23.8s-33.1-4.6-48.4-4.2c-2.6.1 3.9-5.5 9-9.1 3.4-2.4 6.7-3.9 9.8-4.4-20.2.0-39.5 5.1-57.8 15.3C30.9 84.6 22 102.1 11.6 120.4S.3 101.1.3 101.2C16.2 69.1 31.1 46.5 45 33.5z"/><linearGradient id="路径-7_1_" gradientUnits="userSpaceOnUse" x1="-139.4087" y1="511.094" x2="-139.4087" y2="510.094" gradientTransform="matrix(12.239 1.5028 1.9107 -15.5616 917.8299 8225.8291)"><stop offset="0" style="stop-color:#81deff"/><stop offset="1" style="stop-color:#20a0ff"/></linearGradient><path id="路径-7" class="st9" d="M183.2 62.4c.8-.5 4.4 2.4 6.5 5.6 2.8 4.2 3.8 10.5 2 11.1-1.5.4-6.3-2.1-9-5.7C180 69.8 182 63.1 183.2 62.4z"/></g></g></g></g></g></svg></span><span class="text-uppercase font-weight-bold">Nightingale</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link active" href="/docs/" ><span class="active">文档</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/blog/" ><span>博客</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/community/" ><span>社区</span></a>
+			</li>
+			
+			
+			
+			<li class="nav-item dropdown d-none d-lg-block">
+				
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	中文
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/en/docs/usage/logger/">English</a>
+	
+</div>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            
+
+
+
+
+<div id="td-sidebar-menu" class="td-sidebar__inner">
+  
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  
+  <nav class="collapse td-sidebar-nav pt-2 pl-4" id="td-section-nav">
+    
+    <div class="nav-item dropdown d-block d-lg-none">
+      
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	中文
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/en/docs/usage/logger/">English</a>
+	
+</div>
+    </div>
+    
+    
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">文档</a>
+  </li>
+  <ul>
+    <li class="collapse show" id="docs">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/community/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">社区</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscommunity">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/intro/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">介绍</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsintro">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/install/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">安装</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsinstall">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsinstalldidiyun" href="/docs/install/didiyun/">镜像安装</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsinstallcompile" href="/docs/install/compile/">源码编译</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsinstallproduct" href="/docs/install/product/">生产安装</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsinstallrpm" href="/docs/install/rpm/">RPM安装</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/usage/" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">使用</a>
+  </li>
+  <ul>
+    <li class="collapse show" id="docsusage">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagemetric" href="/docs/usage/metric/">监控指标</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagestrategy" href="/docs/usage/strategy/">监控策略</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagemaskconf" href="/docs/usage/maskconf/">告警屏蔽</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusageport" href="/docs/usage/port/">端口监控</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusageproc" href="/docs/usage/proc/">进程监控</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page  active" id="m-docsusagelogger" href="/docs/usage/logger/">日志监控</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusageplugin" href="/docs/usage/plugin/">插件机制</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/plugin/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">插件</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsplugin">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/operation/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">运维</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsoperation">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsoperationtsdb" href="/docs/operation/tsdb/">绘图相关</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsoperationidx" href="/docs/operation/idx/">索引相关</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsoperationchecklist" href="/docs/operation/checklist/">变更检查</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsoperationcapacity" href="/docs/operation/capacity/">容量评估</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsoperationmonitor" href="/docs/operation/monitor/">自监控</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/api/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">API</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsapi">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsapidata" href="/docs/api/data/">监控数据</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsapistra" href="/docs/api/stra/">告警相关</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsapicollect" href="/docs/api/collect/">采集配置</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsapiuser" href="/docs/api/user/">用户管理</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsapitree" href="/docs/api/tree/">对象节点</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/faq/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">FAQ</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfaq">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfaqgraph" href="/docs/faq/graph/">绘图相关</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfaqalert" href="/docs/faq/alert/">告警相关</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/appendix/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">附录</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsappendix">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+  </nav>
+</div>
+
+
+
+
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+            
+
+
+
+
+
+
+<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+
+
+
+
+
+<a href="https://github.com/n9e/book/edit/master/content/zh/docs/usage/logger.md" target="_blank"><i class="fa fa-edit fa-fw"></i> 编辑此页</a>
+<a href="https://github.com/n9e/book/issues/new?title=%e6%97%a5%e5%bf%97%e7%9b%91%e6%8e%a7" target="_blank"><i class="fab fa-github fa-fw"></i> 提交文档问题</a>
+
+
+<a href="https://github.com/didi/nightingale/issues/new" target="_blank"><i class="fas fa-tasks fa-fw"></i> 提交项目问题</a>
+
+</div>
+
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#元信息配置文件方式">元信息配置文件方式</a></li>
+    <li><a href="#页面上配置采集策略">页面上配置采集策略</a></li>
+  </ul>
+</nav>
+
+
+
+
+<div style="color: red;">
+	注意：您当前浏览的文档适用夜莺v2版本，如果尚未上生产，不建议使用v2版本，直接上v3即可，v3版本的文档请查阅官方 <a href="https://github.com/didi/nightingale" style="display: inline;">readme</a>
+</div>
+
+
+
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+            
+  
+
+            <nav aria-label="breadcrumb" class="d-none d-md-block d-print-none">
+	<ol class="breadcrumb spb-1">
+		
+
+
+
+
+
+
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="/docs/">文档</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="/docs/usage/">使用</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item active" aria-current="page">
+	<a href="/docs/usage/logger/">日志监控</a>
+</li>
+
+	</ol>
+</nav	>
+
+            
+<div class="td-content">
+	<h1>日志监控</h1>
+	<div class="lead">夜莺相比Open-Falcon，直接内置了日志监控，可以在目标机器放置日志采集策略文件，也可以在页面上配置日志采集策略</div>
+	<p>日志监控，是一种外挂式的采集。通过读取进程打印的日志，来进行监控数据的采集与汇聚计算。汇聚成标准的时间序列数据之后，推送给Nightingale统一的后端存储。</p>
+<p>日志监控支持两种配置方式，一种是在目标机器的指定目录创建元信息配置文件，一种是在页面上配置采集策略。日志采集部分最原始的代码是fork自：<a href="https://github.com/didi/falcon-log-agent">falcon-log-agent</a>。</p>
+<h2 id="元信息配置文件方式">元信息配置文件方式</h2>
+<p>查看collector的配置文件，logPath就是针对此项的配置（默认取值：/home/n9e/etc/log），可以把日志采集策略文件（命名格式<code>log.&lt;xx&gt;.json</code>）放到这个目录，collector组件会自动探测，进行采集。
+举个例子：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#204a87;font-weight:bold">&#34;name&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;log.sys.oom&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#204a87;font-weight:bold">&#34;file_path&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;/var/log/messages&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#204a87;font-weight:bold">&#34;time_format&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;mmm dd HH:MM:SS&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#204a87;font-weight:bold">&#34;pattern&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Out of memory&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#204a87;font-weight:bold">&#34;interval&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#204a87;font-weight:bold">&#34;tags&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{},</span>
+    <span style="color:#204a87;font-weight:bold">&#34;func&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;cnt&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#204a87;font-weight:bold">&#34;degree&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">6</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#204a87;font-weight:bold">&#34;unit&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;次数&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#204a87;font-weight:bold">&#34;comment&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;有进程oom了&#34;</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><ul>
+<li><strong>name</strong>：指标名，对应上报后数据的metric字段</li>
+<li><strong>file_path</strong>：要采集的日志文件</li>
+<li><strong>time_format</strong>：日志打印时采用的时间戳格式</li>
+<li><strong>pattern</strong>：正则表达式，系统会根据所配置正则逐行匹配file_path指定的日志文件</li>
+<li><strong>interval</strong>：采集周期，即每隔多少秒产生一个监控数据点</li>
+<li><strong>tags</strong>：支持通过正则的方式，采集出所需要的其他维度，使用不同的标签来标记</li>
+<li><strong>func</strong>：计算方法，即对采集出的多行日志进行计算，得出最后时间点的方法</li>
+<li><strong>degree</strong>：计算精度，监控指标的值最终计算的时候采用的精度，维持默认即可</li>
+<li><strong>unit</strong>：监控指标的单位，仅用作标记，并不会改变监控数值</li>
+<li><strong>comment</strong>：备注，描述信息</li>
+</ul>
+<p>如此，上面的这条json配置代表什么意思呢？表示会每隔10s采集一次 /var/log/messages 文件，匹配 &ldquo;Out of Memory&rdquo; 这个关键字，看总共可以匹配到多少行（即cnt函数），把行数作为监控指标的值上报。这样服务端就可以配置告警策略，当log.sys.oom的值大于0就报警，说明系统出现了OOM。</p>
+<p>下面我们对关键的字段进行更详细的解释：</p>
+<p><strong>file_path</strong></p>
+<p>文件路径支持固定路径和动态路径两种。固定路径的日志文件的名称不会变更，动态路径目的是为了支持按时间片切割并在文件名中有所体现的日志文件。
+例如，上面的/var/log/messages就是固定路径；动态路径格式举例： <code>/opt/appx/log/${%Y%m%d}/appx.log.${%Y%m%d%H}</code></p>
+<p><strong>time_format</strong></p>
+<p>日志监控要求日志中必须有确定的时间戳，以保证计算的准确性。在日志落盘延迟、日志量太大的情况下，只要不达到计算的瓶颈，仍然可以保证数据的准确性。</p>
+<p>目前Nightingale支持的时间格式如下：</p>
+<pre><code>dd/mmm/yyyy:HH:MM:SS
+dd/mmm/yyyy HH:MM:SS
+yyyy-mm-ddTHH:MM:SS
+dd-mmm-yyyy HH:MM:SS
+yyyy-mm-dd HH:MM:SS
+yyyy/mm/dd HH:MM:SS
+yyyymmdd HH:MM:SS
+mmm dd HH:MM:SS
+</code></pre><p><strong>pattern</strong></p>
+<p>用来匹配的正则表达式，正则表达式用来匹配日志中满足条件的行，将命中的行进行归纳和计算。</p>
+<p>由于Golang正则表达式使用RE2语法，而RE2去掉了反向引用和零宽断言。因此，如果我们想排除掉一些关键字，可以使用我们内置的语法糖：</p>
+<pre><code>```EXCLUDE```
+</code></pre><p>可以使用这个语法糖来分割前方的命中正则配置和后方的排除正则配置，组装成一个pattern。</p>
+<p>例如：</p>
+<pre><code>code=[45]00```EXCLUDE```SpeciallyErrorNo
+</code></pre><p><strong>func</strong></p>
+<p>采集方式<strong>func</strong>，当通过配置的正则筛选出一批符合规则的行，应该以何种方式进行归纳汇总，进而得出我们想要的结果。</p>
+<p>目前支持的汇总方式有：</p>
+<ul>
+<li>cnt</li>
+<li>avg</li>
+<li>sum</li>
+<li>max</li>
+<li>min</li>
+</ul>
+<pre><code>举例如下：
+假设正则表达式配置为 Return Success : (\d+)s Used
+ 
+某一个周期内日志滚动：
+2017/12/01 12:12:01 Return Success : 1s Used
+2017/12/01 12:12:02 Return Success : 2s Used
+2017/12/01 12:12:03 Return Success : 4s Used
+2017/12/01 12:12:04 Return Success : 2s Used
+2017/12/01 12:12:05 Return Success : 1s Used
+ 
+首先，根据正则获取到括号内的值：1、2、4、2、1
+接下来，根据不同的计算方式，会得到不同的结果：
+avg   : (1 + 2 + 4 + 2 + 1) / 5 = 2
+cnt   : 5
+sum   : (1 + 2 + 4 + 2 + 1) = 10
+max   : Max(1, 2, 4, 2, 1) = 4
+min   : Min(1, 2, 4, 2, 1) = 1
+</code></pre><p><strong>tags</strong></p>
+<p>func一节举例的日志相对简单，只是一个耗时打印，如果我们的系统有多个接口，我们在采集的时候希望同时采集到耗时对应的接口信息，并将其作为tags上报，这样服务端看图的时候就可以清晰的得知各个接口的耗时情况，应该如何做呢？</p>
+<pre><code>举例某一个周期内日志滚动：
+2017/12/01 12:12:01 Return Success : 1s Used by /a
+2017/12/01 12:12:02 Return Success : 2s Used by /b
+2017/12/01 12:12:03 Return Success : 4s Used by /a
+2017/12/01 12:12:04 Return Success : 2s Used by /a
+2017/12/01 12:12:05 Return Success : 1s Used by /b
+
+此时我们的pattern不变，还是：Return Success : (\d+)s Used，pattern只是表示能否匹配到某行日志
+
+tags字段此时配置为：
+{
+    &quot;...&quot;: &quot;...&quot;,
+    &quot;tags&quot;: {
+        &quot;api&quot;: &quot;Used by (\\/\\w+)&quot;
+    },
+    &quot;...&quot;: &quot;...&quot;
+}
+
+只是为了提取 /a 或者 /b 这样的字符串，其实正则配置为 Used by (\/\w+) 即可，但是，
+这个正则是配置在json的&quot;&quot;内的，\ 需要被转义，所以变成上面这样了，如果是在web端配置，无需转义
+</code></pre><p>注意：<strong>如果无法匹配出tag的值，则视为该条数据未匹配到，该条日志将不再计入统计。</strong></p>
+<h2 id="页面上配置采集策略">页面上配置采集策略</h2>
+<p>页面功能各字段与配置文件基本一一对应，此处不过多赘述。另外，web上有一个配置验证的字段，可以放一条真实日志看正则是否能够正常匹配。</p>
+
+	
+	
+	<div class="text-muted mt-5 pt-3 border-top">最后修改 2020-04-08: <a  href="https://github.com/n9e/book/commit/be08163c17aaa225b4b69db83b36c959876c6281">add zh (be08163)</a>
+</div>
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Wechat" aria-label="Wechat">
+    <a class="text-white" target="_blank" href="https://s3-gz01.didistatic.com/n9e-pub/image/didiyun-xiaozhushou-wechat.jpeg">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Email" aria-label="Email">
+    <a class="text-white" target="_blank" href="mailto:nightingale@didiglobal.com">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/didi/nightingale">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" href="https://n9e.slack.com/">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">&copy; 2020 DiDi&#39;s Nightingale team All Rights Reserved</small>
+        
+	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://s3-gz01.didistatic.com/n9e-pub/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+<script src="/js/main.min.29b0315468c00226fa6f4556a9cebc0ac4fe1ce1457a01b22c0a06b329877383.js" integrity="sha256-KbAxVGjAAib6b0VWqc68CsT&#43;HOFFegGyLAoGsymHc4M=" crossorigin="anonymous"></script>
+
+
+
+  </body>
+</html>

@@ -35,18 +35,24 @@ curl -X POST -H "Content-Type: application/json" http://n9e-server-address/v1/n9
 ]'
 ```
 
+其中各个字段的含义参考《[DataModel](/docs/appendix/datamodel/)》一章，其中ident、alias字段也是可选的，很多情形的监控数据是没法和设备关联在一起的，比如某个域名的证书过期时间，这种监控数据就可以不传ident、alias字段。
+
 
 ## 数据读取
 
-夜莺的后端存储可以支持使用M3、Prometheus、InfluxDB等等，这些存储本身就暴露了数据查询的接口，所以，大家可以直接使用存储自身提供的查询接口。也可以使用夜莺的，下面讲解一下夜莺的查询监控数据的方式：
-- 夜莺V5内置了prometheus的remote read能力和promql查询引擎，具体查询过程如下
-    - 前端传入查询参数(n9e模式 or promql模式)
-    - 后端解析参数后拼接成promql(n9e模式)
-    - 使用内置的prometheus remote read查询配置中的多个后端数据源(如prometheus、m3db、influxdb)
-    - 将查询到数据进行merge(去掉重复的，填充缺失的)
-    - 将数据转化为夜莺前端需要的格式返回
-- 查询数据接口python代码如下
+夜莺的后端存储可以支持使用M3、Prometheus、InfluxDB等等，这些存储本身就暴露了数据查询的接口，所以，大家可以直接使用存储自身提供的查询接口。也可以使用夜莺的，下面讲解一下夜莺的查询监控数据的方式。
+
+夜莺的监控数据查询，主要是两种模式，模式一是直接传入一个promql，夜莺把这个promql透传给后端存储；模式二是指定metric、idents、tags等过滤条件，夜莺根据不同的存储后端接口，做查询条件的ETL转换。所以，如果想走夜莺的接口，建议用模式二的方式，因为模式一的方式根本不用查夜莺的接口，绕了一层多此一举，直接查后端存储即可。下面给一个模式二的查询例子：
+
 ```python
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
+# python环境默认可能没有requests这个库，需要先安装一下
+# 或者直接把下面的例子转换成curl命令来测试
+import requests
+import time
+
 def query_data():
     now = int(time.time())
     data = {
@@ -54,31 +60,25 @@ def query_data():
         "start": now - 60 ,
         # 结束时间
         "end": now,
-        # 参数
-        "params": [{
-            # 如果有prome_ql代表 直接使用promql查询，否则使用下面参数
-            "prome_ql": '''avg(rate(node_cpu_seconds_total{mode="iowait"}[2m])) by (instance) *100''',
-            # 如果使用下面参数会拼接成promql  {__name__="system_cpu_guest",ident=~"1.1.1.1|2.2.2.2",job=~"node|db",group=~"inf"}
-            "metric": "system_cpu_guest",
-            #  ident 列表
-            "idents": ["1.1.1.1", "2.2.2.2"],
-            # 标签组
-            "tags": [
-                {
-                    "key": "job",
-                    "value": "node",
-                },
-                {
-                    "key": "job",
-                    "value": "db",
-                },
-                {
-                    "key": "group",
-                    "value": "inf",
-                },
-            ],
-
-        },
+        "params": [
+            {
+                "metric": "system_cpu_idle",
+                "idents": ["1.1.1.1", "2.2.2.2"],
+                "tags": [
+                    {
+                        "key": "job",
+                        "value": "node",
+                    },
+                    {
+                        "key": "job",
+                        "value": "db",
+                    },
+                    {
+                        "key": "group",
+                        "value": "inf",
+                    },
+                ],
+            },
         ],
         #  返回series数量限制
         "limit": 10,
@@ -87,8 +87,12 @@ def query_data():
     res = requests.post(uri, json=data)
     print(res.json())
 
-
+if __name__ == "__main__":
+    query_data()
 ```
+
+上面的例子中，核心有三个过滤条件，metric、idents、tags，相互之间是“与”的关系，tags中也有多个条件，不同key之间是“与”的关系，相同key的不同value是“或”的关系，即：`job=node|db && group=inf`
+
 ## 二次开发
 
 夜莺的http接口主要有两个前缀，`/api/n9e`相关的是给前端JavaScript使用，用cookie做认证，写操作会有CSRF校验。`/v1/n9e`前缀的接口是给第三方系统用的。`/v1/n9e`相关的接口如何认证呢？使用token(个别接口不用token，比如数据上报查询的接口)；token从哪里找呢？去页面上，个人中心密钥里；调用接口的时候如何传递token呢？使用Authorization这个Header。比如某个第三方系统要调用夜莺的接口，先由管理员去用户中心为这个系统创建个账号，然后用这个账号登录，生成token(密钥)即可。
@@ -96,7 +100,7 @@ def query_data():
 举例，拉取用户列表的接口，使用curl来调用，样例如下：
 
 ```bash
-curl -H "Authorization: token-from-web-gen" http://${n9e-server}/v1/n9e/users
+curl -H "Authorization: 59f668a8ac7df683a275e57a15de0db9" http://${n9e-server}/v1/n9e/users
 ```
 
 ## 接口安全

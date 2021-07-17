@@ -97,7 +97,7 @@
       <description>
         
         
-        &lt;p&gt;插件是扩展agent采集能力的一种手段，通常是一个脚本，有时是二进制，我们在web上通过配置，告诉系统哪些机器上应该执行哪些插件，执行频率是多少，插件脚本的路径在哪里等等，这个配置会下发给agentd，agentd就知道去哪个位置找插件，并且按照某个频率周期性去执行，截获插件的stdout，解析出监控指标上报。&lt;/p&gt;
+        &lt;p&gt;插件是扩展agentd采集能力的一种手段，通常是一个脚本，有时是二进制，我们在web上通过配置，告诉夜莺哪些机器上应该执行哪些插件，执行频率是多少，插件脚本的路径在哪里等等，这个配置会下发给agentd，agentd就知道去哪个位置找插件，并且按照某个频率周期性去执行，截获插件的stdout，解析出监控指标上报。&lt;/p&gt;
 &lt;p&gt;截获的stdout要求是个json array，举例：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;
     &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
@@ -106,7 +106,7 @@
             &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;device&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;sda&amp;#34;&lt;/span&gt;
         &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;,
         &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;: 15.4,
-        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1554455574&lt;/span&gt;
+        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;gauge&amp;#34;&lt;/span&gt;
     &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;,
     &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
         &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;metric&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;api.latency&amp;#34;&lt;/span&gt;,
@@ -117,11 +117,51 @@
             &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;region&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;bj&amp;#34;&lt;/span&gt;
         &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;,
         &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;: 5.4,
-        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1554455574&lt;/span&gt;
+        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;gauge&amp;#34;&lt;/span&gt;
     &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个数据结构可以对照《&lt;a href=&#34;/docs/appendix/datamodel/&#34;&gt;DataModel&lt;/a&gt;》一章的内容来看，上面的插件输出样例其实没有ident和alias字段，因为插件是agentd驱动的，所以agentd会自动补上这俩字段，无需插件输出这俩字段。&lt;/p&gt;
-&lt;p&gt;agentd执行插件，每次都是fork一个进程去跑的，就类似我们在shell环境下跑一个脚本，Linux下跑一个脚本可以给脚本传参数，可以设置环境变量，可以给脚本传入stdin，所以页面上也支持配置这些内容。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个数据结构可以对照《&lt;a href=&#34;/docs/appendix/datamodel/&#34;&gt;DataModel&lt;/a&gt;》一章的内容来看，上面的插件输出样例其实没有ident、alias、time字段，因为插件是agentd驱动的，所以agentd会自动补上这些字段，无需插件输出这些字段。&lt;/p&gt;
+&lt;p&gt;相比《&lt;a href=&#34;/docs/appendix/datamodel/&#34;&gt;DataModel&lt;/a&gt;》一章的介绍，上例中多了一个type字段，这个字段是插件机制特有的，type可取的类型有3种：gauge、increase、rate。下面简单解释下这3种类型的意义和场景：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;gauge: 原值类型，插件输出什么值，agentd都不做处理，原封不动发给server&lt;/li&gt;
+&lt;li&gt;increase: 表示增量，agentd会把本周期取到的插件的值与上一周期的值做差值&lt;/li&gt;
+&lt;li&gt;rate: 表示速率，agentd会把本周期取到的插件的值与上一周期的值做差值，然后除以周期时间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;大家可以把下面这个插件拿去执行一下做个测试，对这三种类型的理解会更深，场景上来说，其中gauge用的较多，另外两个类型很少用到&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#!/bin/sh
+&lt;/span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#000&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;date +%s&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;[
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;metric&amp;#34;: &amp;#34;plugin_example_gauge&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;tags&amp;#34;: {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;type&amp;#34;: &amp;#34;testcase&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;author&amp;#34;: &amp;#34;ulric&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;value&amp;#34;: &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;type&amp;#34;: &amp;#34;gauge&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;metric&amp;#34;: &amp;#34;plugin_example_rate&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;tags&amp;#34;: {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;type&amp;#34;: &amp;#34;testcase&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;author&amp;#34;: &amp;#34;ulric&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;value&amp;#34;: &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;type&amp;#34;: &amp;#34;rate&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;metric&amp;#34;: &amp;#34;plugin_example_increase&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;tags&amp;#34;: {
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;type&amp;#34;: &amp;#34;testcase&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;author&amp;#34;: &amp;#34;ulric&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        },
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;value&amp;#34;: &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;,
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;type&amp;#34;: &amp;#34;increase&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    }
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;]&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;agentd执行插件，每次都是fork一个进程去跑的，就类似我们在shell环境下跑一个脚本，Linux下跑一个脚本可以给脚本传参数，可以设置环境变量，可以给脚本传入stdin，所以页面上也支持配置这些内容。&lt;/p&gt;
 &lt;p&gt;欢迎大家写文章介绍自己的插件，大家共建生态！&lt;/p&gt;
 
       </description>
