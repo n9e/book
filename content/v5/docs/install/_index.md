@@ -10,14 +10,14 @@ description: >
 
 > 演示环境：[http://116.85.46.86/](http://116.85.46.86/) 用户名：demo，密码：demo.2021
 
-回顾《[夜莺介绍](/docs/intro/)》中的架构讲解，整个数据流是`agentd->server<->storage`，即agentd采集监控数据，推送给server，server会做各种处理，然后交由存储来持久化数据，后续server要读取数据的时候就从存储来读。所以，我们的部署顺序就是从被依赖方开始部署：1.部署存储 2.部署服务端 3.部署客户端
+回顾《[夜莺介绍](/docs/intro/)》中的架构讲解，整个数据流是`agentd->server<->storage`，即agentd采集监控数据，推送给server，server会做各种处理，然后交由存储来持久化数据，后续server要读取数据的时候就从存储来读。所以，我们的部署顺序就是从被依赖方开始部署：1.部署服务端(包括存储) 2.部署客户端
 
 ## 部署服务端
 ```bash
 # 需要以root权限执行，机器需要可以连接互联网
 # 安装脚本做了3件事情
 # 1. 安装promethues作为存储，夜莺支持对接多种存储，我们选择单机版Prometheus来快速开始
-# 2. 安装mysql
+# 2. 安装mysql，root默认密码为1234
 # 3. 安装n9e-server
 curl -s http://116.85.64.82/install_n9e_server.sh|bash
 
@@ -25,6 +25,7 @@ curl -s http://116.85.64.82/install_n9e_server.sh|bash
 # 通过下面命令可以查看端口是否在监听，如果端口都在监听，就说明启动成功
 ss -tlnp|grep n9e-server
 ```
+如果启动不起来，或者进程启动了，但是端口没有在监听，都有问题，需要查阅日志，执行 `journalctl -u n9e-server -f` 查看 n9e-server 的启动日志，以及查看 /opt/n9e/server/logs 下面的日志
 
 安装成功之后，就可以用浏览器访问服务端的端口（在服务端的yml配置中可以看到http的监听端口，默认是8000）进入系统了，系统启动的时候会默认初始化一个`root`账号，密码是`root.2020` 登录之后没啥数据，毕竟我们还没有部署采集程序，下一小节开始部署客户端采集程序。
 
