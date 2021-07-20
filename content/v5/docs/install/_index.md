@@ -10,16 +10,32 @@ description: >
 
 > 演示环境：[http://116.85.46.86/](http://116.85.46.86/) 用户名：demo，密码：demo.2021
 
-回顾《[夜莺介绍](/docs/intro/)》中的架构讲解，整个数据流是`agentd->server<->storage`，即agentd采集监控数据，推送给server，server会做各种处理，然后交由存储来持久化数据，后续server要读取数据的时候就从存储来读。所以，我们的部署顺序就是从被依赖方开始部署：1.部署存储 2.部署服务端 3.部署客户端
+回顾《[夜莺介绍](/docs/intro/)》中的架构讲解，整个数据流是`agentd->server<->storage`，即agentd采集监控数据，推送给server，server会做各种处理，然后交由存储来持久化数据，后续server要读取数据的时候就从存储来读。所以，我们的部署顺序就是从被依赖方开始部署：1.部署服务端(包括存储) 2.部署客户端
 
-## 部署存储
+## 部署服务端
+我们提供了一个一键部署的命令，如果操作系统是centos的话，可以执行下面命令一键安装
+```bash
+# 需要以root权限执行，机器需要可以连接互联网
+# 安装脚本做了3件事情
+# 1. 安装promethues作为存储，夜莺支持对接多种存储，我们选择单机版Prometheus来快速开始
+# 2. 安装mysql，root默认密码为1234
+# 3. 安装n9e-server
+curl -s http://116.85.64.82/install_n9e_server.sh|bash
 
-存储是可插拔的方式，简单起见，我们选择单机版Prometheus来快速开始，部署Prometheus的方式如下：
+# 进程如果启动了，理论上会监听2个端口，一个http端口一个rpc端口
+# 通过下面命令可以查看端口是否在监听，如果端口都在监听，就说明启动成功
+ss -tlnp|grep n9e-server
+```
+
+安装脚本的详细内容如下，如果机器的操作系统不是centos，可以根据自己的需求来做调整
+<details>
+<summary>点击查看安装脚本内容</summary>
 
 ```bash
+#!/bin/bash
 
+# 1.安装promethues作为存储，夜莺支持对接多种存储，我们选择单机版Prometheus来快速开始
 mkdir -p /opt/prometheus
-
 wget https://s3-gz01.didistatic.com/n9e-pub/prome/prometheus-2.28.0.linux-amd64.tar.gz -O prometheus-2.28.0.linux-amd64.tar.gz
 tar xf prometheus-2.28.0.linux-amd64.tar.gz
 cp -far prometheus-2.28.0.linux-amd64/*  /opt/prometheus/
@@ -54,63 +70,58 @@ systemctl enable prometheus
 systemctl restart prometheus
 systemctl status prometheus
 
-```
+# 2.安装mysql，root默认密码为1234
+yum -y install mariadb*
+# 假设机器的/home分区是个SSD的大分区，datadir设置为/home/mysql
+mkdir -p /home/mysql
+chown mysql:mysql /home/mysql
+sed -i '/^datadir/s/^.*$/datadir=\/home\/mysql/g' /etc/my.cnf
+# 启动mysql进程
+systemctl start mariadb.service
+# 将mysql设置为开机自启动
+systemctl enable mariadb.service
+# 设置mysql root密码
+mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('1234');"
 
-## 部署服务端
-
-服务端依赖mysql数据库，请自行安装，v5版本的数据库表结构和之前的版本不兼容，所以没法复用之前版本的数据库，这点请注意。
-
-#### 1. 下载安装包
-
-```bash
+# 3.安装n9e-server
 mkdir -p /opt/n9e
 cd /opt/n9e
-wget 116.85.64.82/n9e-5.0.0-rc1.tar.gz
-tar zxvf n9e-5.0.0-rc1.tar.gz
+wget 116.85.64.82/n9e-server.tar.gz
+tar zxvf n9e-server.tar.gz
+mysql -uroot -p1234 < /opt/n9e/server/sql/n9e.sql
+
+cp /opt/n9e/server/etc/service/n9e-server.service /etc/systemd/system/
+systemctl daemon-reload
+systemctl enable n9e-server
+systemctl restart n9e-server
+systemctl status n9e-server
 ```
 
-#### 2. 导入表结构
+</details>
 
-```
-mysql -uroot -p < /opt/n9e/sql/n9e.sql
-```
 
-#### 3. 修改配置
+如果启动不起来，或者进程启动了，但是端口没有在监听，都有问题，需要查阅日志，执行 `journalctl -u n9e-server` 查看 n9e-server 的启动日志，以及查看 /opt/n9e/server/logs 下面的日志
 
-服务端启动的时候会看etc目录下是否有server.local.yml，如果有就用，如果没有，再去找server.yml，即server.local.yml的优先级高于server.yml
-
-```
-cd /opt/n9e/etc
-cp server.yml server.local.yml
-# 修改server.local.yml中的数据库连接配置
-# 默认配置的后端存储就是Prometheus，所以不用改动
-```
-
-#### 4. 启动进程
-
-```
-cd /opt/n9e
-nohup ./n9e-server &> server.log &
-
-# 进程如果启动了，理论上会监听2个端口，一个http端口一个rpc端口
-# 通过下面命令可以查看端口是否在监听，如果端口都在监听，就说明启动成功
-ss -tlnp|grep n9e-server
-```
-
-如果启动不起来，或者进程启动了，但是端口没有在监听，都有问题，需要查阅日志，日志在server.log里以及logs目录里。上面是用nohup启动，更好的方式是用systemd来托管，service文件在`etc/service`下，至于如何使用systemd来管理，比较简单，这里就不赘述了，新手可以百度一下。
-
-下面就可以用浏览器访问服务端的端口（在服务端的yml配置中可以看到http的监听端口）进入系统了，系统启动的时候会默认初始化一个`root`账号，密码是`root.2020` 登录之后没啥数据，毕竟我们还没有部署采集程序，下一小节开始部署客户端采集程序。
+安装成功之后，就可以用浏览器访问服务端的端口（在服务端的yml配置中可以看到http的监听端口，默认是8000）进入系统了，系统启动的时候会默认初始化一个`root`账号，密码是`root.2020` 登录之后没啥数据，毕竟我们还没有部署采集程序，下一小节开始部署客户端采集程序。
 
 ## 部署客户端
 
 > 客户端的代码在这里：[https://github.com/n9e/n9e-agentd](https://github.com/n9e/n9e-agentd)
 
-压缩包里其实默认打了客户端的二进制和相关配置，直接`nohup ./n9e-agentd -c etc/agentd.yml &> agentd.log &`就可以启动，如果启动失败，就查看日志，日志在agentd.log和logs目录下。
+```bash
+# 一键安装n9e-agentd
+curl -s http://116.85.64.82/install_n9e_agentd.sh|bash
 
-如上，就完成了整个单机版的部署，如果想多监控几台机器，只需要把客户端相关文件打个包，拷贝到目标机器上，修改agentd.yml中的服务端地址，即可启动验证。具体要把哪些文件打包呢？参考下面的命令：
-
+# 通过下面命令查看n9e-agentd的进程，如果进程存在，说明启动成功
+# 如果启动失败，可通过 journalctl -u n9e-agentd 查看日志
+ps -ef|grep n9e-agentd|grep -v grep
 ```
-tar zcvf n9e-agentd.tar.gz n9e-agentd etc/agentd.yml etc/conf.d etc/service/n9e-agentd.service
-```
 
-OK，把n9e-agentd.tar.gz分发到你要监控的机器上，解包之后修改agentd.yml中的服务端连接地址（搜索endpoint关键字），即可启动测试。
+如上，就完成了整个单机版的部署，如果想多监控几台机器，只需要执行一键安装n9e-agentd的命令，安装完成之后
+修改/opt/n9e/agentd/etc/agentd.yaml中的服务端连接地址（搜索endpoint关键字），然后重启n9e-agentd即可，重启命令 `systemctl restart n9e-agentd`
+
+## 高可用集群部署
+
+不同的时序数据库有不同的集群搭建方式，这里不展开讲解，我们主要讲解如何做夜莺组件的高可用。夜莺的服务端用到的核心组件就一个：n9e-server，n9e-server的集群部署也非常简单，就是找多个机器，部署多个n9e-server进程即可。
+
+n9e-agentd主动连n9e-server推送数据，走的是http接口（即默认的8000端口，protobuf协议），建议的高可用方案是在多台n9e-server前面架设4层负载均衡，比如LVS或者haproxy，agentd连接vip，这样服务端扩缩容，都只需要变更vip和n9e-server的对应关系即可。如果不方便搞负载均衡，也可以把多个n9e-server的地址直接配置到agentd.yaml中，agentd会随机请求server，如果某一个连不上，会重试其他的server，这样做的问题，就是server如果扩缩容，就要修改所有的agentd的配置了。

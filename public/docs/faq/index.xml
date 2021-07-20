@@ -1,0 +1,89 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nightingale – FAQ</title>
+    <link>/docs/faq/</link>
+    <description>Recent content in FAQ on Nightingale</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 09 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/docs/faq/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: 绘图相关</title>
+      <link>/docs/faq/graph/</link>
+      <pubDate>Tue, 17 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/faq/graph/</guid>
+      <description>
+        
+        
+        &lt;h4 id=&#34;q1监控指标已发送到服务端但最终看不到图&#34;&gt;Q1:监控指标已发送到服务端，但最终看不到图&lt;/h4&gt;
+&lt;p&gt;此情况一般是数据格式不正确，或者数据并没有上报到服务端，假设发送的指标为 n9e.points.in&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;首先看下transfer和tsdb模块是否有 n9e.points.in 的错误日志&lt;br&gt;
+登陆到transfer部署的机器，执行 &lt;code&gt;tail -f /home/n9e/logs/transfer/WARNING.log|grep n9e.points.in&lt;/code&gt;&lt;br&gt;
+登陆到tsdb部署的机器，执行 &lt;code&gt;tail -f /home/n9e/logs/tsdb/WARNING.log|grep n9e.points.in&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;如果没有报错信息，再次确认监控指标是否上报到了服务端，修改transfer的日志等级为 DEBUG&lt;br&gt;
+执行 &lt;code&gt;tail -f /home/n9e/logs/transfer/DEBUG.log|grep n9e.points.in&lt;/code&gt; 如果没有日志出现，说明没有并没有上报到服务端，排查发送端的问题&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;q2监控插件放到指定目录了但最终看不到图&#34;&gt;Q2:监控插件放到指定目录了，但最终看不到图&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;一般遇到这种问题都是插件执行失败了，比如插件没有可执行权限，或者插件上报的数据格式不正确，可以登陆到有问题的机器，查看 /home/n9e/logs/collector/ERROR.log 有没有插件相关的错误日志，如有，解决之。如果没有错误日志，按照&lt;a href=&#34;#q1%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%E5%B7%B2%E5%8F%91%E9%80%81%E5%88%B0%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BD%86%E6%9C%80%E7%BB%88%E7%9C%8B%E4%B8%8D%E5%88%B0%E5%9B%BE&#34;&gt;Q1&lt;/a&gt;思路排查&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;q3自己写程序按照数据规范usagemetric向collector或者transfer上报数据但看不到图&#34;&gt;Q3:自己写程序，按照&lt;a href=&#34;../usage/metric/&#34;&gt;数据规范&lt;/a&gt;向collector或者transfer上报数据，但看不到图&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;首先将程序的request body和resp body 都打印出来，查看 resp 中 err 不为空说明上报格式有问题，request body为空说明没有上报数据&lt;/li&gt;
+&lt;li&gt;如果上报正常，按照&lt;a href=&#34;#q1%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%E5%B7%B2%E5%8F%91%E9%80%81%E5%88%B0%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BD%86%E6%9C%80%E7%BB%88%E7%9C%8B%E4%B8%8D%E5%88%B0%E5%9B%BE&#34;&gt;Q1&lt;/a&gt;思路排查&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;q4配置了日志进程或者端口采集但看不到相关监控图&#34;&gt;Q4:配置了日志、进程或者端口采集，但看不到相关监控图&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;查看采集策略是否已经下发到目标机器的collector    &lt;br&gt;
+&lt;code&gt;curl 目标机器IP:2058/api/collector/stra&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;如果可以查到配置的采集，tail -f /home/n9e/logs/collector/ERROR.log 查看是否有错误日志&lt;/li&gt;
+&lt;li&gt;有报错则按照日志提示去处理，如果没有报错，按照&lt;a href=&#34;#q1%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%E5%B7%B2%E5%8F%91%E9%80%81%E5%88%B0%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BD%86%E6%9C%80%E7%BB%88%E7%9C%8B%E4%B8%8D%E5%88%B0%E5%9B%BE&#34;&gt;Q1&lt;/a&gt;思路排查&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 告警相关</title>
+      <link>/docs/faq/alert/</link>
+      <pubDate>Tue, 17 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/faq/alert/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;q1配置了告警策略监控指标有异常但没有发出告警&#34;&gt;Q1:配置了告警策略，监控指标有异常但没有发出告警&lt;/h3&gt;
+&lt;p&gt;可能是以下几种情况&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;查看对象挂载&lt;/strong&gt;：对象（通常是机器）需要挂载在配置策略的节点（或者其子孙节点）下面&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;查看监控数据&lt;/strong&gt;：确认监控策略对应的监控数据是有值的，并且是肯定会触发阈值的&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;阈值设置有误&lt;/strong&gt;：查看告警策略的告警函数设置，确认告警触发条件是否满足，确认策略的生效时间是否满足&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;策略被屏蔽&lt;/strong&gt;：查看告警策略屏蔽列表，确认策略是否被屏蔽&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;通知网关问题&lt;/strong&gt;：到告警历史页面，查看是否已经生成的告警事件，如果有告警事件，说明是通知网关的问题&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;策略下发问题&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;执行 &lt;code&gt;curl &#39;127.0.0.1:5800/api/portal/stras/effective?all=1&#39;&lt;/code&gt; 拿到全量策略列表&lt;/li&gt;
+&lt;li&gt;如果列表没有此策略，查看 monapi 日志，看是否有报错信息，有报错，按照提示处理&lt;/li&gt;
+&lt;li&gt;如果有，则查看judge_instance字段，找到策略分发给了哪个judge实例，登陆到judge所在机器，
+&lt;code&gt;curl 127.0.0.1:5840/api/judge/stra/:id&lt;/code&gt; 查看是否下发给judge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;judge解析策略异常&lt;/strong&gt;：查看judge WARNING.log 和 ERROR.log 日志，检查是否有此策略的报错信息&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;judge没有收到数据&lt;/strong&gt;：修改judge日志等级为DEBUG，&lt;code&gt;tail -f DEBUG.log|grep 监控指标&lt;/code&gt; 无日志输出，说明数据没有走到judge这里&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;查看数据链路&lt;/strong&gt;：查看transfer的日志，看数据为何没有从transfer转发到judge模块&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

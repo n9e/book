@@ -17,13 +17,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/usage/plugin/" />
 <meta property="article:published_time" content="2021-05-25T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-06-27T15:03:11+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta property="article:modified_time" content="2021-07-17T22:17:22+08:00" /><meta property="og:site_name" content="Nightingale" />
 <meta itemprop="name" content="插件监控">
 <meta itemprop="description" content="夜莺插件机制，可以看做是agentd能力的一种扩展机制，插件通常来说，就是一个采集脚本(也可以是个二进制，只要具备可执行权限即可)，可以在页面上控制哪些机器要执行插件，非常灵活方便
 ">
 <meta itemprop="datePublished" content="2021-05-25T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-06-27T15:03:11&#43;08:00" />
-<meta itemprop="wordCount" content="40">
+<meta itemprop="dateModified" content="2021-07-17T22:17:22&#43;08:00" />
+<meta itemprop="wordCount" content="99">
 
 
 
@@ -251,6 +251,24 @@
       
       
       
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagesnmp" href="/docs/usage/snmp/">SNMP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusageblackbox" href="/docs/usage/blackbox/">远程探测</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagejmx" href="/docs/usage/jmx/">JMX监控</a>
+      
+      
+      
+      
+      
       <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagenotify" href="/docs/usage/notify/">告警通知</a>
       
       
@@ -397,7 +415,7 @@
 <div class="td-content">
 	<h1>插件监控</h1>
 	<div class="lead">夜莺插件机制，可以看做是agentd能力的一种扩展机制，插件通常来说，就是一个采集脚本(也可以是个二进制，只要具备可执行权限即可)，可以在页面上控制哪些机器要执行插件，非常灵活方便</div>
-	<p>插件是扩展agent采集能力的一种手段，通常是一个脚本，有时是二进制，我们在web上通过配置，告诉系统哪些机器上应该执行哪些插件，执行频率是多少，插件脚本的路径在哪里等等，这个配置会下发给agentd，agentd就知道去哪个位置找插件，并且按照某个频率周期性去执行，截获插件的stdout，解析出监控指标上报。</p>
+	<p>插件是扩展agentd采集能力的一种手段，通常是一个脚本，有时是二进制，我们在web上通过配置，告诉夜莺哪些机器上应该执行哪些插件，执行频率是多少，插件脚本的路径在哪里等等，这个配置会下发给agentd，agentd就知道去哪个位置找插件，并且按照某个频率周期性去执行，截获插件的stdout，解析出监控指标上报。</p>
 <p>截获的stdout要求是个json array，举例：</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#ce5c00;font-weight:bold">[</span>
     <span style="color:#ce5c00;font-weight:bold">{</span>
@@ -406,7 +424,7 @@
             <span style="color:#4e9a06">&#34;device&#34;</span>: <span style="color:#4e9a06">&#34;sda&#34;</span>
         <span style="color:#ce5c00;font-weight:bold">}</span>,
         <span style="color:#4e9a06">&#34;value&#34;</span>: 15.4,
-        <span style="color:#4e9a06">&#34;time&#34;</span>: <span style="color:#0000cf;font-weight:bold">1554455574</span>
+        <span style="color:#4e9a06">&#34;type&#34;</span>: <span style="color:#4e9a06">&#34;gauge&#34;</span>
     <span style="color:#ce5c00;font-weight:bold">}</span>,
     <span style="color:#ce5c00;font-weight:bold">{</span>
         <span style="color:#4e9a06">&#34;metric&#34;</span>: <span style="color:#4e9a06">&#34;api.latency&#34;</span>,
@@ -417,11 +435,51 @@
             <span style="color:#4e9a06">&#34;region&#34;</span>: <span style="color:#4e9a06">&#34;bj&#34;</span>
         <span style="color:#ce5c00;font-weight:bold">}</span>,
         <span style="color:#4e9a06">&#34;value&#34;</span>: 5.4,
-        <span style="color:#4e9a06">&#34;time&#34;</span>: <span style="color:#0000cf;font-weight:bold">1554455574</span>
+        <span style="color:#4e9a06">&#34;type&#34;</span>: <span style="color:#4e9a06">&#34;gauge&#34;</span>
     <span style="color:#ce5c00;font-weight:bold">}</span>
 <span style="color:#ce5c00;font-weight:bold">]</span>
-</code></pre></div><p>这个数据结构可以对照《<a href="/docs/appendix/datamodel/">DataModel</a>》一章的内容来看，上面的插件输出样例其实没有ident和alias字段，因为插件是agentd驱动的，所以agentd会自动补上这俩字段，无需插件输出这俩字段。</p>
-<p>agentd执行插件，每次都是fork一个进程去跑的，就类似我们在shell环境下跑一个脚本，Linux下跑一个脚本可以给脚本传参数，可以设置环境变量，可以给脚本传入stdin，所以页面上也支持配置这些内容。</p>
+</code></pre></div><p>这个数据结构可以对照《<a href="/docs/appendix/datamodel/">DataModel</a>》一章的内容来看，上面的插件输出样例其实没有ident、alias、time字段，因为插件是agentd驱动的，所以agentd会自动补上这些字段，无需插件输出这些字段。</p>
+<p>相比《<a href="/docs/appendix/datamodel/">DataModel</a>》一章的介绍，上例中多了一个type字段，这个字段是插件机制特有的，type可取的类型有3种：gauge、increase、rate。下面简单解释下这3种类型的意义和场景：</p>
+<ul>
+<li>gauge: 原值类型，插件输出什么值，agentd都不做处理，原封不动发给server</li>
+<li>increase: 表示增量，agentd会把本周期取到的插件的值与上一周期的值做差值</li>
+<li>rate: 表示速率，agentd会把本周期取到的插件的值与上一周期的值做差值，然后除以周期时间</li>
+</ul>
+<p>大家可以把下面这个插件拿去执行一下做个测试，对这三种类型的理解会更深，场景上来说，其中gauge用的较多，另外两个类型很少用到</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#8f5902;font-style:italic">#!/bin/sh
+</span><span style="color:#8f5902;font-style:italic"></span>
+<span style="color:#000">now</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>date +%s<span style="color:#204a87;font-weight:bold">)</span>
+
+<span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#39;[
+</span><span style="color:#4e9a06">    {
+</span><span style="color:#4e9a06">        &#34;metric&#34;: &#34;plugin_example_gauge&#34;,
+</span><span style="color:#4e9a06">        &#34;tags&#34;: {
+</span><span style="color:#4e9a06">            &#34;type&#34;: &#34;testcase&#34;,
+</span><span style="color:#4e9a06">            &#34;author&#34;: &#34;ulric&#34;
+</span><span style="color:#4e9a06">        },
+</span><span style="color:#4e9a06">        &#34;value&#34;: &#39;</span><span style="color:#4e9a06">${</span><span style="color:#000">now</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39;,
+</span><span style="color:#4e9a06">        &#34;type&#34;: &#34;gauge&#34;
+</span><span style="color:#4e9a06">    },
+</span><span style="color:#4e9a06">    {
+</span><span style="color:#4e9a06">        &#34;metric&#34;: &#34;plugin_example_rate&#34;,
+</span><span style="color:#4e9a06">        &#34;tags&#34;: {
+</span><span style="color:#4e9a06">            &#34;type&#34;: &#34;testcase&#34;,
+</span><span style="color:#4e9a06">            &#34;author&#34;: &#34;ulric&#34;
+</span><span style="color:#4e9a06">        },
+</span><span style="color:#4e9a06">        &#34;value&#34;: &#39;</span><span style="color:#4e9a06">${</span><span style="color:#000">now</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39;,
+</span><span style="color:#4e9a06">        &#34;type&#34;: &#34;rate&#34;
+</span><span style="color:#4e9a06">    },
+</span><span style="color:#4e9a06">    {
+</span><span style="color:#4e9a06">        &#34;metric&#34;: &#34;plugin_example_increase&#34;,
+</span><span style="color:#4e9a06">        &#34;tags&#34;: {
+</span><span style="color:#4e9a06">            &#34;type&#34;: &#34;testcase&#34;,
+</span><span style="color:#4e9a06">            &#34;author&#34;: &#34;ulric&#34;
+</span><span style="color:#4e9a06">        },
+</span><span style="color:#4e9a06">        &#34;value&#34;: &#39;</span><span style="color:#4e9a06">${</span><span style="color:#000">now</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39;,
+</span><span style="color:#4e9a06">        &#34;type&#34;: &#34;increase&#34;
+</span><span style="color:#4e9a06">    }
+</span><span style="color:#4e9a06">]&#39;</span>
+</code></pre></div><p>agentd执行插件，每次都是fork一个进程去跑的，就类似我们在shell环境下跑一个脚本，Linux下跑一个脚本可以给脚本传参数，可以设置环境变量，可以给脚本传入stdin，所以页面上也支持配置这些内容。</p>
 <p>欢迎大家写文章介绍自己的插件，大家共建生态！</p>
 
 	

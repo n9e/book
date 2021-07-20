@@ -244,6 +244,24 @@
       
       
       
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagesnmp" href="/docs/usage/snmp/">SNMP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusageblackbox" href="/docs/usage/blackbox/">远程探测</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagejmx" href="/docs/usage/jmx/">JMX监控</a>
+      
+      
+      
+      
+      
       <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagenotify" href="/docs/usage/notify/">告警通知</a>
       
       
@@ -448,6 +466,33 @@
                         <a href="/docs/usage/logmon/">日志监控</a>
                     </h5>
                     <p>夜莺内置的日志监控，并非是把日志收集到中心在中心处理，而是使用了一种更轻量的方式，在服务端配置正则表达式，下发到agentd，agentd会流式读取日志，然后从日志中根据正则提取metrics数据，所以本质上，这仍然是metrics监控的一种扩展机制。如果大家需要中心化的日志处理解决方案，可以参考我们的logi产品。</p>
+                </div>
+            
+        
+            
+                <div class="entry">
+                    <h5>
+                        <a href="/docs/usage/snmp/">SNMP</a>
+                    </h5>
+                    <p>夜莺的客户端(n9e-agentd)中内置了SNMP采集器，可以采集各类网络设备的监控指标。一般我们会在不同的机房分别找一个机器作为探针，开启这个机器的n9e-agentd的SNMP采集能力，采集本机房的网络设备</p>
+                </div>
+            
+        
+            
+                <div class="entry">
+                    <h5>
+                        <a href="/docs/usage/blackbox/">远程探测</a>
+                    </h5>
+                    <p>远程探测这块，包括ICMP、TCP、HTTP，主要用于网络连通性测试，这块blackbox_exporter已经做的挺好了，我们可以直接复用，把数据抓到时序库，夜莺直接去消费即可。</p>
+                </div>
+            
+        
+            
+                <div class="entry">
+                    <h5>
+                        <a href="/docs/usage/jmx/">JMX监控</a>
+                    </h5>
+                    <p>JMX用于采集JVM的一些监控指标，对于Java类的一些中间件，一般会用这种方式，Java写的业务进程不推荐用JMX方式，建议直接使用micrometer这种SDK埋点，micrometer会自动采集JVM相关监控指标。</p>
                 </div>
             
         

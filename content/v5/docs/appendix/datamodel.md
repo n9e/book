@@ -30,7 +30,7 @@ description: >
 - time：UNIX时间戳，单位是秒
 - value：监控数据此刻的值，只能是数值，服务端最终都转换为浮点数处理
 
-夜莺的服务端和客户端都提供了监控数据上报的接口，如果是要把监控数据上报给服务端，就用上例中的数据结构组装为list上报即可，比如：
+夜莺的服务端提供了监控数据上报的接口，如果是要把监控数据上报给服务端，就用上例中的数据结构组装为list上报即可，比如：
 
 ```bash
 curl -X POST -H "Content-Type: application/json" http://n9e-server-address/v1/n9e/push -d '[
@@ -57,11 +57,5 @@ curl -X POST -H "Content-Type: application/json" http://n9e-server-address/v1/n9
 ]'
 ```
 
-如果监控数据不是直接推送给服务端，而是推给了客户端，比如插件的方式或者直接调用客户端的推送接口，此时数据结构略有变化，增加了一个type字段来标识监控数据的类型，不同类型的监控数据，客户端会做预处理，然后将处理之后的数据推给服务端，推给服务端的时候会拿掉type信息。即type字段只在客户端处理，服务端会忽略这个字段。客户端支持的type类型以及相关解释如下：
+另外，夜莺的客户端即n9e-agentd进程支持statsd的方式接收数据，在agentd的配置文件中将statsd功能enable即可，statsd的介绍在：[github](https://github.com/statsd/statsd) ，statsd是一个指标聚合神器，通常用于应用监控的场景。使用node.js语言开发，n9e-agentd是go写的，即用go实现了node.js的逻辑，statsd社区提供的各种语言的sdk都可以直接使用，业务方用这些sdk埋点，把数据推送地址设置为n9e-agentd的udp地址，即可与夜莺打通，用夜莺来做应用监控。
 
-参考 [statsd metric_types.md](https://github.com/statsd/statsd/blob/master/docs/metric_types.md#timing)
-
-- count: 计数器， 在周期内累计，结束时上报，并归零
-- gauges: 原值，一直保持到下一次设置。
-- timing: 类似 prometheus 的 histogram
-- set: 记录flush期间，不重复的值. 可以用来计算metric unique事件的个数，比如一个周期内，有多少用户访问.
