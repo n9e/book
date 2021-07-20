@@ -82,62 +82,64 @@ sudo systemctl restart n9e-agentd
 1. SNMPv2
 ```yaml
 # /opt/n9e/agentd/etc/agentd.yaml
-listeners:
-  - name: snmp
-snmpListener:
-  workers: 100 # number of workers used to discover devices concurrently
-  discoveryInterval: 3600 # interval between each autodiscovery in seconds
-  configs:
-    - network: 1.2.3.4/24 # CIDR notation, we recommend no larger than /24 blocks
-      version: 2
-      port: 161
-      community: ***
-      tags:
-      - "key1:val1"
-      - "key2:val2"
-      loader: core # use SNMP corecheck implementation
-    - network: 2.3.4.5/24
-      version: 2
-      port: 161
-      community: ***
-      tags:
-      - "key1:val1"
-      - "key2:val2"
-      loader: core
+agent:
+  listeners:
+    - name: snmp
+  snmpListener:
+    workers: 100 # number of workers used to discover devices concurrently
+    discoveryInterval: 3600 # interval between each autodiscovery in seconds
+    configs:
+      - network: 1.2.3.4/24 # CIDR notation, we recommend no larger than /24 blocks
+        version: 2
+        port: 161
+        community: ***
+        tags:
+          - "key1:val1"
+          - "key2:val2"
+        loader: core # use SNMP corecheck implementation
+      - network: 2.3.4.5/24
+        version: 2
+        port: 161
+        community: ***
+        tags:
+          - "key1:val1"
+          - "key2:val2"
+        loader: core
 ```
 
 2. SNMPv3
 ```yaml
 # /opt/n9e/agentd/etc/agentd.yaml
-listeners:
-  - name: snmp
-snmpListener:
-  workers: 100 # number of workers used to discover devices concurrently
-  discoveryInterval: 3600 # interval between each autodiscovery in seconds
-  configs:
-    - network: 1.2.3.4/24 # CIDR notation, we recommend no larger than /24 blocks
-      version: 3
-      user: "user"
-      authenticationProtocol: "fakeAuth"
-      authenticationKey: "fakeKey"
-      #privacyProtocol:
-      #privacyKey:
-      tags:
-        - "key1:val1"
-        - "key2:val2"
-      loader: core
-    - network: 2.3.4.5/24
-      version: 3
-      snmpVersion: 3
-      user: "user"
-      authenticationProtocol: "fakeAuth"
-      authenticationKey: "fakeKey"
-      #privacyProtocol:
-      #privacyKey: 
-      tags:
-        - "key1:val1"
-        - "key2:val2"
-      loader: core
+agent:
+  listeners:
+    - name: snmp
+  snmpListener:
+    workers: 100 # number of workers used to discover devices concurrently
+    discoveryInterval: 3600 # interval between each autodiscovery in seconds
+    configs:
+      - network: 1.2.3.4/24 # CIDR notation, we recommend no larger than /24 blocks
+        version: 3
+        user: "user"
+        authenticationProtocol: "fakeAuth"
+        authenticationKey: "fakeKey"
+        #privacyProtocol:
+        #privacyKey:
+        tags:
+          - "key1:val1"
+          - "key2:val2"
+        loader: core
+      - network: 2.3.4.5/24
+        version: 3
+        snmpVersion: 3
+        user: "user"
+        authenticationProtocol: "fakeAuth"
+        authenticationKey: "fakeKey"
+        #privacyProtocol:
+        #privacyKey: 
+        tags:
+          - "key1:val1"
+          - "key2:val2"
+        loader: core
 ```
 
 <b>注意</b>：agentd 会自动发现设备IP，然后依次采集每一个正常应答的设备。
