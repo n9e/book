@@ -244,6 +244,12 @@
       
       
       
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagesnmp" href="/docs/usage/snmp/">SNMP监控</a>
+      
+      
+      
+      
+      
       <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagenotify" href="/docs/usage/notify/">告警通知</a>
       
       
@@ -448,6 +454,15 @@
                         <a href="/docs/usage/logmon/">日志监控</a>
                     </h5>
                     <p>夜莺内置的日志监控，并非是把日志收集到中心在中心处理，而是使用了一种更轻量的方式，在服务端配置正则表达式，下发到agentd，agentd会流式读取日志，然后从日志中根据正则提取metrics数据，所以本质上，这仍然是metrics监控的一种扩展机制。如果大家需要中心化的日志处理解决方案，可以参考我们的logi产品。</p>
+                </div>
+            
+        
+            
+                <div class="entry">
+                    <h5>
+                        <a href="/docs/usage/snmp/">SNMP监控</a>
+                    </h5>
+                    <p>夜莺的客户端(n9e-agentd)中内置了SNMP采集器，可以采集各类网络设备的监控指标。一般我们会在不同的机房分别找一个机器作为探针，开启这个机器的n9e-agentd的SNMP采集能力，采集本机房的网络设备</p>
                 </div>
             
         
