@@ -338,6 +338,14 @@
 
 
 
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#部署服务端">部署服务端</a></li>
+    <li><a href="#部署客户端">部署客户端</a></li>
+    <li><a href="#高可用集群部署">高可用集群部署</a></li>
+  </ul>
+</nav>
+
 
 
 
@@ -463,7 +471,7 @@ systemctl <span style="color:#204a87">enable</span> n9e-server
 systemctl restart n9e-server
 systemctl status n9e-server
 </code></pre></div></details>
-<p>如果启动不起来，或者进程启动了，但是端口没有在监听，都有问题，需要查阅日志，执行 <code>journalctl -u n9e-server -f</code> 查看 n9e-server 的启动日志，以及查看 /opt/n9e/server/logs 下面的日志</p>
+<p>如果启动不起来，或者进程启动了，但是端口没有在监听，都有问题，需要查阅日志，执行 <code>journalctl -u n9e-server</code> 查看 n9e-server 的启动日志，以及查看 /opt/n9e/server/logs 下面的日志</p>
 <p>安装成功之后，就可以用浏览器访问服务端的端口（在服务端的yml配置中可以看到http的监听端口，默认是8000）进入系统了，系统启动的时候会默认初始化一个<code>root</code>账号，密码是<code>root.2020</code> 登录之后没啥数据，毕竟我们还没有部署采集程序，下一小节开始部署客户端采集程序。</p>
 <h2 id="部署客户端">部署客户端</h2>
 <blockquote>
@@ -472,10 +480,14 @@ systemctl status n9e-server
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#8f5902;font-style:italic"># 一键安装n9e-agentd</span>
 curl -s http://116.85.64.82/install_n9e_agentd.sh<span style="color:#000;font-weight:bold">|</span>bash
 
-<span style="color:#8f5902;font-style:italic"># 通过下面命令可以n9e-agentd的进程，如果进程存在，说明启动成功了，如果启动失败，就查看日志，日志在agentd.log下</span>
+<span style="color:#8f5902;font-style:italic"># 通过下面命令查看n9e-agentd的进程，如果进程存在，说明启动成功</span>
+<span style="color:#8f5902;font-style:italic"># 如果启动失败，可通过 journalctl -u n9e-agentd 查看日志</span>
 ps -ef<span style="color:#000;font-weight:bold">|</span>grep n9e-agentd<span style="color:#000;font-weight:bold">|</span>grep -v grep
 </code></pre></div><p>如上，就完成了整个单机版的部署，如果想多监控几台机器，只需要执行一键安装n9e-agentd的命令，安装完成之后
 修改/opt/n9e/agentd/etc/agentd.yaml中的服务端连接地址（搜索endpoint关键字），然后重启n9e-agentd即可，重启命令 <code>systemctl restart n9e-agentd</code></p>
+<h2 id="高可用集群部署">高可用集群部署</h2>
+<p>不同的时序数据库有不同的集群搭建方式，这里不展开讲解，我们主要讲解如何做夜莺组件的高可用。夜莺的服务端用到的核心组件就一个：n9e-server，n9e-server的集群部署也非常简单，就是找多个机器，部署多个n9e-server进程即可。</p>
+<p>n9e-agentd主动连n9e-server推送数据，走的是http接口（即默认的8000端口，protobuf协议），建议的高可用方案是在多台n9e-server前面架设4层负载均衡，比如LVS或者haproxy，agentd连接vip，这样服务端扩缩容，都只需要变更vip和n9e-server的对应关系即可。如果不方便搞负载均衡，也可以把多个n9e-server的地址直接配置到agentd.yaml中，agentd会随机请求server，如果某一个连不上，会重试其他的server，这样做的问题，就是server如果扩缩容，就要修改所有的agentd的配置了。</p>
 
         <div class="section-index">
     
