@@ -19,7 +19,7 @@ MIB（Management Information Base）充当 OID 和人类可读名称之间的转
 - 1.3.6.1.4.1：保存供应商特定信息的标准。
 
 #### 安装
- [n9e-agentd](https://github.com/n9e/n9e-agentd/blob/main/README.md) 代理程序中已经包含 SNMP 采集器，无需额外安装。
+ [n9e-agentd](https://github.com/n9e/n9e-agentd) 代理程序中已经包含 SNMP 采集器，无需额外安装。
 
 #### 配置
 agentd 网络设备监控支持从单个设备收集指标，或自动发现整个子网上的设备（网络内设备的IP必须唯一）。
