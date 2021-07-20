@@ -182,7 +182,7 @@
     </item>
     
     <item>
-      <title>Docs: SNMP监控</title>
+      <title>Docs: SNMP</title>
       <link>/docs/usage/snmp/</link>
       <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
       
@@ -191,6 +191,34 @@
         
         
         &lt;p&gt;TODO: 描述SNMP采集的使用方法&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 远程探测</title>
+      <link>/docs/usage/blackbox/</link>
+      <pubDate>Wed, 19 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/usage/blackbox/</guid>
+      <description>
+        
+        
+        &lt;p&gt;TODO: 讲解blackbox的使用，梳理内置大盘和告警策略&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: JMX监控</title>
+      <link>/docs/usage/jmx/</link>
+      <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/usage/jmx/</guid>
+      <description>
+        
+        
+        &lt;p&gt;TODO: 讲解JMX相关采集&lt;/p&gt;
 
       </description>
     </item>
