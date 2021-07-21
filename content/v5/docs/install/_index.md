@@ -73,9 +73,9 @@ systemctl status prometheus
 # 2.安装mysql，root默认密码为1234
 yum -y install mariadb*
 # 假设机器的/home分区是个SSD的大分区，datadir设置为/home/mysql
-mkdir -p /home/mysql
-chown mysql:mysql /home/mysql
-sed -i '/^datadir/s/^.*$/datadir=\/home\/mysql/g' /etc/my.cnf
+# mkdir -p /home/mysql
+# chown mysql:mysql /home/mysql
+# sed -i '/^datadir/s/^.*$/datadir=\/home\/mysql/g' /etc/my.cnf
 # 启动mysql进程
 systemctl start mariadb.service
 # 将mysql设置为开机自启动
