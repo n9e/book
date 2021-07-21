@@ -6,9 +6,7 @@ description: >
   夜莺的客户端(n9e-agentd)中内置了SNMP采集器，可以采集各类网络设备的监控指标。一般我们会在不同的机房分别找一个机器作为探针，开启这个机器的n9e-agentd的SNMP采集能力，采集本机房的网络设备
 ---
 
-## SNMP
-
-#### 概述
+## 概述
 简单网络管理协议 (SNMP)是用于监视网络连接设备（例如路由器、交换机、服务器和防火墙）的标准。从网络设备收集 SNMP 指标。
 
 SNMP 使用 sysObjectID（系统对象标识符）来唯一标识设备，使用 OID（对象标识符）来唯一标识管理对象。OID 遵循分层树模式：根下是 ISO，编号为 1。下一级是 ORG，编号为3，依此类推，每个级别之间用 . 分隔。
@@ -18,10 +16,10 @@ MIB（Management Information Base）充当 OID 和人类可读名称之间的转
 - 1.3.6.1.1: (MIB-II) 一种保存系统信息（如正常运行时间、接口和网络堆栈）的标准。
 - 1.3.6.1.4.1：保存供应商特定信息的标准。
 
-#### 安装
+## 安装
  [n9e-agentd](https://github.com/n9e/n9e-agentd) 代理程序中已经包含 SNMP 采集器，无需额外安装。
 
-#### 配置
+## 配置
 agentd 网络设备监控支持从单个设备收集指标，或自动发现整个子网上的设备（网络内设备的IP必须唯一）。
 
 可以根据网络上存在的设备数量以及网络的动态程度（添加或删除设备的频率）选择适合的采集策略：
@@ -43,10 +41,10 @@ initConfig:
   loader: core
 instances:
 - ipAddress: "1.2.3.4"
-  communityString: “sample-string”
-  tags:
-    - "key1:val1"
-    - "key2:val2"
+  communityString: "public"
+  # tags:
+  #   - "region:beijing"
+  #   - "usefor:firewall"
 ```
 
 2. SNMPv3
@@ -60,15 +58,15 @@ instances:
   user: "user"
   authProtocol: "fakeAuth"
   authKey: "fakeKey"
-  #privProtocol:
-  #privKey:
-  tags:
-    - "key1:val1"
-    - "key2:val2"
+  # privProtocol:
+  # privKey:
+  # tags:
+  #   - "region:shanghai"
+  #   - "usefor:switch"
 ```
 
 - 重启 agentd
-```
+```bash
 sudo systemctl restart n9e-agentd
 ```
 
@@ -82,64 +80,66 @@ sudo systemctl restart n9e-agentd
 - 编辑 agentd.yaml 配置文件，设置 要扫描的所有子网。以下示例提供了自动发现所需的参数、默认值。
 
 1. SNMPv2
-```
+```yaml
 # /opt/n9e/agentd/etc/agentd.yaml
-listeners:
-  - name: snmp
-snmpListener:
-  workers: 100 # number of workers used to discover devices concurrently
-  discoveryInterval: 3600 # interval between each autodiscovery in seconds
-  configs:
-    - network: 1.2.3.4/24 # CIDR notation, we recommend no larger than /24 blocks
-      version: 2
-      port: 161
-      community: ***
-      tags:
-      - "key1:val1"
-      - "key2:val2"
-      loader: core # use SNMP corecheck implementation
-    - network: 2.3.4.5/24
-      version: 2
-      port: 161
-      community: ***
-      tags:
-      - "key1:val1"
-      - "key2:val2"
-      loader: core
+agent:
+  listeners:
+    - name: snmp
+  snmpListener:
+    workers: 100 # number of workers used to discover devices concurrently
+    discoveryInterval: 3600 # interval between each autodiscovery in seconds
+    configs:
+      - network: 1.2.3.4/24 # CIDR notation, we recommend no larger than /24 blocks
+        version: 2
+        port: 161
+        community: "public"
+        # tags:
+        #   - "region:beijing"
+        #   - "usefor:firewall"
+        loader: core # use SNMP corecheck implementation
+      - network: 2.3.4.5/24
+        version: 2
+        port: 161
+        community: "public"
+        # tags:
+        #   - "region:beijing"
+        #   - "usefor:switch"
+        loader: core
 ```
 
 2. SNMPv3
-```
+```yaml
 # /opt/n9e/agentd/etc/agentd.yaml
-listeners:
-  - name: snmp
-snmpListener:
-  workers: 100 # number of workers used to discover devices concurrently
-  discoveryInterval: 3600 # interval between each autodiscovery in seconds
-  configs:
-    - network: 1.2.3.4/24 # CIDR notation, we recommend no larger than /24 blocks
-      version: 3
-      user: "user"
-      authenticationProtocol: "fakeAuth"
-      authenticationKey: "fakeKey"
-      #privacyProtocol:
-      #privacyKey:
-      tags:
-        - "key1:val1"
-        - "key2:val2"
-      loader: core
-    - network: 2.3.4.5/24
-      version: 3
-      snmpVersion: 3
-      user: "user"
-      authenticationProtocol: "fakeAuth"
-      authenticationKey: "fakeKey"
-      #privacyProtocol:
-      #privacyKey: 
-      tags:
-        - "key1:val1"
-        - "key2:val2"
-      loader: core
+agent:
+  listeners:
+    - name: snmp
+  snmpListener:
+    workers: 100 # number of workers used to discover devices concurrently
+    discoveryInterval: 3600 # interval between each autodiscovery in seconds
+    configs:
+      - network: 1.2.3.4/24 # CIDR notation, we recommend no larger than /24 blocks
+        version: 3
+        user: "user"
+        authenticationProtocol: "fakeAuth"
+        authenticationKey: "fakeKey"
+        # privacyProtocol:
+        # privacyKey:
+        # tags:
+        #   - "region:beijing"
+        #   - "usefor:firewall"
+        loader: core
+      - network: 2.3.4.5/24
+        version: 3
+        snmpVersion: 3
+        user: "user"
+        authenticationProtocol: "fakeAuth"
+        authenticationKey: "fakeKey"
+        # privacyProtocol:
+        # privacyKey: 
+        # tags:
+        #   - "region:beijing"
+        #   - "usefor:firewall"
+        loader: core
 ```
 
-<b>注意</b>：agentd 会自动发现设备IP，然后依次采集每一个正常应答的设备。
+**注意**：agentd 会自动发现设备IP，然后依次采集每一个正常应答的设备。
