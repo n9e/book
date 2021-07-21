@@ -339,7 +339,67 @@
       <description>
         
         
-        &lt;p&gt;TODO: 讲解JMX相关采集&lt;/p&gt;
+        &lt;p&gt;我们使用prometheus生态的jmx_exporter来采集监控数据。&lt;a href=&#34;/docs/intro/&#34;&gt;夜莺介绍&lt;/a&gt;章节，介绍了集成exporter的原理。假设我们使用prometheus作为夜莺的时序存储库，只需要在prometheus里配置jmx_exporter的抓取规则即可。如果我们使用M3或InfluxDB作为时序库，那就需要搞一个prometheus作为纯粹的抓取器，抓取jmx_exporter的数据，然后通过remote write方式，写入M3或InfluxDB。不管是哪种方式，只要数据进了时序库，夜莺就可以消费了，可以在夜莺中查看监控数据，配置告警规则，查看告警事件，管理告警接收人等。&lt;/p&gt;
+&lt;p&gt;下面以kafka和zookeeper为例，介绍通过jmx采集监控数据的做法。对于prometheus生态的其他exporter，道理都一样，都是想方设法把exporter的数据抓取到时序库。然后交由夜莺服务端消费。&lt;/p&gt;
+&lt;h3 id=&#34;01-下载jar包&#34;&gt;01. 下载jar包&lt;/h3&gt;
+&lt;p&gt;下载jar包，姑且把jar包放到/opt/tgzs，目录可以调，但是所有的地方要保持一致&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;mkdir -p /opt/tgzs
+&lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; /opt/tgzs
+wget https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.16.1/jmx_prometheus_javaagent-0.16.1.jar
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;02-准备配置&#34;&gt;02. 准备配置&lt;/h3&gt;
+&lt;p&gt;准备jmx_exporter基础配置文件，也是姑且放在/opt/tgzs目录，可以调，但是其他地方要对应上。下面的配置可以导出一些机器指标：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; /opt/tgzs
+cat &amp;lt;&amp;lt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;EOF&amp;#34;&lt;/span&gt; &amp;gt; jmx_exporter_common.yaml
+---   
+lowercaseOutputLabelNames: &lt;span style=&#34;color:#204a87&#34;&gt;true&lt;/span&gt;
+lowercaseOutputName: &lt;span style=&#34;color:#204a87&#34;&gt;true&lt;/span&gt;
+whitelistObjectNames: &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;java.lang:type=OperatingSystem&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
+blacklistObjectNames: &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[]&lt;/span&gt;
+rules:
+  - pattern: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;java.lang&amp;lt;type=OperatingSystem&amp;gt;&amp;lt;&amp;gt;(committed_virtual_memory|free_physical_memory|free_swap_space|total_physical_memory|total_swap_space)_size:&amp;#39;&lt;/span&gt;
+    name: os_&lt;span style=&#34;color:#000&#34;&gt;$1&lt;/span&gt;_bytes
+    type: GAUGE
+    attrNameSnakeCase: &lt;span style=&#34;color:#204a87&#34;&gt;true&lt;/span&gt;
+  - pattern: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;java.lang&amp;lt;type=OperatingSystem&amp;gt;&amp;lt;&amp;gt;((?!process_cpu_time)\w+):&amp;#39;&lt;/span&gt;
+    name: os_&lt;span style=&#34;color:#000&#34;&gt;$1&lt;/span&gt;
+    type: GAUGE
+    attrNameSnakeCase: &lt;span style=&#34;color:#204a87&#34;&gt;true&lt;/span&gt;
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;03-引用jar包和配置&#34;&gt;03. 引用jar包和配置&lt;/h3&gt;
+&lt;p&gt;JVM启动的时候，有个&lt;code&gt;-javaagent&lt;/code&gt;的参数，可以把jmx的jar包引入，下面以kafka和zookeeper举例。jar包和yaml文件的路径以及JMX端口自行调整，特别是端口，别跟现有机器上的进程冲突了即可。&lt;/p&gt;
+&lt;p&gt;下面的是kafka的示例：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 在bin/kafka-server-start.sh 脚本最上面添加下面这行&lt;/span&gt;
+&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;KAFKA_OPTS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;-javaagent:/opt/tgzs/jmx_prometheus_javaagent-0.16.1.jar=9309:/opt/tgzs/jmx_exporter_common.yaml&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;下面是zookeeper的示例：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 在bin/zookeeper-server-start.sh 脚本EXTRA_ARGS 下面添加 EXTRA_ARGS&lt;/span&gt;
+&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# EXTRA_ARGS=${EXTRA_ARGS-&amp;#39;-name zookeeper -loggc&amp;#39;}&lt;/span&gt;
+&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;EXTRA_ARGS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$EXTRA_ARGS&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; -javaagent:/opt/tgzs/jmx_prometheus_javaagent-0.16.1.jar=9142:/opt/tgzs/jmx_exporter_common.yaml&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;关于jmx_exporter的配置文件可以依据不同的中间件到&lt;a href=&#34;https://github.com/prometheus/jmx_exporter/tree/master/example_configs&#34;&gt;官网&lt;/a&gt;下载使用，比如tomcat、weblogic、activemq、cassandra、flink、spark，都有提供对应的yaml配置。&lt;/p&gt;
+&lt;h3 id=&#34;04-重启java中间件&#34;&gt;04. 重启Java中间件&lt;/h3&gt;
+&lt;p&gt;重启Java中间件，对应的JMX端口应该会自动监听，curl这个端口，status code应该可以返回200，可以通过下面的命令测试：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 以9309端口举例&lt;/span&gt;
+ss -ntlp &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;9309&lt;/span&gt; 
+curl localhost:9309 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;05-配置抓取器&#34;&gt;05. 配置抓取器&lt;/h3&gt;
+&lt;p&gt;前面几步做完，Java中间件已经监听了JMX的端口，后面就可以使用prometheus的抓取能力来抓取这些JMX端口的监控数据。注意一定要配置java_app这个label，后面导入的内置大盘，就是依赖这个label来区分不同的中间件。job_name默认就设置为jmx_exporter即可。静态抓取配置如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;- &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;job_name&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;jmx_exporter&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;honor_timestamps&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;scrape_interval&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;15s&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;scrape_timeout&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;10s&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;metrics_path&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;/metrics&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;scheme&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;http&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;follow_redirects&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;static_configs&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;targets&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;- localhost&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;9309&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;labels&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;java_app&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;kafka&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;targets&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;- localhost&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;9142&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;labels&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;java_app&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;zookeeper&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;06-导入大盘&#34;&gt;06. 导入大盘&lt;/h3&gt;
+&lt;p&gt;在夜莺的监控大盘页面，选择导入内置大盘，导入jmx_exporter即可查看jmx相关监控数据。&lt;/p&gt;
 
       </description>
     </item>

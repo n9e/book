@@ -17,13 +17,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/usage/jmx/" />
 <meta property="article:published_time" content="2021-05-17T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-07-20T18:00:34+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta property="article:modified_time" content="2021-07-21T14:19:01+08:00" /><meta property="og:site_name" content="Nightingale" />
 <meta itemprop="name" content="JMX监控">
 <meta itemprop="description" content="JMX用于采集JVM的一些监控指标，对于Java类的一些中间件，一般会用这种方式，Java写的业务进程不推荐用JMX方式，建议直接使用micrometer这种SDK埋点，micrometer会自动采集JVM相关监控指标。
 ">
 <meta itemprop="datePublished" content="2021-05-17T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-07-20T18:00:34&#43;08:00" />
-<meta itemprop="wordCount" content="2">
+<meta itemprop="dateModified" content="2021-07-21T14:19:01&#43;08:00" />
+<meta itemprop="wordCount" content="97">
 
 
 
@@ -363,6 +363,21 @@
 
 
 
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#01-下载jar包">01. 下载jar包</a></li>
+        <li><a href="#02-准备配置">02. 准备配置</a></li>
+        <li><a href="#03-引用jar包和配置">03. 引用jar包和配置</a></li>
+        <li><a href="#04-重启java中间件">04. 重启Java中间件</a></li>
+        <li><a href="#05-配置抓取器">05. 配置抓取器</a></li>
+        <li><a href="#06-导入大盘">06. 导入大盘</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
 
 
 
@@ -415,7 +430,67 @@
 <div class="td-content">
 	<h1>JMX监控</h1>
 	<div class="lead">JMX用于采集JVM的一些监控指标，对于Java类的一些中间件，一般会用这种方式，Java写的业务进程不推荐用JMX方式，建议直接使用micrometer这种SDK埋点，micrometer会自动采集JVM相关监控指标。</div>
-	<p>TODO: 讲解JMX相关采集</p>
+	<p>我们使用prometheus生态的jmx_exporter来采集监控数据。<a href="/docs/intro/">夜莺介绍</a>章节，介绍了集成exporter的原理。假设我们使用prometheus作为夜莺的时序存储库，只需要在prometheus里配置jmx_exporter的抓取规则即可。如果我们使用M3或InfluxDB作为时序库，那就需要搞一个prometheus作为纯粹的抓取器，抓取jmx_exporter的数据，然后通过remote write方式，写入M3或InfluxDB。不管是哪种方式，只要数据进了时序库，夜莺就可以消费了，可以在夜莺中查看监控数据，配置告警规则，查看告警事件，管理告警接收人等。</p>
+<p>下面以kafka和zookeeper为例，介绍通过jmx采集监控数据的做法。对于prometheus生态的其他exporter，道理都一样，都是想方设法把exporter的数据抓取到时序库。然后交由夜莺服务端消费。</p>
+<h3 id="01-下载jar包">01. 下载jar包</h3>
+<p>下载jar包，姑且把jar包放到/opt/tgzs，目录可以调，但是所有的地方要保持一致</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p /opt/tgzs
+<span style="color:#204a87">cd</span> /opt/tgzs
+wget https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.16.1/jmx_prometheus_javaagent-0.16.1.jar
+</code></pre></div><h3 id="02-准备配置">02. 准备配置</h3>
+<p>准备jmx_exporter基础配置文件，也是姑且放在/opt/tgzs目录，可以调，但是其他地方要对应上。下面的配置可以导出一些机器指标：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#204a87">cd</span> /opt/tgzs
+cat &lt;&lt;<span style="color:#4e9a06">&#34;EOF&#34;</span> &gt; jmx_exporter_common.yaml
+---   
+lowercaseOutputLabelNames: <span style="color:#204a87">true</span>
+lowercaseOutputName: <span style="color:#204a87">true</span>
+whitelistObjectNames: <span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#4e9a06">&#34;java.lang:type=OperatingSystem&#34;</span><span style="color:#ce5c00;font-weight:bold">]</span>
+blacklistObjectNames: <span style="color:#ce5c00;font-weight:bold">[]</span>
+rules:
+  - pattern: <span style="color:#4e9a06">&#39;java.lang&lt;type=OperatingSystem&gt;&lt;&gt;(committed_virtual_memory|free_physical_memory|free_swap_space|total_physical_memory|total_swap_space)_size:&#39;</span>
+    name: os_<span style="color:#000">$1</span>_bytes
+    type: GAUGE
+    attrNameSnakeCase: <span style="color:#204a87">true</span>
+  - pattern: <span style="color:#4e9a06">&#39;java.lang&lt;type=OperatingSystem&gt;&lt;&gt;((?!process_cpu_time)\w+):&#39;</span>
+    name: os_<span style="color:#000">$1</span>
+    type: GAUGE
+    attrNameSnakeCase: <span style="color:#204a87">true</span>
+EOF
+</code></pre></div><h3 id="03-引用jar包和配置">03. 引用jar包和配置</h3>
+<p>JVM启动的时候，有个<code>-javaagent</code>的参数，可以把jmx的jar包引入，下面以kafka和zookeeper举例。jar包和yaml文件的路径以及JMX端口自行调整，特别是端口，别跟现有机器上的进程冲突了即可。</p>
+<p>下面的是kafka的示例：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#8f5902;font-style:italic"># 在bin/kafka-server-start.sh 脚本最上面添加下面这行</span>
+<span style="color:#204a87">export</span> <span style="color:#000">KAFKA_OPTS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;-javaagent:/opt/tgzs/jmx_prometheus_javaagent-0.16.1.jar=9309:/opt/tgzs/jmx_exporter_common.yaml&#34;</span>
+</code></pre></div><p>下面是zookeeper的示例：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#8f5902;font-style:italic"># 在bin/zookeeper-server-start.sh 脚本EXTRA_ARGS 下面添加 EXTRA_ARGS</span>
+<span style="color:#8f5902;font-style:italic"># EXTRA_ARGS=${EXTRA_ARGS-&#39;-name zookeeper -loggc&#39;}</span>
+<span style="color:#204a87">export</span> <span style="color:#000">EXTRA_ARGS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#000">$EXTRA_ARGS</span><span style="color:#4e9a06"> -javaagent:/opt/tgzs/jmx_prometheus_javaagent-0.16.1.jar=9142:/opt/tgzs/jmx_exporter_common.yaml&#34;</span>
+</code></pre></div><p>关于jmx_exporter的配置文件可以依据不同的中间件到<a href="https://github.com/prometheus/jmx_exporter/tree/master/example_configs">官网</a>下载使用，比如tomcat、weblogic、activemq、cassandra、flink、spark，都有提供对应的yaml配置。</p>
+<h3 id="04-重启java中间件">04. 重启Java中间件</h3>
+<p>重启Java中间件，对应的JMX端口应该会自动监听，curl这个端口，status code应该可以返回200，可以通过下面的命令测试：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#8f5902;font-style:italic"># 以9309端口举例</span>
+ss -ntlp <span style="color:#000;font-weight:bold">|</span> grep <span style="color:#0000cf;font-weight:bold">9309</span> 
+curl localhost:9309 
+</code></pre></div><h3 id="05-配置抓取器">05. 配置抓取器</h3>
+<p>前面几步做完，Java中间件已经监听了JMX的端口，后面就可以使用prometheus的抓取能力来抓取这些JMX端口的监控数据。注意一定要配置java_app这个label，后面导入的内置大盘，就是依赖这个label来区分不同的中间件。job_name默认就设置为jmx_exporter即可。静态抓取配置如下：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- <span style="color:#204a87;font-weight:bold">job_name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>jmx_exporter<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">honor_timestamps</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">true</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">scrape_interval</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>15s<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">scrape_timeout</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>10s<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">metrics_path</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>/metrics<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">scheme</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>http<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">follow_redirects</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">true</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">static_configs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">targets</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span>- localhost<span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">9309</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">labels</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">java_app</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>kafka<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">targets</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span>- localhost<span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">9142</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">labels</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">java_app</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>zookeeper<span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><h3 id="06-导入大盘">06. 导入大盘</h3>
+<p>在夜莺的监控大盘页面，选择导入内置大盘，导入jmx_exporter即可查看jmx相关监控数据。</p>
 
 	
 	
