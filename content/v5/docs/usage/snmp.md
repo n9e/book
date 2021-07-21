@@ -41,10 +41,10 @@ initConfig:
   loader: core
 instances:
 - ipAddress: "1.2.3.4"
-  communityString: “sample-string”
-  tags:
-    - "key1:val1"
-    - "key2:val2"
+  communityString: "public"
+  # tags:
+  #   - "region:beijing"
+  #   - "usefor:firewall"
 ```
 
 2. SNMPv3
@@ -58,11 +58,11 @@ instances:
   user: "user"
   authProtocol: "fakeAuth"
   authKey: "fakeKey"
-  #privProtocol:
-  #privKey:
-  tags:
-    - "key1:val1"
-    - "key2:val2"
+  # privProtocol:
+  # privKey:
+  # tags:
+  #   - "region:shanghai"
+  #   - "usefor:switch"
 ```
 
 - 重启 agentd
@@ -92,18 +92,18 @@ agent:
       - network: 1.2.3.4/24 # CIDR notation, we recommend no larger than /24 blocks
         version: 2
         port: 161
-        community: ***
-        tags:
-          - "key1:val1"
-          - "key2:val2"
+        community: "public"
+        # tags:
+        #   - "region:beijing"
+        #   - "usefor:firewall"
         loader: core # use SNMP corecheck implementation
       - network: 2.3.4.5/24
         version: 2
         port: 161
-        community: ***
-        tags:
-          - "key1:val1"
-          - "key2:val2"
+        community: "public"
+        # tags:
+        #   - "region:beijing"
+        #   - "usefor:switch"
         loader: core
 ```
 
@@ -122,11 +122,11 @@ agent:
         user: "user"
         authenticationProtocol: "fakeAuth"
         authenticationKey: "fakeKey"
-        #privacyProtocol:
-        #privacyKey:
-        tags:
-          - "key1:val1"
-          - "key2:val2"
+        # privacyProtocol:
+        # privacyKey:
+        # tags:
+        #   - "region:beijing"
+        #   - "usefor:firewall"
         loader: core
       - network: 2.3.4.5/24
         version: 3
@@ -134,12 +134,12 @@ agent:
         user: "user"
         authenticationProtocol: "fakeAuth"
         authenticationKey: "fakeKey"
-        #privacyProtocol:
-        #privacyKey: 
-        tags:
-          - "key1:val1"
-          - "key2:val2"
+        # privacyProtocol:
+        # privacyKey: 
+        # tags:
+        #   - "region:beijing"
+        #   - "usefor:firewall"
         loader: core
 ```
 
-<b>注意</b>：agentd 会自动发现设备IP，然后依次采集每一个正常应答的设备。
+**注意**：agentd 会自动发现设备IP，然后依次采集每一个正常应答的设备。
