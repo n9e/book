@@ -60,6 +60,31 @@ def query_data():
         "start": now - 60 ,
         # 结束时间
         "end": now,
+        # 参数
+        "params": [{
+            # 如果有prome_ql代表 直接使用promql查询，否则使用下面参数
+            "prome_ql": '''avg(rate(node_cpu_seconds_total{mode="iowait"}[2m])) by (instance) *100''',
+            # 如果使用下面参数会拼接成promql  {__name__="system_cpu_guest",ident=~"1.1.1.1|2.2.2.2",job=~"node|db",group=~"inf"}
+            "metric": "system_cpu_guest",
+            #  ident 列表
+            "idents": ["1.1.1.1", "2.2.2.2"],
+            # 标签组
+            "tags": [
+                {
+                    "key": "job",
+                    "value": "node",
+                },
+                {
+                    "key": "job",
+                    "value": "db",
+                },
+                {
+                    "key": "group",
+                    "value": "inf",
+                },
+            ],
+
+        },
         "params": [
             {
                 "metric": "system_cpu_idle",
