@@ -186,4 +186,5 @@ curl 'http://localhost:9115/probe?target=baidu.com&module=http_2xx'
 
 
 # 导入夜莺内置 blackbox_exporter大盘就能看到图了
+# 导入夜莺内置告警策略 blackbox_exporter 就能配置告警了
 
