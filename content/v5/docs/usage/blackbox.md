@@ -124,7 +124,7 @@ SSH连通性的探测配置使用 ssh_banner 模块，底层是 tcp 探针
   - job_name: 'blackbox_ssh'
     metrics_path: /probe
     params:
-      module: [ssh_banner]  # Look for a HTTP 200 response.
+      module: [ssh_banner]
     static_configs:
       - targets:
         - 172.20.70.205:22    
@@ -144,7 +144,7 @@ PING监控，使用icmp模块
   - job_name: 'blackbox_icmp'
     metrics_path: /probe
     params:
-      module: [icmp]  # Look for a HTTP 200 response.
+      module: [icmp]
     static_configs:
       - targets:
         - 172.20.70.205
@@ -165,7 +165,7 @@ TCP端口探测，使用tcp_connect模块
   - job_name: 'blackbox_tcp'
     metrics_path: /probe
     params:
-      module: [tcp_connect]  # Look for a HTTP 200 response.
+      module: [tcp_connect]
     static_configs:
       - targets:
         - 10.86.76.13:8090 
