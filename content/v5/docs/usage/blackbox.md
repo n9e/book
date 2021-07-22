@@ -6,20 +6,21 @@ description: >
   远程探测这块，包括ICMP、TCP、HTTP，主要用于网络连通性测试，这块blackbox_exporter已经做的挺好了，我们可以直接复用，把数据抓到时序库，夜莺直接去消费即可。
 ---
 
-TODO: 讲解blackbox的使用，梳理内置大盘和告警策略
+先给出监控大盘的最终效果如下，对大盘熟悉的朋友也可以自行修改，内置大盘的配置在[这里](https://github.com/didi/nightingale/blob/master/etc/dashboard/blackbox_exporter)，大家安装完夜莺之后，这个配置会出现在n9e-server二进制同级的etc目录下的dashboard下。
 
-# 安装blackbox_exporter
-> 01 下载
+![](https://s3-gz01.didistatic.com/n9e-pub/image/blackbox_dash.png)
+
+### 01. 下载探测器
+
 ```shell script
 wget https://github.com/prometheus/blackbox_exporter/releases/download/v0.19.0/blackbox_exporter-0.19.0.linux-amd64.tar.gz
 ```
 
-> 02 使用默认的配置启动 blackbox.yml
-- 当然也可以基于 tcp、http、icmp三种基础探针自己封装探测模块
-- 默认配置如下
+### 02. 探测器配置
+
+准备blackbox_exporter所用的配置，姑且叫做blackbox.yml
 
 ```shell script
-
 cat <<"EOF" > blackbox.yml
 modules:
   http_2xx:
@@ -58,8 +59,10 @@ modules:
 EOF
 ```
 
-> 03 启动服务
-- 下面给出的是systemd配置，路径自己更改
+### 03. 启动探测器
+
+这是使用systemd托管blackbox_exporter，大家也可以自行使用自己习惯的进程托管工具，比如supervisor、god之类的，也可以直接用nohup扔到后台。注意下面的ExecStart这一行配置，样例给的二进制和配置文件都放在了/opt/app/blackbox_exporter，请自行修改适配自己的环境。
+
 ```shell script
 cat <<"EOF" >  /etc/systemd/system/blackbox_exporter.service
 [Unit]
@@ -79,23 +82,22 @@ EOF
 
 systemctl daemon-reload
 systemctl restart blackbox_exporter
-
 ```
 
-> 04 检查blackbox_exporter服务
-- 本地或者浏览器 探测下baidu.com试试
+### 04. 检查探测器
+
+我们用blackbox探测器来探测一下`baidu.com`，看看能否返回metrics结果，如果有正常返回，就表示探测器正常
+
 ```shell script
 curl 'http://localhost:9115/probe?target=baidu.com&module=http_2xx'
 ```
-- 如果能出现metrics结果说明服务正常
-- 至此blackbox的配置安装结束
 
-# 配置prometheus 添加相关采集job
+### 05. 配置抓取器
 
-> 01 配置prometheus配置文件，按需添加探测job
+抓取器就是指prometheus，原理是：prometheus周期性调用blackbox_exporter的接口，让blackbox_exporter对目标地址做探测，对blackbox_exporter的探测结果做解析，生成时序数据写入时序库。
 
-- 注意下面的配置都需要配置 prometheus 的relabel能力，具体原理请自行查阅
-- http接口的探测配置，使用http_2xx模块，GET方法
+注意下面的配置都需要配置 prometheus 的 relabel 能力，具体原理请自行查阅。http接口的探测配置，使用http_2xx模块，GET方法：
+
 ```yaml
   - job_name: 'blackbox_http'
     metrics_path: /probe
@@ -114,10 +116,9 @@ curl 'http://localhost:9115/probe?target=baidu.com&module=http_2xx'
         target_label: instance
       - target_label: __address__
         replacement: 127.0.0.1:9115  # The blackbox exporter's real hostname:port.
-
 ```
 
-- ssh联通性的探测配置 使用 ssh_banner模块，底层是tcp探针
+SSH连通性的探测配置使用 ssh_banner 模块，底层是 tcp 探针
 
 ```yaml
   - job_name: 'blackbox_ssh'
@@ -137,19 +138,18 @@ curl 'http://localhost:9115/probe?target=baidu.com&module=http_2xx'
         replacement: 127.0.0.1:9115  # The blackbox exporter's real hostname:port.
 ```
 
-- ping监控：使用icmp模块
-```yaml
+PING监控，使用icmp模块
 
-	
+```yaml
   - job_name: 'blackbox_icmp'
     metrics_path: /probe
     params:
-      module: [ssh_banner]  # Look for a HTTP 200 response.
+      module: [icmp]  # Look for a HTTP 200 response.
     static_configs:
       - targets:
-        - 172.20.70.205    
-        - 172.20.70.215   
-		- baidu.com
+        - 172.20.70.205
+        - 172.20.70.215
+        - baidu.com
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -159,7 +159,8 @@ curl 'http://localhost:9115/probe?target=baidu.com&module=http_2xx'
         replacement: 127.0.0.1:9115  # The blackbox exporter's real hostname:port.		
 ```
 
-- tcp端口探测 使用tcp_connect模块
+TCP端口探测，使用tcp_connect模块
+
 ```yaml
   - job_name: 'blackbox_tcp'
     metrics_path: /probe
@@ -169,7 +170,6 @@ curl 'http://localhost:9115/probe?target=baidu.com&module=http_2xx'
       - targets:
         - 10.86.76.13:8090 
         - 10.86.76.13:8085 
-         
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -179,12 +179,16 @@ curl 'http://localhost:9115/probe?target=baidu.com&module=http_2xx'
         replacement: 127.0.0.1:9115  
 ```
 
+### 06. 检查抓取结果
 
-> 02 观察prometheus target页面
-- targets页面中出现上述配置的探测方法则为成功
+- 观察prometheus targets页面，targets页面中出现上述配置的探测方法则为成功
 - prometheus ui上查询probe开头的metrics，如果查询到则成功
 
+### 07. 导入夜莺模板
 
-# 导入夜莺内置 blackbox_exporter大盘就能看到图了
-# 导入夜莺内置告警策略 blackbox_exporter 就能配置告警了
+- 导入夜莺内置 blackbox_exporter 大盘就能看到图了
+- 导入夜莺内置告警策略 blackbox_exporter 就能告警了
 
+下面的系统内置的告警策略，作为[内置策略](https://github.com/didi/nightingale/blob/master/etc/alert_rule/blackbox_exporter)的方式存在：
+
+![](https://s3-gz01.didistatic.com/n9e-pub/image/blackbox_rule.png)

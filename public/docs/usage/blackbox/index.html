@@ -17,13 +17,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/usage/blackbox/" />
 <meta property="article:published_time" content="2021-05-19T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-07-20T18:00:34+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta property="article:modified_time" content="2021-07-22T15:02:35+08:00" /><meta property="og:site_name" content="Nightingale" />
 <meta itemprop="name" content="远程探测">
 <meta itemprop="description" content="远程探测这块，包括ICMP、TCP、HTTP，主要用于网络连通性测试，这块blackbox_exporter已经做的挺好了，我们可以直接复用，把数据抓到时序库，夜莺直接去消费即可。
 ">
 <meta itemprop="datePublished" content="2021-05-19T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-07-20T18:00:34&#43;08:00" />
-<meta itemprop="wordCount" content="2">
+<meta itemprop="dateModified" content="2021-07-22T15:02:35&#43;08:00" />
+<meta itemprop="wordCount" content="223">
 
 
 
@@ -369,6 +369,22 @@
 
 
 
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#01-下载探测器">01. 下载探测器</a></li>
+        <li><a href="#02-探测器配置">02. 探测器配置</a></li>
+        <li><a href="#03-启动探测器">03. 启动探测器</a></li>
+        <li><a href="#04-检查探测器">04. 检查探测器</a></li>
+        <li><a href="#05-配置抓取器">05. 配置抓取器</a></li>
+        <li><a href="#06-检查抓取结果">06. 检查抓取结果</a></li>
+        <li><a href="#07-导入夜莺模板">07. 导入夜莺模板</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
 
 
 
@@ -421,7 +437,152 @@
 <div class="td-content">
 	<h1>远程探测</h1>
 	<div class="lead">远程探测这块，包括ICMP、TCP、HTTP，主要用于网络连通性测试，这块blackbox_exporter已经做的挺好了，我们可以直接复用，把数据抓到时序库，夜莺直接去消费即可。</div>
-	<p>TODO: 讲解blackbox的使用，梳理内置大盘和告警策略</p>
+	<p>先给出监控大盘的最终效果如下，对大盘熟悉的朋友也可以自行修改，内置大盘的配置在<a href="https://github.com/didi/nightingale/blob/master/etc/dashboard/blackbox_exporter">这里</a>，大家安装完夜莺之后，这个配置会出现在n9e-server二进制同级的etc目录下的dashboard下。</p>
+<p><img src="https://s3-gz01.didistatic.com/n9e-pub/image/blackbox_dash.png" alt=""></p>
+<h3 id="01-下载探测器">01. 下载探测器</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">wget https://github.com/prometheus/blackbox_exporter/releases/download/v0.19.0/blackbox_exporter-0.19.0.linux-amd64.tar.gz
+</code></pre></div><h3 id="02-探测器配置">02. 探测器配置</h3>
+<p>准备blackbox_exporter所用的配置，姑且叫做blackbox.yml</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cat &lt;&lt;<span style="color:#4e9a06">&#34;EOF&#34;</span> &gt; blackbox.yml
+modules:
+  http_2xx:
+    prober: http
+  http_post_2xx:
+    prober: http
+    http:
+      method: POST
+  tcp_connect:
+    prober: tcp
+  pop3s_banner:
+    prober: tcp
+    tcp:
+      query_response:
+      - expect: <span style="color:#4e9a06">&#34;^+OK&#34;</span>
+      tls: <span style="color:#204a87">true</span>
+      tls_config:
+        insecure_skip_verify: <span style="color:#204a87">false</span>
+  ssh_banner:
+    prober: tcp
+    tcp:
+      query_response:
+      - expect: <span style="color:#4e9a06">&#34;^SSH-2.0-&#34;</span>
+  irc_banner:
+    prober: tcp
+    tcp:
+      query_response:
+      - send: <span style="color:#4e9a06">&#34;NICK prober&#34;</span>
+      - send: <span style="color:#4e9a06">&#34;USER prober prober prober :prober&#34;</span>
+      - expect: <span style="color:#4e9a06">&#34;PING :([^ ]+)&#34;</span>
+        send: <span style="color:#4e9a06">&#34;PONG </span><span style="color:#4e9a06">${</span><span style="color:#000">1</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+      - expect: <span style="color:#4e9a06">&#34;^:[^ ]+ 001&#34;</span>
+  icmp:
+    prober: icmp
+ 
+EOF
+</code></pre></div><h3 id="03-启动探测器">03. 启动探测器</h3>
+<p>这是使用systemd托管blackbox_exporter，大家也可以自行使用自己习惯的进程托管工具，比如supervisor、god之类的，也可以直接用nohup扔到后台。注意下面的ExecStart这一行配置，样例给的二进制和配置文件都放在了/opt/app/blackbox_exporter，请自行修改适配自己的环境。</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cat &lt;&lt;<span style="color:#4e9a06">&#34;EOF&#34;</span> &gt;  /etc/systemd/system/blackbox_exporter.service
+<span style="color:#ce5c00;font-weight:bold">[</span>Unit<span style="color:#ce5c00;font-weight:bold">]</span>
+<span style="color:#000">Description</span><span style="color:#ce5c00;font-weight:bold">=</span>blackbox_exporter Exporter
+<span style="color:#000">Wants</span><span style="color:#ce5c00;font-weight:bold">=</span>network-online.target
+<span style="color:#000">After</span><span style="color:#ce5c00;font-weight:bold">=</span>network-online.target
+
+<span style="color:#ce5c00;font-weight:bold">[</span>Service<span style="color:#ce5c00;font-weight:bold">]</span>
+<span style="color:#000">ExecStart</span><span style="color:#ce5c00;font-weight:bold">=</span>/opt/app/blackbox_exporter/blackbox_exporter --config.file<span style="color:#ce5c00;font-weight:bold">=</span>/opt/app/blackbox_exporter/blackbox.yml
+<span style="color:#000">StandardOutput</span><span style="color:#ce5c00;font-weight:bold">=</span>syslog
+<span style="color:#000">StandardError</span><span style="color:#ce5c00;font-weight:bold">=</span>syslog
+<span style="color:#000">SyslogIdentifier</span><span style="color:#ce5c00;font-weight:bold">=</span>blackbox_exporter
+<span style="color:#ce5c00;font-weight:bold">[</span>Install<span style="color:#ce5c00;font-weight:bold">]</span>
+<span style="color:#000">WantedBy</span><span style="color:#ce5c00;font-weight:bold">=</span>default.target
+
+EOF
+
+systemctl daemon-reload
+systemctl restart blackbox_exporter
+</code></pre></div><h3 id="04-检查探测器">04. 检查探测器</h3>
+<p>我们用blackbox探测器来探测一下<code>baidu.com</code>，看看能否返回metrics结果，如果有正常返回，就表示探测器正常</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl <span style="color:#4e9a06">&#39;http://localhost:9115/probe?target=baidu.com&amp;module=http_2xx&#39;</span>
+</code></pre></div><h3 id="05-配置抓取器">05. 配置抓取器</h3>
+<p>抓取器就是指prometheus，原理是：prometheus周期性调用blackbox_exporter的接口，让blackbox_exporter对目标地址做探测，对blackbox_exporter的探测结果做解析，生成时序数据写入时序库。</p>
+<p>注意下面的配置都需要配置 prometheus 的 relabel 能力，具体原理请自行查阅。http接口的探测配置，使用http_2xx模块，GET方法：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">job_name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;blackbox_http&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">metrics_path</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>/probe<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#8f5902;font-style:italic"># 传入的参数，选用那个探测模块</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">params</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">module</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span>http_2xx<span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline"> 
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">static_configs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">targets</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>- http<span style="color:#000;font-weight:bold">:</span>//prometheus.io<span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#8f5902;font-style:italic"># Target to probe with http.</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>- https<span style="color:#000;font-weight:bold">:</span>//www.baidu.com<span style="color:#f8f8f8;text-decoration:underline">   </span><span style="color:#8f5902;font-style:italic"># Target to probe with https.</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>- http<span style="color:#000;font-weight:bold">:</span>//localhost<span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">3000</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#8f5902;font-style:italic"># Target to probe with http on port 3000.</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">relabel_configs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">source_labels</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span>__address__<span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">target_label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>__param_target<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">source_labels</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span>__param_target<span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">target_label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>instance<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">target_label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>__address__<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">replacement</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">127.0.0.1</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">9115</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#8f5902;font-style:italic"># The blackbox exporter&#39;s real hostname:port.</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><p>SSH连通性的探测配置使用 ssh_banner 模块，底层是 tcp 探针</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">job_name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;blackbox_ssh&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">metrics_path</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>/probe<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">params</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">module</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span>ssh_banner<span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#8f5902;font-style:italic"># Look for a HTTP 200 response.</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">static_configs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">targets</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>- <span style="color:#0000cf;font-weight:bold">172.20.70.205</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">22</span><span style="color:#f8f8f8;text-decoration:underline">    
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>- <span style="color:#0000cf;font-weight:bold">172.20.70.215</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">22</span><span style="color:#f8f8f8;text-decoration:underline">  
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">relabel_configs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">source_labels</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span>__address__<span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">target_label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>__param_target<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">source_labels</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span>__param_target<span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">target_label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>instance<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">target_label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>__address__<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">replacement</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">127.0.0.1</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">9115</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#8f5902;font-style:italic"># The blackbox exporter&#39;s real hostname:port.</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><p>PING监控，使用icmp模块</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">job_name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;blackbox_icmp&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">metrics_path</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>/probe<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">params</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">module</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span>icmp<span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#8f5902;font-style:italic"># Look for a HTTP 200 response.</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">static_configs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">targets</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>- <span style="color:#0000cf;font-weight:bold">172.20.70.205</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>- <span style="color:#0000cf;font-weight:bold">172.20.70.215</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>- baidu.com<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">relabel_configs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">source_labels</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span>__address__<span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">target_label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>__param_target<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">source_labels</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span>__param_target<span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">target_label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>instance<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">target_label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>__address__<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">replacement</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">127.0.0.1</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">9115</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#8f5902;font-style:italic"># The blackbox exporter&#39;s real hostname:port.		</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><p>TCP端口探测，使用tcp_connect模块</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">job_name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;blackbox_tcp&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">metrics_path</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>/probe<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">params</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">module</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span>tcp_connect<span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#8f5902;font-style:italic"># Look for a HTTP 200 response.</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">static_configs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">targets</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>- <span style="color:#0000cf;font-weight:bold">10.86.76.13</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">8090</span><span style="color:#f8f8f8;text-decoration:underline"> 
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>- <span style="color:#0000cf;font-weight:bold">10.86.76.13</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">8085</span><span style="color:#f8f8f8;text-decoration:underline"> 
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">relabel_configs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">source_labels</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span>__address__<span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">target_label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>__param_target<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">source_labels</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span>__param_target<span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">target_label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>instance<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">target_label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>__address__<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">replacement</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">127.0.0.1</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">9115</span><span style="color:#f8f8f8;text-decoration:underline">  
+</span></code></pre></div><h3 id="06-检查抓取结果">06. 检查抓取结果</h3>
+<ul>
+<li>观察prometheus targets页面，targets页面中出现上述配置的探测方法则为成功</li>
+<li>prometheus ui上查询probe开头的metrics，如果查询到则成功</li>
+</ul>
+<h3 id="07-导入夜莺模板">07. 导入夜莺模板</h3>
+<ul>
+<li>导入夜莺内置 blackbox_exporter 大盘就能看到图了</li>
+<li>导入夜莺内置告警策略 blackbox_exporter 就能告警了</li>
+</ul>
+<p>下面的系统内置的告警策略，作为<a href="https://github.com/didi/nightingale/blob/master/etc/alert_rule/blackbox_exporter">内置策略</a>的方式存在：</p>
+<p><img src="https://s3-gz01.didistatic.com/n9e-pub/image/blackbox_rule.png" alt=""></p>
 
 	
 	

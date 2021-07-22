@@ -6,6 +6,10 @@ description: >
   JMX用于采集JVM的一些监控指标，对于Java类的一些中间件，一般会用这种方式，Java写的业务进程不推荐用JMX方式，建议直接使用micrometer这种SDK埋点，micrometer会自动采集JVM相关监控指标。
 ---
 
+先给出监控大盘的最终效果如下，对大盘熟悉的朋友也可以自行修改，内置大盘的配置在[这里](https://github.com/didi/nightingale/blob/master/etc/dashboard/jmx_exporter)，大家安装完夜莺之后，这个配置会出现在n9e-server二进制同级的etc目录下的dashboard下。
+
+![](https://s3-gz01.didistatic.com/n9e-pub/image/jmx_exporter_dash1.png)
+
 我们使用prometheus生态的jmx_exporter来采集监控数据。[夜莺介绍](/docs/intro/)章节，介绍了集成exporter的原理。假设我们使用prometheus作为夜莺的时序存储库，只需要在prometheus里配置jmx_exporter的抓取规则即可。如果我们使用M3或InfluxDB作为时序库，那就需要搞一个prometheus作为纯粹的抓取器，抓取jmx_exporter的数据，然后通过remote write方式，写入M3或InfluxDB。不管是哪种方式，只要数据进了时序库，夜莺就可以消费了，可以在夜莺中查看监控数据，配置告警规则，查看告警事件，管理告警接收人等。
 
 下面以kafka和zookeeper为例，介绍通过jmx采集监控数据的做法。对于prometheus生态的其他exporter，道理都一样，都是想方设法把exporter的数据抓取到时序库。然后交由夜莺服务端消费。
