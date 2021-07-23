@@ -98,6 +98,8 @@
 </a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 	
+	<a class="dropdown-item" href="/en/index.json">English</a>
+	
 	<a class="dropdown-item" href="/index.json">v5版本</a>
 	
 </div>

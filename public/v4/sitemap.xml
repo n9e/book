@@ -5,11 +5,26 @@
   <url>
     <loc>/v4/docs/api/data/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/api/data/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/api/data/"
+                />
   </url>
   
   <url>
     <loc>/v4/docs/intro/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/intro/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="v5"
@@ -27,6 +42,11 @@
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
+                hreflang="en"
+                href="/en/docs/install/"
+                />
+    <xhtml:link
+                rel="alternate"
                 hreflang="v5"
                 href="/docs/install/"
                 />
@@ -42,6 +62,11 @@
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
+                hreflang="en"
+                href="/en/docs/usage/"
+                />
+    <xhtml:link
+                rel="alternate"
                 hreflang="v5"
                 href="/docs/usage/"
                 />
@@ -55,21 +80,56 @@
   <url>
     <loc>/v4/docs/operation/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/operation/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/operation/"
+                />
   </url>
   
   <url>
     <loc>/v4/docs/api/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/api/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/api/"
+                />
   </url>
   
   <url>
     <loc>/v4/docs/faq/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/faq/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/faq/"
+                />
   </url>
   
   <url>
     <loc>/v4/docs/appendix/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/appendix/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="v5"
@@ -102,6 +162,11 @@
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
+                hreflang="en"
+                href="/en/docs/"
+                />
+    <xhtml:link
+                rel="alternate"
                 hreflang="v5"
                 href="/docs/"
                 />
@@ -120,21 +185,61 @@
   <url>
     <loc>/v4/docs/operation/tsdb/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/operation/tsdb/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/operation/tsdb/"
+                />
   </url>
   
   <url>
     <loc>/v4/docs/operation/idx/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/operation/idx/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/operation/idx/"
+                />
   </url>
   
   <url>
     <loc>/v4/docs/operation/checklist/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/operation/checklist/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/operation/checklist/"
+                />
   </url>
   
   <url>
     <loc>/v4/docs/operation/monitor/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/operation/monitor/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/operation/monitor/"
+                />
   </url>
   
   <url>
@@ -145,11 +250,31 @@
   <url>
     <loc>/v4/docs/usage/metric/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/usage/metric/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/usage/metric/"
+                />
   </url>
   
   <url>
     <loc>/v4/docs/usage/strategy/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/usage/strategy/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/usage/strategy/"
+                />
   </url>
   
   <url>
@@ -160,6 +285,16 @@
   <url>
     <loc>/v4/docs/usage/maskconf/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/usage/maskconf/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/usage/maskconf/"
+                />
   </url>
   
   <url>
@@ -170,6 +305,11 @@
   <url>
     <loc>/v4/docs/usage/port/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/usage/port/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="v5"
@@ -187,6 +327,11 @@
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
+                hreflang="en"
+                href="/en/docs/usage/proc/"
+                />
+    <xhtml:link
+                rel="alternate"
                 hreflang="v5"
                 href="/docs/usage/proc/"
                 />
@@ -200,6 +345,16 @@
   <url>
     <loc>/v4/docs/usage/logger/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/usage/logger/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v4"
+                href="/v4/docs/usage/logger/"
+                />
   </url>
   
   <url>
@@ -215,6 +370,11 @@
   <url>
     <loc>/v4/docs/usage/plugin/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/usage/plugin/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="v5"
@@ -237,6 +397,11 @@
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
+                hreflang="en"
+                href="/en/index.json"
+                />
+    <xhtml:link
+                rel="alternate"
                 hreflang="v5"
                 href="/index.json"
                 />
@@ -252,6 +417,11 @@
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
+                hreflang="en"
+                href="/en/"
+                />
+    <xhtml:link
+                rel="alternate"
                 hreflang="v5"
                 href="/"
                 />
@@ -265,6 +435,11 @@
   <url>
     <loc>/v4/search/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/search/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="v5"
@@ -285,6 +460,11 @@
   <url>
     <loc>/v4/community/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/community/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="v5"
