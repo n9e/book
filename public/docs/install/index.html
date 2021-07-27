@@ -509,7 +509,7 @@ systemctl status n9e-server
 curl -s http://116.85.64.82/install_n9e_agentd.sh<span style="color:#000;font-weight:bold">|</span>bash
 
 <span style="color:#8f5902;font-style:italic"># 通过下面命令查看n9e-agentd的进程，如果进程存在，说明启动成功</span>
-<span style="color:#8f5902;font-style:italic"># 如果启动失败，可通过 journalctl -u n9e-agentd 查看日志</span>
+<span style="color:#8f5902;font-style:italic"># 如果启动失败，可通过 journalctl -u n9e-agentd -f 查看日志</span>
 ps -ef<span style="color:#000;font-weight:bold">|</span>grep n9e-agentd<span style="color:#000;font-weight:bold">|</span>grep -v grep
 </code></pre></div><p>如上，就完成了整个单机版的部署，如果想多监控几台机器，只需要执行一键安装n9e-agentd的命令，安装完成之后
 修改/opt/n9e/agentd/etc/agentd.yaml中的服务端连接地址（搜索endpoint关键字），然后重启n9e-agentd即可，重启命令 <code>systemctl restart n9e-agentd</code></p>
