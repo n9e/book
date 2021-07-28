@@ -143,3 +143,82 @@ agent:
 ```
 
 **注意**：agentd 会自动发现设备IP，然后依次采集每一个正常应答的设备。
+
+
+## profile 配置
+SNMP profile为某些品牌和型号的网络设备提供开箱即用监控的配置, 目录 /opt/n9e/agentd/conf.d/snmp.d/profiles.
+
+文件结构如下 
+
+```yaml
+sysobjectid: <x.y.z...>
+
+# extends:
+#   <Optional list of base profiles to extend from...>
+
+metrics:
+  # <List of metrics to collect...>
+
+# metric_tags:
+#   <List of tags to apply to collected metrics. Required for table metrics, optional otherwise>
+```
+
+下面的例子中, 查询 172.25.79.194 的 `sysobjectid` 为  `1.3.6.1.4.1.25506.1.1210`
+```sh
+$ snmpwalk -On 172.25.79.194 1.3.6.1.2.1.1.2.0
+.1.3.6.1.2.1.1.2.0 = OID: .1.3.6.1.4.1.25506.1.1210
+```
+
+采集器的配置文件 /opt/n9e/agentd/conf.d/snmp.d/conf.yaml 中,  采集器会首先查询目标的 sysobjectid, 在 profile 目录查找相匹配的配置, 也可以直接在 conf.yaml 文件中配置 metrics 和 metric_tags, 格式和 profile 一样
+
+### 字段
+
+#### `sysobjectid`
+
+_(必须)_
+
+`sysobjectid` 字段用于在设备自动发现期间将配置文件与设备进行匹配。
+
+它可以引用特定设备品牌和型号的完全定义的 OID：
+
+```yaml
+sysobjectid: 1.3.6.1.4.1.232.9.4.10
+```
+
+或通配符模式来解决多个设备模型：
+
+```yaml
+sysobjectid: 1.3.6.1.131.12.4.*
+```
+
+或完全定义的 OID / 通配符模式列表：
+
+```yaml
+sysobjectid:
+  - 1.3.6.1.131.12.4.*
+  - 1.3.6.1.4.1.232.9.4.10
+```
+
+#### `metrics`
+ 参考 [profiles](https://datadoghq.dev/integrations-core/tutorials/snmp/profiles/)
+
+#### `metrics_tags`
+ 参考 [profiles](https://datadoghq.dev/integrations-core/tutorials/snmp/profiles/)
+
+
+## FAQ
+
+#### 自动发现不起作用?
+  - 确认agentd是否为最新版本
+  - /opt/n9e/agentd/conf.d/snmp.d/auto_conf.yaml 文件是否存在，最新的安装包里有
+
+
+## Resources
+- https://docs.datadoghq.com/network_monitoring/devices/setup
+- https://datadoghq.dev/integrations-core/tutorials/snmp/profiles/
+- http://cric.grenoble.cnrs.fr/Administrateurs/Outils/MIBS/
+- http://circitor.fr/Mibs/Mibs.php
+- http://mibs.snmplabs.com/asn1/
+- https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol
+- https://www.youtube.com/playlist?list=PL4j_fCKQ7Bso1wGplcaF2pcDGeLVCuKHU
+- https://en.wikipedia.org/wiki/Field-replaceable_unit
