@@ -164,7 +164,7 @@ metrics:
 ```
 
 下面的例子中, 查询 172.25.79.194 的 `sysobjectid` 为  `1.3.6.1.4.1.25506.1.1210`
-```sh
+```Bash
 $ snmpwalk -On 172.25.79.194 1.3.6.1.2.1.1.2.0
 .1.3.6.1.2.1.1.2.0 = OID: .1.3.6.1.4.1.25506.1.1210
 ```
@@ -209,9 +209,8 @@ sysobjectid:
 ## FAQ
 
 #### 自动发现不起作用?
-  - 确认agentd是否为最新版本
-  - /opt/n9e/agentd/conf.d/snmp.d/auto_conf.yaml 文件是否存在，最新的安装包里有
 
+确认agentd是否为最新版本。确认方法是看这个文件是否存在：/opt/n9e/agentd/conf.d/snmp.d/auto_conf.yaml 官网最新安装包里是有这个文件的，或者去agentd的github release页面下载，[下载地址](https://github.com/n9e/n9e-agentd/releases)
 
 ## Resources
 - https://docs.datadoghq.com/network_monitoring/devices/setup

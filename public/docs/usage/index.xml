@@ -326,7 +326,7 @@
 &lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# metric_tags:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#   &amp;lt;List of tags to apply to collected metrics. Required for table metrics, optional otherwise&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;下面的例子中, 查询 172.25.79.194 的 &lt;code&gt;sysobjectid&lt;/code&gt; 为  &lt;code&gt;1.3.6.1.4.1.25506.1.1210&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ snmpwalk -On 172.25.79.194 1.3.6.1.2.1.1.2.0
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Bash&#34; data-lang=&#34;Bash&#34;&gt;$ snmpwalk -On 172.25.79.194 1.3.6.1.2.1.1.2.0
 .1.3.6.1.2.1.1.2.0 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; OID: .1.3.6.1.4.1.25506.1.1210
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;采集器的配置文件 /opt/n9e/agentd/conf.d/snmp.d/conf.yaml 中,  采集器会首先查询目标的 sysobjectid, 在 profile 目录查找相匹配的配置, 也可以直接在 conf.yaml 文件中配置 metrics 和 metric_tags, 格式和 profile 一样&lt;/p&gt;
 &lt;h3 id=&#34;字段&#34;&gt;字段&lt;/h3&gt;
@@ -347,10 +347,7 @@
 &lt;p&gt;参考 &lt;a href=&#34;https://datadoghq.dev/integrations-core/tutorials/snmp/profiles/&#34;&gt;profiles&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;faq&#34;&gt;FAQ&lt;/h2&gt;
 &lt;h4 id=&#34;自动发现不起作用&#34;&gt;自动发现不起作用?&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;确认agentd是否为最新版本&lt;/li&gt;
-&lt;li&gt;/opt/n9e/agentd/conf.d/snmp.d/auto_conf.yaml 文件是否存在，最新的安装包里有&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;确认agentd是否为最新版本。确认方法是看这个文件是否存在：/opt/n9e/agentd/conf.d/snmp.d/auto_conf.yaml 官网最新安装包里是有这个文件的，或者去agentd的github release页面下载，&lt;a href=&#34;https://github.com/n9e/n9e-agentd/releases&#34;&gt;下载地址&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;resources&#34;&gt;Resources&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.datadoghq.com/network_monitoring/devices/setup&#34;&gt;https://docs.datadoghq.com/network_monitoring/devices/setup&lt;/a&gt;&lt;/li&gt;
