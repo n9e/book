@@ -322,9 +322,14 @@
 &lt;p&gt;夜莺是PUSH模型，n9e-server会监听两个端口，一个http端口一个rpc端口，n9e-agentd会采集监控数据，然后通过http端口推送给n9e-server。如果有某个机房网络隔离，至少要在这个隔离机房找一台转发机器，转发机器至少可以连通n9e-server，在转发机器上部署haproxy或者nginx，利用haproxy或者nginx进行流量转发。即：n9e-agentd的配置文件里，把服务端地址指向haproxy或nginx的地址，haproxy或nginx接收到请求之后转发给n9e-server。目前这个版本，haproxy和nginx只要代理n9e-server的http端口即可，无需代理rpc端口，不过后续架构可能会演进，简单起见，可以把n9e-server的两个端口都做代理。&lt;/p&gt;
 &lt;h3 id=&#34;faq004&#34;&gt;FAQ004&lt;/h3&gt;
 &lt;blockquote&gt;
-&lt;p&gt;支持Windows的监控吗？&lt;/p&gt;
+&lt;p&gt;夜莺v5版本支持Windows的监控吗？&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;夜莺支持Linux、Windows、MacOS环境的监控，安装章节使用的安装脚本是CentOS环境下使用的，如要获取Windows的客户端，可以去agentd的release页面下载：&lt;a href=&#34;https://github.com/n9e/n9e-agentd/releases&#34;&gt;下载地址&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;faq005&#34;&gt;FAQ005&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;夜莺v5版本怎么没有Grafana的DataSource了？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;夜莺v5拥抱各类时序数据库，底层可以支持Prometheus、M3、InfluxDB来做时序数据存储，这些存储都可以对接Grafana，所以，让Grafana直接对接这些存储就好了，夜莺不需要实现一个单独的DataSource。夜莺采集的数据会写入时序库，Grafana可以读取这些时序库，于是，就串联起来了。&lt;/p&gt;
 
       </description>
     </item>

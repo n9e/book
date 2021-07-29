@@ -30,7 +30,12 @@ notify.py脚本里引用了一些python的库，特别是requests这个库，很
 
 ### FAQ004
 
-> 支持Windows的监控吗？
+> 夜莺v5版本支持Windows的监控吗？
 
 夜莺支持Linux、Windows、MacOS环境的监控，安装章节使用的安装脚本是CentOS环境下使用的，如要获取Windows的客户端，可以去agentd的release页面下载：[下载地址](https://github.com/n9e/n9e-agentd/releases)
 
+### FAQ005
+
+> 夜莺v5版本怎么没有Grafana的DataSource了？
+
+夜莺v5拥抱各类时序数据库，底层可以支持Prometheus、M3、InfluxDB来做时序数据存储，这些存储都可以对接Grafana，所以，让Grafana直接对接这些存储就好了，夜莺不需要实现一个单独的DataSource。夜莺采集的数据会写入时序库，Grafana可以读取这些时序库，于是，就串联起来了。
