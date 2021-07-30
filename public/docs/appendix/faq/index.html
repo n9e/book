@@ -17,13 +17,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/appendix/faq/" />
 <meta property="article:published_time" content="2021-06-01T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-07-29T19:22:04+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta property="article:modified_time" content="2021-07-29T19:24:46+08:00" /><meta property="og:site_name" content="Nightingale" />
 <meta itemprop="name" content="FAQ">
 <meta itemprop="description" content="一些常见的问题的解释。安装的问题、使用的问题、理念的问题，都会放到这里。
 ">
 <meta itemprop="datePublished" content="2021-06-01T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-07-29T19:22:04&#43;08:00" />
-<meta itemprop="wordCount" content="47">
+<meta itemprop="dateModified" content="2021-07-29T19:24:46&#43;08:00" />
+<meta itemprop="wordCount" content="56">
 
 
 
@@ -383,6 +383,7 @@
         <li><a href="#faq004">FAQ004</a></li>
         <li><a href="#faq005">FAQ005</a></li>
         <li><a href="#faq006">FAQ006</a></li>
+        <li><a href="#faq007">FAQ007</a></li>
       </ul>
     </li>
   </ul>
@@ -472,6 +473,12 @@
 <p>个人中心的密钥，是做什么用的？</p>
 </blockquote>
 <p>是用来调用夜莺的接口的，具体可以参考 <a href="/docs/appendix/api/">API调用</a> 章节。这个Token就是一个用户凭证，调用接口的时候带上这个Token，夜莺就知道当前是以什么身份在调用接口，是否有权限调用相关接口。</p>
+<h3 id="faq007">FAQ007</h3>
+<blockquote>
+<p>未恢复告警页面，【忽略】按钮的作用和使用场景是什么？</p>
+</blockquote>
+<p>通常情况下，都不会用到【忽略】这个按钮，因为告警事件如果恢复了，就会自动从这个列表删除。但是，有些情况告警事件可能永远都消失不了，比如某个机器的CPU使用率告警了，还没恢复呢，机器下线了，这个机器再也不会有新的监控数据上报了，那这个告警就再也恢复不了了，这个事件就会一直存在于表格里，这种情况如果看这个事件不爽，就可以删除。所以，【忽略】按钮的使用场景，就是我们知道事件肯定恢复不了了，并且事件也没啥影响了，就可以主动【忽略】掉。</p>
+<p>未来，我们可能会做一张全量的历史事件表，记录每个告警事件的生命周期，等 github star 数量超过5000，会提供这个功能，各位，拉你的同事们给 <a href="https://github.com/didi/nightingale">star</a> 吧！</p>
 
 	
 	
