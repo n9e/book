@@ -53,12 +53,12 @@ anchor = "smart"
 
 [languages]
 
-# [languages.en]
-# title = "Nightingale"
-# description = "Nightingale website"
-# languageName ="English"
-# # Weight used for sorting.
-# weight = 1
+[languages.en]
+title = "Nightingale"
+description = "Nightingale website"
+languageName ="English"
+# Weight used for sorting.
+weight = 1
 
 [languages.v4]
 title = "Nightingale"
@@ -67,6 +67,7 @@ languageName ="v4版本"
 contentDir = "content/v4"
 time_format_default = "2006-01-02"
 time_format_blog = "2006-01-02"
+weight = 2
 
 [languages.v5]
 title = "Nightingale"
@@ -75,7 +76,7 @@ languageName ="v5版本"
 contentDir = "content/v5"
 time_format_default = "2006-01-02"
 time_format_blog = "2006-01-02"
-weight = 1
+weight = 3
 
 [markup]
   [markup.goldmark]

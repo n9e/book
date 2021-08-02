@@ -7,6 +7,11 @@
     <lastmod>2021-06-23T22:02:52+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
+                hreflang="en"
+                href="/en/docs/intro/"
+                />
+    <xhtml:link
+                rel="alternate"
                 hreflang="v4"
                 href="/v4/docs/intro/"
                 />
@@ -19,7 +24,12 @@
   
   <url>
     <loc>/docs/install/</loc>
-    <lastmod>2021-07-21T08:47:26+08:00</lastmod>
+    <lastmod>2021-07-27T08:25:33+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/install/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="v4"
@@ -37,6 +47,11 @@
     <lastmod>2021-06-24T20:35:17+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
+                hreflang="en"
+                href="/en/docs/usage/"
+                />
+    <xhtml:link
+                rel="alternate"
                 hreflang="v4"
                 href="/v4/docs/usage/"
                 />
@@ -52,6 +67,11 @@
     <lastmod>2021-06-25T21:22:13+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
+                hreflang="en"
+                href="/en/docs/appendix/"
+                />
+    <xhtml:link
+                rel="alternate"
                 hreflang="v4"
                 href="/v4/docs/appendix/"
                 />
@@ -65,6 +85,11 @@
   <url>
     <loc>/docs/</loc>
     <lastmod>2021-06-22T20:18:31+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="v4"
@@ -89,12 +114,17 @@
   
   <url>
     <loc>/docs/appendix/api/</loc>
-    <lastmod>2021-07-17T22:17:22+08:00</lastmod>
+    <lastmod>2021-07-21T14:19:01+08:00</lastmod>
   </url>
   
   <url>
     <loc>/docs/appendix/nginx/</loc>
     <lastmod>2021-06-27T12:45:07+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/appendix/faq/</loc>
+    <lastmod>2021-07-29T19:24:46+08:00</lastmod>
   </url>
   
   <url>
@@ -105,6 +135,11 @@
   <url>
     <loc>/docs/usage/port/</loc>
     <lastmod>2021-06-27T14:12:29+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/usage/port/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="v4"
@@ -122,6 +157,11 @@
     <lastmod>2021-06-27T15:03:11+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
+                hreflang="en"
+                href="/en/docs/usage/proc/"
+                />
+    <xhtml:link
+                rel="alternate"
                 hreflang="v4"
                 href="/v4/docs/usage/proc/"
                 />
@@ -135,6 +175,11 @@
   <url>
     <loc>/docs/usage/plugin/</loc>
     <lastmod>2021-07-17T22:17:22+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/docs/usage/plugin/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="v4"
@@ -154,17 +199,17 @@
   
   <url>
     <loc>/docs/usage/snmp/</loc>
-    <lastmod>2021-07-20T20:38:32+08:00</lastmod>
+    <lastmod>2021-07-28T14:50:46+08:00</lastmod>
   </url>
   
   <url>
     <loc>/docs/usage/blackbox/</loc>
-    <lastmod>2021-07-20T18:00:34+08:00</lastmod>
+    <lastmod>2021-07-22T23:26:12+08:00</lastmod>
   </url>
   
   <url>
     <loc>/docs/usage/jmx/</loc>
-    <lastmod>2021-07-20T18:00:34+08:00</lastmod>
+    <lastmod>2021-07-22T23:22:56+08:00</lastmod>
   </url>
   
   <url>
@@ -175,6 +220,11 @@
   <url>
     <loc>/index.json</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/index.json"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="v4"
@@ -192,6 +242,11 @@
     <lastmod>2021-06-27T15:09:58+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
+                hreflang="en"
+                href="/en/"
+                />
+    <xhtml:link
+                rel="alternate"
                 hreflang="v4"
                 href="/v4/"
                 />
@@ -207,6 +262,11 @@
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
+                hreflang="en"
+                href="/en/search/"
+                />
+    <xhtml:link
+                rel="alternate"
                 hreflang="v4"
                 href="/v4/search/"
                 />
@@ -220,6 +280,11 @@
   <url>
     <loc>/community/</loc>
     <lastmod>2021-05-24T16:58:09+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/community/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="v4"

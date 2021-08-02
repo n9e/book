@@ -37,11 +37,11 @@ agentd 网络设备监控支持从单个设备收集指标，或自动发现整�
 1. SNMPv2
 ```yaml
 # /opt/n9e/agentd/conf.d/snmp.d/conf.yaml
-initConfig:
+init_config
   loader: core
 instances:
-- ipAddress: "1.2.3.4"
-  communityString: "public"
+- ip_address "1.2.3.4"
+  community_string "public"
   # tags:
   #   - "region:beijing"
   #   - "usefor:firewall"
@@ -50,16 +50,16 @@ instances:
 2. SNMPv3
 ```yaml
 # /opt/n9e/agentd/conf.d/snmp.d/conf.yaml
-initConfig:
+init_config
   loader: core
 instances:
-- ipAddress: "1.2.3.4"
-  snmpVersion: 3			# optional, if omitted we will autodetect which version of SNMP you are using
+- ip_address "1.2.3.4"
+  snmp_version 3			# optional, if omitted we will autodetect which version of SNMP you are using
   user: "user"
-  authProtocol: "fakeAuth"
-  authKey: "fakeKey"
-  # privProtocol:
-  # privKey:
+  auth_protocol "fakeAuth"
+  auth_key "fakeKey"
+  # priv_protocol
+  # priv_key
   # tags:
   #   - "region:shanghai"
   #   - "usefor:switch"
@@ -74,7 +74,7 @@ sudo systemctl restart n9e-agentd
 
 指定单个设备的替代方法是使用 Autodiscovery 来自动发现网络上的所有设备。
 
-自动发现配置的网段，并检查来自目标设备的响应。然后，agentd 代理查找 sysObjectID 发现的设备并找到设备对应 的  [配置文件](https://github.com/n9e/n9e-agentd/tree/main/misc/conf.d/snmp.d/profiles)。配置文件中包含各种设备收集的预定义指标列表。
+自动发现配置的网段，并检查来自目标设备的响应。然后，agentd 代理查找 sysObjectID 发现的设备并找到设备对应的  [配置文件](https://github.com/n9e/n9e-agentd/tree/main/misc/conf.d/snmp.d/profiles)。配置文件中包含各种设备收集的预定义指标列表。
 
 将自动发现与网络设备监控结合使用：
 - 编辑 agentd.yaml 配置文件，设置 要扫描的所有子网。以下示例提供了自动发现所需的参数、默认值。
@@ -85,9 +85,9 @@ sudo systemctl restart n9e-agentd
 agent:
   listeners:
     - name: snmp
-  snmpListener:
+  snmp_listener
     workers: 100 # number of workers used to discover devices concurrently
-    discoveryInterval: 3600 # interval between each autodiscovery in seconds
+    discovery_interval 3600 # interval between each autodiscovery in seconds
     configs:
       - network: 1.2.3.4/24 # CIDR notation, we recommend no larger than /24 blocks
         version: 2
@@ -113,29 +113,29 @@ agent:
 agent:
   listeners:
     - name: snmp
-  snmpListener:
+  snmp_listener
     workers: 100 # number of workers used to discover devices concurrently
-    discoveryInterval: 3600 # interval between each autodiscovery in seconds
+    discovery_interval 3600 # interval between each autodiscovery in seconds
     configs:
       - network: 1.2.3.4/24 # CIDR notation, we recommend no larger than /24 blocks
         version: 3
         user: "user"
-        authenticationProtocol: "fakeAuth"
-        authenticationKey: "fakeKey"
-        # privacyProtocol:
-        # privacyKey:
+        authentication_protocol "fakeAuth"
+        authentication_key "fakeKey"
+        # privacy_protocol
+        # privacy_key
         # tags:
         #   - "region:beijing"
         #   - "usefor:firewall"
         loader: core
       - network: 2.3.4.5/24
         version: 3
-        snmpVersion: 3
+        snmp_version 3
         user: "user"
-        authenticationProtocol: "fakeAuth"
-        authenticationKey: "fakeKey"
-        # privacyProtocol:
-        # privacyKey: 
+        authentication_protocol "fakeAuth"
+        authentication_key "fakeKey"
+        # privacy_protocol
+        # privacy_key 
         # tags:
         #   - "region:beijing"
         #   - "usefor:firewall"
@@ -143,3 +143,81 @@ agent:
 ```
 
 **注意**：agentd 会自动发现设备IP，然后依次采集每一个正常应答的设备。
+
+
+## profile 配置
+SNMP profile为某些品牌和型号的网络设备提供开箱即用监控的配置, 目录 /opt/n9e/agentd/conf.d/snmp.d/profiles.
+
+文件结构如下 
+
+```yaml
+sysobjectid: <x.y.z...>
+
+# extends:
+#   <Optional list of base profiles to extend from...>
+
+metrics:
+  # <List of metrics to collect...>
+
+# metric_tags:
+#   <List of tags to apply to collected metrics. Required for table metrics, optional otherwise>
+```
+
+下面的例子中, 查询 172.25.79.194 的 `sysobjectid` 为  `1.3.6.1.4.1.25506.1.1210`
+```Bash
+$ snmpwalk -On 172.25.79.194 1.3.6.1.2.1.1.2.0
+.1.3.6.1.2.1.1.2.0 = OID: .1.3.6.1.4.1.25506.1.1210
+```
+
+采集器的配置文件 /opt/n9e/agentd/conf.d/snmp.d/conf.yaml 中,  采集器会首先查询目标的 sysobjectid, 在 profile 目录查找相匹配的配置, 也可以直接在 conf.yaml 文件中配置 metrics 和 metric_tags, 格式和 profile 一样
+
+### 字段
+
+#### `sysobjectid`
+
+_(必须)_
+
+`sysobjectid` 字段用于在设备自动发现期间将配置文件与设备进行匹配。
+
+它可以引用特定设备品牌和型号的完全定义的 OID：
+
+```yaml
+sysobjectid: 1.3.6.1.4.1.232.9.4.10
+```
+
+或通配符模式来解决多个设备模型：
+
+```yaml
+sysobjectid: 1.3.6.1.131.12.4.*
+```
+
+或完全定义的 OID / 通配符模式列表：
+
+```yaml
+sysobjectid:
+  - 1.3.6.1.131.12.4.*
+  - 1.3.6.1.4.1.232.9.4.10
+```
+
+#### `metrics`
+ 参考 [profiles](https://datadoghq.dev/integrations-core/tutorials/snmp/profiles/)
+
+#### `metrics_tags`
+ 参考 [profiles](https://datadoghq.dev/integrations-core/tutorials/snmp/profiles/)
+
+
+## FAQ
+
+#### 自动发现不起作用?
+
+确认agentd是否为最新版本。确认方法是看这个文件是否存在：/opt/n9e/agentd/conf.d/snmp.d/auto_conf.yaml 官网最新安装包里是有这个文件的，或者去agentd的github release页面下载，[下载地址](https://github.com/n9e/n9e-agentd/releases)
+
+## Resources
+- https://docs.datadoghq.com/network_monitoring/devices/setup
+- https://datadoghq.dev/integrations-core/tutorials/snmp/profiles/
+- http://cric.grenoble.cnrs.fr/Administrateurs/Outils/MIBS/
+- http://circitor.fr/Mibs/Mibs.php
+- http://mibs.snmplabs.com/asn1/
+- https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol
+- https://www.youtube.com/playlist?list=PL4j_fCKQ7Bso1wGplcaF2pcDGeLVCuKHU
+- https://en.wikipedia.org/wiki/Field-replaceable_unit

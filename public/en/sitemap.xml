@@ -7,8 +7,8 @@
     <lastmod>2020-08-25T16:34:31+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
-                href="/docs/api/data/"
+                hreflang="v4"
+                href="/v4/docs/api/data/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -20,61 +20,21 @@
   <url>
     <loc>/en/docs/faq/graph/</loc>
     <lastmod>2020-04-15T11:53:12+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/docs/faq/graph/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/docs/faq/graph/"
-                />
   </url>
   
   <url>
     <loc>/en/docs/community/</loc>
-    <lastmod>2020-05-13T11:00:46+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/docs/community/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/docs/community/"
-                />
+    <lastmod>2021-02-06T11:19:59+08:00</lastmod>
   </url>
   
   <url>
     <loc>/en/docs/api/stra/</loc>
     <lastmod>2020-04-18T08:22:51+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/docs/api/stra/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/docs/api/stra/"
-                />
   </url>
   
   <url>
     <loc>/en/docs/faq/alert/</loc>
     <lastmod>2020-04-15T11:53:12+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/docs/faq/alert/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/docs/faq/alert/"
-                />
   </url>
   
   <url>
@@ -82,7 +42,12 @@
     <lastmod>2020-04-10T21:34:19+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
+                hreflang="v4"
+                href="/v4/docs/intro/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
                 href="/docs/intro/"
                 />
     <xhtml:link
@@ -95,16 +60,6 @@
   <url>
     <loc>/en/docs/api/collect/</loc>
     <lastmod>2020-04-18T08:22:51+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/docs/api/collect/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/docs/api/collect/"
-                />
   </url>
   
   <url>
@@ -112,7 +67,12 @@
     <lastmod>2020-04-13T23:48:30+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
+                hreflang="v4"
+                href="/v4/docs/install/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
                 href="/docs/install/"
                 />
     <xhtml:link
@@ -127,7 +87,12 @@
     <lastmod>2020-04-23T18:26:29+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
+                hreflang="v4"
+                href="/v4/docs/usage/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
                 href="/docs/usage/"
                 />
     <xhtml:link
@@ -140,46 +105,16 @@
   <url>
     <loc>/en/docs/api/user/</loc>
     <lastmod>2020-04-18T08:22:51+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/docs/api/user/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/docs/api/user/"
-                />
   </url>
   
   <url>
     <loc>/en/docs/api/tree/</loc>
     <lastmod>2020-04-18T08:22:51+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/docs/api/tree/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/docs/api/tree/"
-                />
   </url>
   
   <url>
     <loc>/en/docs/plugin/</loc>
     <lastmod>2020-04-11T00:00:09+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/docs/plugin/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/docs/plugin/"
-                />
   </url>
   
   <url>
@@ -187,8 +122,8 @@
     <lastmod>2020-04-12T17:34:25+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
-                href="/docs/operation/"
+                hreflang="v4"
+                href="/v4/docs/operation/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -202,8 +137,8 @@
     <lastmod>2020-04-18T08:22:51+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
-                href="/docs/api/"
+                hreflang="v4"
+                href="/v4/docs/api/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -217,8 +152,8 @@
     <lastmod>2020-04-15T11:53:12+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
-                href="/docs/faq/"
+                hreflang="v4"
+                href="/v4/docs/faq/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -232,7 +167,12 @@
     <lastmod>2020-04-11T16:54:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
+                hreflang="v4"
+                href="/v4/docs/appendix/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
                 href="/docs/appendix/"
                 />
     <xhtml:link
@@ -247,7 +187,12 @@
     <lastmod>2020-04-23T18:26:29+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
+                hreflang="v4"
+                href="/v4/docs/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
                 href="/docs/"
                 />
     <xhtml:link
@@ -262,8 +207,8 @@
     <lastmod>2020-04-23T14:35:32+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
-                href="/docs/usage/maskconf/"
+                hreflang="v4"
+                href="/v4/docs/usage/maskconf/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -277,8 +222,8 @@
     <lastmod>2020-04-23T14:35:32+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
-                href="/docs/usage/metric/"
+                hreflang="v4"
+                href="/v4/docs/usage/metric/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -292,8 +237,8 @@
     <lastmod>2020-04-23T14:35:32+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
-                href="/docs/usage/strategy/"
+                hreflang="v4"
+                href="/v4/docs/usage/strategy/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -305,46 +250,16 @@
   <url>
     <loc>/en/docs/install/didiyun/</loc>
     <lastmod>2020-04-13T23:48:30+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/docs/install/didiyun/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/docs/install/didiyun/"
-                />
   </url>
   
   <url>
     <loc>/en/docs/install/product/</loc>
     <lastmod>2020-04-13T23:48:30+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/docs/install/product/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/docs/install/product/"
-                />
   </url>
   
   <url>
     <loc>/en/docs/operation/capacity/</loc>
     <lastmod>2020-04-12T17:34:25+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/docs/operation/capacity/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/docs/operation/capacity/"
-                />
   </url>
   
   <url>
@@ -352,8 +267,8 @@
     <lastmod>2020-04-12T17:34:25+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
-                href="/docs/operation/checklist/"
+                hreflang="v4"
+                href="/v4/docs/operation/checklist/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -367,8 +282,8 @@
     <lastmod>2020-05-09T11:51:45+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
-                href="/docs/operation/tsdb/"
+                hreflang="v4"
+                href="/v4/docs/operation/tsdb/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -382,8 +297,8 @@
     <lastmod>2020-04-14T09:51:13+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
-                href="/docs/operation/idx/"
+                hreflang="v4"
+                href="/v4/docs/operation/idx/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -397,8 +312,8 @@
     <lastmod>2020-04-12T17:34:25+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
-                href="/docs/operation/monitor/"
+                hreflang="v4"
+                href="/v4/docs/operation/monitor/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -410,16 +325,6 @@
   <url>
     <loc>/en/docs/install/compile/</loc>
     <lastmod>2020-05-27T17:16:51+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/docs/install/compile/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/docs/install/compile/"
-                />
   </url>
   
   <url>
@@ -427,7 +332,12 @@
     <lastmod>2020-04-23T14:35:32+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
+                hreflang="v4"
+                href="/v4/docs/usage/port/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
                 href="/docs/usage/port/"
                 />
     <xhtml:link
@@ -442,7 +352,12 @@
     <lastmod>2020-04-23T14:35:32+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
+                hreflang="v4"
+                href="/v4/docs/usage/proc/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
                 href="/docs/usage/proc/"
                 />
     <xhtml:link
@@ -457,8 +372,8 @@
     <lastmod>2020-04-23T14:35:32+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
-                href="/docs/usage/logger/"
+                hreflang="v4"
+                href="/v4/docs/usage/logger/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -472,7 +387,12 @@
     <lastmod>2020-04-23T14:35:32+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
+                hreflang="v4"
+                href="/v4/docs/usage/plugin/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
                 href="/docs/usage/plugin/"
                 />
     <xhtml:link
@@ -487,7 +407,12 @@
     <lastmod>2020-03-11T18:06:21+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
+                hreflang="v4"
+                href="/v4/index.json"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
                 href="/index.json"
                 />
     <xhtml:link
@@ -502,7 +427,12 @@
     <lastmod>2020-03-11T18:06:21+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
+                hreflang="v4"
+                href="/v4/community/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
                 href="/community/"
                 />
     <xhtml:link
@@ -517,7 +447,12 @@
     <lastmod>2020-03-11T18:06:21+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
+                hreflang="v4"
+                href="/v4/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
                 href="/"
                 />
     <xhtml:link
@@ -530,16 +465,6 @@
   <url>
     <loc>/en/docs/install/rpm/</loc>
     <lastmod>2020-04-23T16:41:17+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/docs/install/rpm/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/docs/install/rpm/"
-                />
   </url>
   
   <url>
@@ -547,7 +472,12 @@
     <lastmod>2020-03-11T18:06:21+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh"
+                hreflang="v4"
+                href="/v4/search/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="v5"
                 href="/search/"
                 />
     <xhtml:link

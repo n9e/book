@@ -17,13 +17,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/usage/snmp/" />
 <meta property="article:published_time" content="2021-05-21T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-07-20T20:38:32+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta property="article:modified_time" content="2021-07-28T14:50:46+08:00" /><meta property="og:site_name" content="Nightingale" />
 <meta itemprop="name" content="SNMP">
 <meta itemprop="description" content="夜莺的客户端(n9e-agentd)中内置了SNMP采集器，可以采集各类网络设备的监控指标。一般我们会在不同的机房分别找一个机器作为探针，开启这个机器的n9e-agentd的SNMP采集能力，采集本机房的网络设备
 ">
 <meta itemprop="datePublished" content="2021-05-21T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-07-20T20:38:32&#43;08:00" />
-<meta itemprop="wordCount" content="189">
+<meta itemprop="dateModified" content="2021-07-28T14:50:46&#43;08:00" />
+<meta itemprop="wordCount" content="293">
 
 
 
@@ -94,6 +94,8 @@
 </a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 	
+	<a class="dropdown-item" href="/en/">English</a>
+	
 	<a class="dropdown-item" href="/v4/">v4版本</a>
 	
 </div>
@@ -133,6 +135,8 @@
 	v5版本
 </a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/en/">English</a>
 	
 	<a class="dropdown-item" href="/v4/">v4版本</a>
 	
@@ -319,6 +323,12 @@
       <a class="td-sidebar-link td-sidebar-link__page " id="m-docsappendixnginx" href="/docs/appendix/nginx/">配置nginx</a>
       
       
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsappendixfaq" href="/docs/appendix/faq/">FAQ</a>
+      
+      
     </li>
   </ul>
 </ul>
@@ -372,6 +382,17 @@
         <li></li>
       </ul>
     </li>
+    <li><a href="#profile-配置">profile 配置</a>
+      <ul>
+        <li><a href="#字段">字段</a></li>
+      </ul>
+    </li>
+    <li><a href="#faq">FAQ</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#resources">Resources</a></li>
   </ul>
 </nav>
 
@@ -549,15 +570,62 @@
 </span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#8f5902;font-style:italic">#   - &#34;usefor:firewall&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
 </span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">loader</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>core<span style="color:#f8f8f8;text-decoration:underline">
 </span></code></pre></div><p><strong>注意</strong>：agentd 会自动发现设备IP，然后依次采集每一个正常应答的设备。</p>
+<h2 id="profile-配置">profile 配置</h2>
+<p>SNMP profile为某些品牌和型号的网络设备提供开箱即用监控的配置, 目录 /opt/n9e/agentd/conf.d/snmp.d/profiles.</p>
+<p>文件结构如下</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#204a87;font-weight:bold">sysobjectid</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>&lt;x.y.z...<span style="color:#8f5902;font-style:italic">&gt;
+</span><span style="color:#8f5902;font-style:italic">
+</span><span style="color:#8f5902;font-style:italic"># extends:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic">#   &lt;Optional list of base profiles to extend from...&gt;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">metrics</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#8f5902;font-style:italic"># &lt;List of metrics to collect...&gt;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># metric_tags:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic">#   &lt;List of tags to apply to collected metrics. Required for table metrics, optional otherwise&gt;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><p>下面的例子中, 查询 172.25.79.194 的 <code>sysobjectid</code> 为  <code>1.3.6.1.4.1.25506.1.1210</code></p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">$ snmpwalk -On 172.25.79.194 1.3.6.1.2.1.1.2.0
+.1.3.6.1.2.1.1.2.0 <span style="color:#ce5c00;font-weight:bold">=</span> OID: .1.3.6.1.4.1.25506.1.1210
+</code></pre></div><p>采集器的配置文件 /opt/n9e/agentd/conf.d/snmp.d/conf.yaml 中,  采集器会首先查询目标的 sysobjectid, 在 profile 目录查找相匹配的配置, 也可以直接在 conf.yaml 文件中配置 metrics 和 metric_tags, 格式和 profile 一样</p>
+<h3 id="字段">字段</h3>
+<h4 id="sysobjectid"><code>sysobjectid</code></h4>
+<p><em>(必须)</em></p>
+<p><code>sysobjectid</code> 字段用于在设备自动发现期间将配置文件与设备进行匹配。</p>
+<p>它可以引用特定设备品牌和型号的完全定义的 OID：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#204a87;font-weight:bold">sysobjectid</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1.3.6.1.4.1.232.9.4.10</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><p>或通配符模式来解决多个设备模型：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#204a87;font-weight:bold">sysobjectid</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1.3.6.1.131.12.4</span>.*<span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><p>或完全定义的 OID / 通配符模式列表：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#204a87;font-weight:bold">sysobjectid</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#0000cf;font-weight:bold">1.3.6.1.131.12.4</span>.*<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#0000cf;font-weight:bold">1.3.6.1.4.1.232.9.4.10</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><h4 id="metrics"><code>metrics</code></h4>
+<p>参考 <a href="https://datadoghq.dev/integrations-core/tutorials/snmp/profiles/">profiles</a></p>
+<h4 id="metrics_tags"><code>metrics_tags</code></h4>
+<p>参考 <a href="https://datadoghq.dev/integrations-core/tutorials/snmp/profiles/">profiles</a></p>
+<h2 id="faq">FAQ</h2>
+<h4 id="自动发现不起作用">自动发现不起作用?</h4>
+<p>确认agentd是否为最新版本。确认方法是看这个文件是否存在：/opt/n9e/agentd/conf.d/snmp.d/auto_conf.yaml 官网最新安装包里是有这个文件的，或者去agentd的github release页面下载，<a href="https://github.com/n9e/n9e-agentd/releases">下载地址</a></p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://docs.datadoghq.com/network_monitoring/devices/setup">https://docs.datadoghq.com/network_monitoring/devices/setup</a></li>
+<li><a href="https://datadoghq.dev/integrations-core/tutorials/snmp/profiles/">https://datadoghq.dev/integrations-core/tutorials/snmp/profiles/</a></li>
+<li><a href="http://cric.grenoble.cnrs.fr/Administrateurs/Outils/MIBS/">http://cric.grenoble.cnrs.fr/Administrateurs/Outils/MIBS/</a></li>
+<li><a href="http://circitor.fr/Mibs/Mibs.php">http://circitor.fr/Mibs/Mibs.php</a></li>
+<li><a href="http://mibs.snmplabs.com/asn1/">http://mibs.snmplabs.com/asn1/</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol">https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol</a></li>
+<li><a href="https://www.youtube.com/playlist?list=PL4j_fCKQ7Bso1wGplcaF2pcDGeLVCuKHU">https://www.youtube.com/playlist?list=PL4j_fCKQ7Bso1wGplcaF2pcDGeLVCuKHU</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Field-replaceable_unit">https://en.wikipedia.org/wiki/Field-replaceable_unit</a></li>
+</ul>
 
 	
 	
 	<div class="text-muted mt-5 pt-3 border-top">
 
-<h5>诚挚邀请各位小伙伴：</h5>
+<h5 style="color: rgb(235, 30, 207);">诚邀各位小伙伴：</h5>
 
-<p>
-一起参与夜莺社区建设，多写一些夜莺的文章，咱们一起把夜莺做成最好用的国产智能监控系统，造福一方。对于不具备开发资源的甲方上帝们，也可联系我们（18612185520，微信同号）寻求技术支持护航服务，贵司业务发展这么快，我们帮你做好监控！
+<p style="color: rgb(235, 30, 207);">
+一起参与夜莺社区建设，多写一些夜莺的文章，咱们一起把夜莺做成最好用的国产智能监控。各位甲方上帝们，也可联系我们（18612185520，微信同号）寻求技术支持护航服务，贵司业务发展这么快，我们帮你做好监控！
 </p>
 </div>
 </div>

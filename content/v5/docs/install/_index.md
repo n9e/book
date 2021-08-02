@@ -86,8 +86,8 @@ mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('1234');"
 # 3.安装n9e-server
 mkdir -p /opt/n9e
 cd /opt/n9e
-wget 116.85.64.82/n9e-server.tar.gz
-tar zxvf n9e-server.tar.gz
+wget 116.85.64.82/n9e-server-5.0.0-rc3.tar.gz
+tar zxvf n9e-server-5.0.0-rc3.tar.gz
 mysql -uroot -p1234 < /opt/n9e/server/sql/n9e.sql
 
 cp /opt/n9e/server/etc/service/n9e-server.service /etc/systemd/system/
@@ -113,7 +113,7 @@ systemctl status n9e-server
 curl -s http://116.85.64.82/install_n9e_agentd.sh|bash
 
 # 通过下面命令查看n9e-agentd的进程，如果进程存在，说明启动成功
-# 如果启动失败，可通过 journalctl -u n9e-agentd 查看日志
+# 如果启动失败，可通过 journalctl -u n9e-agentd -f 查看日志
 ps -ef|grep n9e-agentd|grep -v grep
 ```
 
