@@ -266,6 +266,12 @@
       
       
       
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagenodata" href="/docs/usage/nodata/">nodata</a>
+      
+      
+      
+      
+      
       <a class="td-sidebar-link td-sidebar-link__page " id="m-docsusagenotify" href="/docs/usage/notify/">告警通知</a>
       
       
@@ -505,6 +511,15 @@
                         <a href="/docs/usage/jmx/">JMX监控</a>
                     </h5>
                     <p>JMX用于采集JVM的一些监控指标，对于Java类的一些中间件，一般会用这种方式，Java写的业务进程不推荐用JMX方式，建议直接使用micrometer这种SDK埋点，micrometer会自动采集JVM相关监控指标。</p>
+                </div>
+            
+        
+            
+                <div class="entry">
+                    <h5>
+                        <a href="/docs/usage/nodata/">nodata监控</a>
+                    </h5>
+                    <p>使用prometheus的absent函数。采用那些没有tags的指标，如果指标有tags，需要所有的tags都没有数据才会触发</p>
                 </div>
             
         
