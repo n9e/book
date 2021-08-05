@@ -17,13 +17,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/usage/logmon/" />
 <meta property="article:published_time" content="2021-05-24T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-06-27T15:03:11+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta property="article:modified_time" content="2021-08-05T15:36:23+08:00" /><meta property="og:site_name" content="Nightingale" />
 <meta itemprop="name" content="日志监控">
 <meta itemprop="description" content="夜莺内置的日志监控，并非是把日志收集到中心在中心处理，而是使用了一种更轻量的方式，在服务端配置正则表达式，下发到agentd，agentd会流式读取日志，然后从日志中根据正则提取metrics数据，所以本质上，这仍然是metrics监控的一种扩展机制。如果大家需要中心化的日志处理解决方案，可以参考我们的logi产品。
 ">
 <meta itemprop="datePublished" content="2021-05-24T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-06-27T15:03:11&#43;08:00" />
-<meta itemprop="wordCount" content="2">
+<meta itemprop="dateModified" content="2021-08-05T15:36:23&#43;08:00" />
+<meta itemprop="wordCount" content="97">
 
 
 
@@ -431,7 +431,40 @@
 <div class="td-content">
 	<h1>日志监控</h1>
 	<div class="lead">夜莺内置的日志监控，并非是把日志收集到中心在中心处理，而是使用了一种更轻量的方式，在服务端配置正则表达式，下发到agentd，agentd会流式读取日志，然后从日志中根据正则提取metrics数据，所以本质上，这仍然是metrics监控的一种扩展机制。如果大家需要中心化的日志处理解决方案，可以参考我们的logi产品。</div>
-	<p>TODO: 新版本的日志监控对日志文件的匹配是否支持glob方式？有哪些变化？</p>
+	<p>日志采集支持本地配置文件(在 conf.d/log.d 目录下)和web页面两种配置方式，下面以本地配置文件举例来说明日志采集如何配置，如果想采集nginx日志中 /api/n9e/push 被访问的次数，本地配置文件如下</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#204a87;font-weight:bold">instances</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># @param name - string - required</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># name 在页面上是采集名称，已log_开头，是日志采集监控指标的metric</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>log_api_count<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># @param file_path - string - required</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># file_path 要采集的日志文件所在的位置，支持通配符（*），例如 /var/log/myapp/*.log、/var/log/myapp/*/*.log</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">file_path</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>/var/log/nginx/access.log<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># param pattern -  string - required</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># pattern 表示要匹配的日志的关键字，支持正则</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">pattern</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>/api/n9e/push<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># param tags_pattern -  map[string]string - optional</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># tags_pattern 是从日志提取监控指标tag的配置，是一个map，key是tag的key,</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># value是一个正则表达式，正则中匹配到的子串是会赋值给value，下面配置是将日志中的状态码提取出来作为tag</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">tags_pattern</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">code</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>HTTP\/<span style="color:#0000cf;font-weight:bold">1.1</span>&#34;\s(<span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0-9</span><span style="color:#000;font-weight:bold">]</span>{<span style="color:#0000cf;font-weight:bold">3</span>})<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># #param func -  string - required - enum: count, histogram</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># func是匹配到日志之后的计算方式，支持count和histogram</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># count 表示统计每个周期匹配到的日志的个数</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># histogram 会产生5个指标，$name_avg $name_max $name_median $name_count $name_95percentile，采集周期内的统计值</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># 注意使用 histogram 时，主正则（pattern）要可以提取数字，因为需要计算统计值</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">func</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>count<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># @param tags - list of strings - optional</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># A list of tags to attach to every metric and service check emitted by this instance.</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># Learn more about tagging at https://docs.datadoghq.com/tagging</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># 附件标签，如果想给监控指标打一个属于某个服务的tag，可以配置如下</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># tags:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic">#   - service:n9e</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><p>页面功能各字段与配置文件基本一一对应，此处不过多赘述。另外，web上有一个配置验证的字段，可以放一条真实日志看正则是否能够正常匹配。</p>
 
 	
 	
