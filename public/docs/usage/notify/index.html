@@ -23,7 +23,7 @@
 ">
 <meta itemprop="datePublished" content="2021-04-01T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-07-06T12:49:23&#43;08:00" />
-<meta itemprop="wordCount" content="94">
+<meta itemprop="wordCount" content="61">
 
 
 
@@ -460,26 +460,11 @@
 <p><img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-v5-user-profile.png" alt="image.png"></p>
 <p>如果邮件网关配置的没问题的话，当告警事件触发后，就可以收到告警邮件通知了。如果没有收到，可以依次检查页面上是否生成未恢复的告警事件，检查上文提到的临时文件是否生成，检查邮件网关配置，检查邮件发送代码逻辑，也可以自己写个邮件测试小脚本测试下邮件发送的方法逻辑。</p>
 <h3 id="钉钉群消息发送配置">钉钉群消息发送配置</h3>
-<p>夜莺提供了支持多种消息媒介的能力，除了内置的邮箱和手机号之外，在 server.yml 中，可以配置额外的通知媒介，配置如下</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#204a87;font-weight:bold">contactKeys</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;Wecom Robot Token&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">key</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>wecom_robot_token<span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;Dingtalk Robot Token&#34;</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># User的更多联系方式的下拉框中，钉钉机器人方式的label部分</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">key</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>dingtalk_robot_token<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># User的更多联系方式的下拉框中，钉钉机器人方式的key部分，需要和notify.py中获取用户此联系方式的key相同</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">    
-</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">notifyChannels</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span>- email<span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span>- sms<span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span>- voice<span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span>- dingtalk<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># 通知渠道，dingtalk代表要启用钉钉通知媒介</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">  </span>- wecom<span style="color:#f8f8f8;text-decoration:underline">
-</span></code></pre></div><p>目前默认配置了微信机器人和钉钉机器人，如果想要增加其他联系方式，修改配置文件，然后重启 n9e-server 即可。重启服务端之后，在创建用户的时候，就可以给用户添加在server.yml中配置的联系方式了，如果是发送钉钉群消息的话，可以选择Dingtalk Robot Token</p>
+<p>首先创建钉钉机器人（钉钉有个安全设置，选择关键字匹配，关键字写20），拿到钉钉机器人的token，配置到某个user的联系方式中，然后把这个user作为告警接收人即可。</p>
 <p><img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-v5-user-contacts.png" alt="image.png"></p>
-<p>假设我们在系统里创建了一个虚拟用户：dingtalk-x，并且把钉钉的token配置到了dingtalk-x的Dingtalk Robot Token字段上。那当我们把dingtalk-x或者dingtalk-x所在的团队添加到某个告警策略的接收者之后，当告警触发的时候，对应的钉钉机器人所在的钉钉群就会收到告警信息，如下</p>
-<p><img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-v5-dingtalk-notice.png" alt="image.png"></p>
 <h3 id="支持其他通知媒介">支持其他通知媒介</h3>
 <p>这里以发送微信群消息为例，主要分三个步骤。</p>
-<p>第一，在 server.yml 中配置新的通知媒介联系字段和通知渠道，然后重启服务器</p>
+<p>第一，修改 server.yml ，contactKeys增加一项Wecom Robot Token，这样在用户的更多联系方式中就会自动展示这个字段，notifyChannels中增加wecom。默认提供的 server.yml 已经提供了企业微信的这个配置了，所以大家维持默认的不用动即可。</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#204a87;font-weight:bold">contactKeys</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
 </span><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">label</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;Wecom Robot Token&#34;</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># User的更多联系方式的下拉框中，微信机器人方式的label部分</span><span style="color:#f8f8f8;text-decoration:underline">
 </span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">key</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>wecom_robot_token<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># User的更多联系方式的下拉框中，微信机器人方式的key部分，需要和notify.py中获取用户此联系方式的key相同</span><span style="color:#f8f8f8;text-decoration:underline">
@@ -492,13 +477,8 @@
 </span><span style="color:#f8f8f8;text-decoration:underline">  </span>- voice<span style="color:#f8f8f8;text-decoration:underline">
 </span><span style="color:#f8f8f8;text-decoration:underline">  </span>- dingtalk<span style="color:#f8f8f8;text-decoration:underline"> 
 </span><span style="color:#f8f8f8;text-decoration:underline">  </span>- wecom<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># 通知渠道，wecom代表要启用企业微信通知媒介</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></code></pre></div><p>第二，在创建用户的时候，以添加微信群消息举例，在更多联系方式的地方，把 Wecom Robot Token 字段的值配上（配置为企业微信机器人的token），之后在notify.py中就可以通过user的 <code>contacts.get(&quot;wecom_robot_token&quot;, &quot;&quot;)</code> 拿到该用户的企业微信token。</p>
-<p><img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-v5-wecom-notice.png" alt="image.png"></p>
-<p>第三， 到这一步，新通知媒介的方法名称知道了（notifyChannels.xxx），用户的联系方式也知道了(<code>user.contacts[contactKeys.key]</code>)，就可以补充notify.py中send_xxx的方法了，脚本完成补充之后，在个人信息页面，配置更多联系方式，就可以收到对应的消息了</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#5c35cc;font-weight:bold">@classmethod</span>
-<span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">send_wecom</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">cls</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">payload</span><span style="color:#000;font-weight:bold">):</span>
-    <span style="color:#204a87;font-weight:bold">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;send_wecom&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#8f5902;font-style:italic"># 补充发送逻辑</span>
-</code></pre></div><p><img src="https://s3-gz01.didistatic.com/n9e-pub/image/n9e-v5-user-profile-dingtalk.png" alt="image.png"></p>
+</span></code></pre></div><p>第二，个人联系方式中会看到Wecom Robot Token（因为contactKeys有此配置），把企业微信机器人的token填上</p>
+<p>第三，修改notify.py，编写发送逻辑。notify.py中根据wecom这个notifyChannels找到对应的发送方法，然后从users的wecom_robot_token字段拿到用户的企业微信token，就可以调用微信的接口发送通知了。</p>
 
 	
 	
