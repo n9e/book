@@ -89,8 +89,8 @@ pip install bottle
 # 3.安装n9e-server
 mkdir -p /opt/n9e
 cd /opt/n9e
-wget 116.85.64.82/n9e-server-5.0.0-rc5.tar.gz
-tar zxvf n9e-server-5.0.0-rc5.tar.gz
+wget 116.85.64.82/n9e-server-5.0.0-rc6.tar.gz
+tar zxvf n9e-server-5.0.0-rc6.tar.gz
 mysql -uroot -p1234 < /opt/n9e/server/sql/n9e.sql
 
 cp /opt/n9e/server/etc/service/n9e-server.service /etc/systemd/system/
