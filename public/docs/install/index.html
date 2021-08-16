@@ -492,11 +492,14 @@ systemctl <span style="color:#204a87">enable</span> mariadb.service
 <span style="color:#8f5902;font-style:italic"># 设置mysql root密码</span>
 mysql -e <span style="color:#4e9a06">&#34;SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;1234&#39;);&#34;</span>
 
+<span style="color:#8f5902;font-style:italic"># 安装 notify.py 依赖</span> 
+pip install bottle
+
 <span style="color:#8f5902;font-style:italic"># 3.安装n9e-server</span>
 mkdir -p /opt/n9e
 <span style="color:#204a87">cd</span> /opt/n9e
-wget 116.85.64.82/n9e-server-5.0.0-rc3.tar.gz
-tar zxvf n9e-server-5.0.0-rc3.tar.gz
+wget 116.85.64.82/n9e-server-5.0.0-rc6.tar.gz
+tar zxvf n9e-server-5.0.0-rc6.tar.gz
 mysql -uroot -p1234 &lt; /opt/n9e/server/sql/n9e.sql
 
 cp /opt/n9e/server/etc/service/n9e-server.service /etc/systemd/system/
