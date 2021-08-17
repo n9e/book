@@ -37,11 +37,11 @@ agentd 网络设备监控支持从单个设备收集指标，或自动发现整�
 1. SNMPv2
 ```yaml
 # /opt/n9e/agentd/conf.d/snmp.d/conf.yaml
-init_config
+init_config:
   loader: core
 instances:
-- ip_address "1.2.3.4"
-  community_string "public"
+- ip_address: "1.2.3.4"
+  community_string: "public"
   # tags:
   #   - "region:beijing"
   #   - "usefor:firewall"
@@ -50,16 +50,16 @@ instances:
 2. SNMPv3
 ```yaml
 # /opt/n9e/agentd/conf.d/snmp.d/conf.yaml
-init_config
+init_config:
   loader: core
 instances:
-- ip_address "1.2.3.4"
-  snmp_version 3			# optional, if omitted we will autodetect which version of SNMP you are using
+- ip_address: "1.2.3.4"
+  snmp_version: 3			# optional, if omitted we will autodetect which version of SNMP you are using
   user: "user"
-  auth_protocol "fakeAuth"
-  auth_key "fakeKey"
-  # priv_protocol
-  # priv_key
+  auth_protocol: "fakeAuth"
+  auth_key: "fakeKey"
+  # priv_protocol:
+  # priv_key:
   # tags:
   #   - "region:shanghai"
   #   - "usefor:switch"
@@ -85,9 +85,9 @@ sudo systemctl restart n9e-agentd
 agent:
   listeners:
     - name: snmp
-  snmp_listener
+  snmp_listener:
     workers: 100 # number of workers used to discover devices concurrently
-    discovery_interval 3600 # interval between each autodiscovery in seconds
+    discovery_interval: 3600 # interval between each autodiscovery in seconds
     configs:
       - network: 1.2.3.4/24 # CIDR notation, we recommend no larger than /24 blocks
         version: 2
@@ -113,29 +113,29 @@ agent:
 agent:
   listeners:
     - name: snmp
-  snmp_listener
+  snmp_listener:
     workers: 100 # number of workers used to discover devices concurrently
-    discovery_interval 3600 # interval between each autodiscovery in seconds
+    discovery_interval: 3600 # interval between each autodiscovery in seconds
     configs:
       - network: 1.2.3.4/24 # CIDR notation, we recommend no larger than /24 blocks
         version: 3
         user: "user"
-        authentication_protocol "fakeAuth"
-        authentication_key "fakeKey"
-        # privacy_protocol
-        # privacy_key
+        authentication_protocol: "fakeAuth"
+        authentication_key: "fakeKey"
+        # privacy_protocol:
+        # privacy_key:
         # tags:
         #   - "region:beijing"
         #   - "usefor:firewall"
         loader: core
       - network: 2.3.4.5/24
         version: 3
-        snmp_version 3
+        snmp_version: 3
         user: "user"
-        authentication_protocol "fakeAuth"
-        authentication_key "fakeKey"
-        # privacy_protocol
-        # privacy_key 
+        authentication_protocol: "fakeAuth"
+        authentication_key: "fakeKey"
+        # privacy_protocol:
+        # privacy_key:
         # tags:
         #   - "region:beijing"
         #   - "usefor:firewall"
