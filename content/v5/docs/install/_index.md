@@ -85,6 +85,7 @@ mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('1234');"
 
 # 安装 notify.py 依赖 
 pip install bottle
+pip install requests
 
 # 3.安装n9e-server
 mkdir -p /opt/n9e
