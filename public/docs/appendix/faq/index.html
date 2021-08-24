@@ -17,13 +17,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/appendix/faq/" />
 <meta property="article:published_time" content="2021-06-01T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-07-30T15:19:26+08:00" /><meta property="og:site_name" content="Nightingale" />
+<meta property="article:modified_time" content="2021-08-21T22:14:00+08:00" /><meta property="og:site_name" content="Nightingale" />
 <meta itemprop="name" content="FAQ">
 <meta itemprop="description" content="一些常见的问题的解释。安装的问题、使用的问题、理念的问题，都会放到这里。
 ">
 <meta itemprop="datePublished" content="2021-06-01T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-07-30T15:19:26&#43;08:00" />
-<meta itemprop="wordCount" content="63">
+<meta itemprop="dateModified" content="2021-08-21T22:14:00&#43;08:00" />
+<meta itemprop="wordCount" content="75">
 
 
 
@@ -391,6 +391,7 @@
         <li><a href="#faq006">FAQ006</a></li>
         <li><a href="#faq007">FAQ007</a></li>
         <li><a href="#faq008">FAQ008</a></li>
+        <li><a href="#faq009">FAQ009</a></li>
       </ul>
     </li>
   </ul>
@@ -491,6 +492,12 @@
 <p>前端代码开源了么？github地址在哪里？</p>
 </blockquote>
 <p>前端代码也是开源的，v3 v4 版本的前端代码在这里：<a href="https://github.com/n9e/fe">https://github.com/n9e/fe</a> v5 版本的前端代码在这里：<a href="https://github.com/n9e/fe-v5">https://github.com/n9e/fe-v5</a></p>
+<h3 id="faq009">FAQ009</h3>
+<blockquote>
+<p>即使看图中可以查询监控数据，资源管理-看图页面也有个类似的页面可以查看监控数据，二者有何区别？</p>
+</blockquote>
+<p>首先要读一下<a href="/docs/appendix/datamodel/">DataModel</a>章节，夜莺的思路，是把监控数据分为两类，一类是跟设备相关的，上报的监控数据中带有ident字段（通常n9e-agentd采集的监控数据都带有ident字段），另一类是跟设备无关的，上报的监控数据中没有ident字段（通常是 Prometheus 抓取的 exporter 的数据，抓取了之后直接写入时序库，数据不会流经 n9e-agentd 和 n9e-server ）。对于设备相关的监控指标，通常的看图逻辑是先选择设备，再选择指标，所以用资源管理-看图页面看图，这里看到的指标都是根据资源筛选出来的，即都是与选中的资源ident相关的指标，如果监控指标跟选中的资源ident没有关系，就只能去即时看图页面看图。</p>
+<p>既然所有的监控数据都可以在即时看图查看，还有必要特殊处理资源相关的监控指标吗？这个是为了便利性考虑，资源可以做分组，可以对分组做告警规则，相当于除了时序数据的tags之外，我们有了另一种灵活的告警策略和监控数据的关联机制，运维人员通常喜欢这种视角。</p>
 
 	
 	
