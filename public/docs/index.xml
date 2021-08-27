@@ -167,7 +167,7 @@
 &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;device&amp;#34;: &amp;#34;/dev/vda1&amp;#34;
 &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        },
 &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;time&amp;#34;: 1624062385,
-&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;value: 351
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;value&amp;#34;: 351
 &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    },
 &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    {
 &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;ident&amp;#34;: &amp;#34;10.4.5.6&amp;#34;,
@@ -177,7 +177,7 @@
 &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;            &amp;#34;device&amp;#34;: &amp;#34;/dev/vda2&amp;#34;
 &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        },
 &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;time&amp;#34;: 1624062385,
-&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;value: 35109
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;        &amp;#34;value&amp;#34;: 35109
 &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    }
 &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;]&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中各个字段的含义参考《&lt;a href=&#34;/docs/appendix/datamodel/&#34;&gt;DataModel&lt;/a&gt;》一章，其中ident、alias字段也是可选的，很多情形的监控数据是没法和设备关联在一起的，比如某个域名的证书过期时间，这种监控数据就可以不传ident、alias字段。&lt;/p&gt;
