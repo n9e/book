@@ -20,7 +20,7 @@ curl -X POST -H "Content-Type: application/json" http://n9e-server-address/v1/n9
             "device": "/dev/vda1"
         },
         "time": 1624062385,
-        "value: 351
+        "value": 351
     },
     {
         "ident": "10.4.5.6",
@@ -30,7 +30,7 @@ curl -X POST -H "Content-Type: application/json" http://n9e-server-address/v1/n9
             "device": "/dev/vda2"
         },
         "time": 1624062385,
-        "value: 35109
+        "value": 35109
     }
 ]'
 ```
