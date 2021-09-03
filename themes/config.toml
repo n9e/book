@@ -149,7 +149,7 @@ no = 'Sorry to hear that. Please <a href="https://github.com/USERNAME/REPOSITORY
 #        desc = "Discussion and help from your fellow users"
 [[params.links.user]]
 	name ="Wechat"
-	url = "https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite.png"
+	url = "https://s3-gz01.didistatic.com/n9e-pub/image/n9e-invite1.png"
 	icon = "fab fa-weixin"
     desc = "Contact us for help and join our group"
 
